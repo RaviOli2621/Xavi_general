@@ -33,6 +33,8 @@ public class Main
             case "3":
                 MostrarCarret();
                 break;
+            default:
+                break;
         }
     }
 
@@ -61,7 +63,7 @@ public class Main
             case "3":
                 Electronica();
                 break;
-            case "0":
+            default:
                 inici();
                 break;
         }
@@ -79,7 +81,7 @@ public class Main
             preu = scan.nextLine().trim();
             System.out.println("Codi de barres producte:");
             codiDeBarres = scan.nextLine().trim();
-            System.out.println("Data caducitat producte:");
+            System.out.println("Data caducitat producte (dd-MM-yyyy):");
             dataCaducitat = scan.nextLine().trim();
             try {
                 Alimentacio aliment = new Alimentacio(preu,nom,codiDeBarres,dataCaducitat);
@@ -154,16 +156,5 @@ public class Main
     public static void MostrarCarret()
     {
 
-    }
-    public static void cosasxd()
-    {
-        try {
-            Electronica al = new Electronica("100.0","Manzana","123456432","21");
-        }catch (java.text.ParseException e)//exepció en el parser de la data
-        {
-            System.out.println("El format de la data es incorrecte");
-        }catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
     }
 }

@@ -48,4 +48,14 @@ public class Textil extends Productes
     public String getCodiBarres() {
         return codiBarres;
     }
+
+    @Override
+    public String toString() {
+        return "Textil{" +
+                "compocisioTextil='" + compocisioTextil + '\'' +
+                ", preu=" + preu +
+                ", nom='" + nom + '\'' +
+                ", codiBarres='" + codiBarres + '\'' +
+                '}';
+    }
 }

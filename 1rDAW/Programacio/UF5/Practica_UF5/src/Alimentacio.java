@@ -29,11 +29,10 @@ public class Alimentacio extends Productes
     {
         data_caducitat = paraParsearLaData.parse(p);
     }
-    public static float preuSegonsCaducitat(float preu, Date data_caducitat)throws  Exception
+    public static float preuSegonsCaducitat(float preu, Date data_caducitat)
     {
         Date actual = new Date();
         int dataDif = (int)((data_caducitat.getTime() - actual.getTime())/(1000*60*60*24)+1);
-        System.out.println(data_caducitat);
         // el calcul es divideixo en parts: preu - (preu*(1/(dataDif))) + (preu * 0.1f)
         float calculPreu = ((float) 1 /(dataDif));
         calculPreu = calculPreu*preu;
@@ -96,5 +95,17 @@ public class Alimentacio extends Productes
 
     public SimpleDateFormat getParaParsearLaData() {
         return paraParsearLaData;
+    }
+
+    @Override
+    public String toString() {
+        return "Alimentacio{" +
+                "data_caducitat=" + data_caducitat +
+                ", dataPat=" + dataPat +
+                ", paraParsearLaData=" + paraParsearLaData +
+                ", preu=" + preu +
+                ", nom='" + nom + '\'' +
+                ", codiBarres='" + codiBarres + '\'' +
+                '}';
     }
 }

@@ -44,4 +44,15 @@ public class Electronica extends Productes
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "Electronica{" +
+                "diesDeGarantia=" + diesDeGarantia +
+                ", intPat=" + intPat +
+                ", preu=" + preu +
+                ", nom='" + nom + '\'' +
+                ", codiBarres='" + codiBarres + '\'' +
+                '}';
+    }
 }

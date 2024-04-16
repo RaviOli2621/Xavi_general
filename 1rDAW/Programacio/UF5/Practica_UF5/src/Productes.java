@@ -1,6 +1,6 @@
 import java.util.regex.Pattern;
 
-public class Productes
+public abstract class Productes
 {
     float preu;
 
