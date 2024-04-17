@@ -1,7 +1,7 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Scanner;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.regex.Pattern;
 
 public class Main
 {
@@ -160,24 +160,26 @@ public class Main
     }
     public static void PasarPerCaixa()
     {
+        Pattern dataPat = Pattern.compile("dd-MM-yyyy");
+        SimpleDateFormat paraParsearLaData = new SimpleDateFormat(dataPat.pattern());
+
         HashMap<String,String> tiquet = new HashMap<>(); // la clave guarda el codigo de barras y el precio, el segundo valor guarda el nombre del producto y la cantidad
-        List<String> keys = new ArrayList<>();
-        List<String> values = new ArrayList<>();
+
         for (int i = 0; i < carrito.size(); i++) {
             String key = carrito.get(i).toString().split("//")[3] + "//" + carrito.get(i).toString().split("//")[2];
             if(!tiquet.containsKey(key))
             {
-                tiquet.put(key,carrito.get(i).toString().split("//")[0] + "//0");
+                tiquet.put(key,carrito.get(i).toString().split("//")[0] + "//1");
             }else
             {
                 tiquet.replace(key,tiquet.get(key).split("//")[0] + "//" + (Integer.parseInt(tiquet.get(key).split("//")[1]) + 1));
             }
         }
-        keys.addAll(tiquet.keySet());
-        values.addAll(tiquet.values());
-        for (int i = 0; i < tiquet.size(); i++) {
-
-        }
+        System.out.println("--------------------\nSAPAMERCAT\n--------------------\nData: " + paraParsearLaData.format(new Date()) + "\n--------------------");
+        tiquet.forEach((k,v) -> System.out.printf("%-15s\t%-10s\t%-10s\t%-10s\t\n",v.split("//")[0],v.split("//")[1],k.split("//")[1],(Float.parseFloat(k.split("//")[1]) * Float.parseFloat(v.split("//")[1]))));
+        System.out.println("--------------------\n");
+        carrito.clear();
+        inici();
     }
     public static void MostrarCarret()
     {

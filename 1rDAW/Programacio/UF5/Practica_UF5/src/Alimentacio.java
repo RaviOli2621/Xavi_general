@@ -21,7 +21,7 @@ public class Alimentacio extends Productes
         checkDataCad(data_caducitat);
         this.nom = nom;
         this.preu = Float.parseFloat(preu);
-        this.codiBarres = (codiBarres);
+        this.codiBarres = "A-" + codiBarres;
         this.preu = preuSegonsCaducitat(this.preu,this.data_caducitat);
     }
 
@@ -101,5 +101,10 @@ public class Alimentacio extends Productes
     @Override
     public String toString() {
         return nom + "//Alimentacio//" + preu + "//" + codiBarres + "//" + paraParsearLaData.format(data_caducitat);
+    }
+
+    @Override
+    public int compare(Object o1, Object o2) {
+        return 0;
     }
 }

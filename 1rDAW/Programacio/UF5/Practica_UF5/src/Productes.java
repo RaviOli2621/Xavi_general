@@ -1,6 +1,7 @@
+import java.util.Comparator;
 import java.util.regex.Pattern;
 
-public abstract class Productes
+public abstract class Productes implements Comparator
 {
     float preu;
 

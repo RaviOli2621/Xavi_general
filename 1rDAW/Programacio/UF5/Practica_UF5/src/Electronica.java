@@ -16,7 +16,7 @@ public class Electronica extends Productes
         checkDiesGarant(diesDeGarantia);
         this.nom = nom;
         this.preu = Float.parseFloat(preu);
-        this.codiBarres = (codiBarres);
+        this.codiBarres = "E-" + codiBarres;
         this.preu = preuSegonsGarantia(this.preu,this.diesDeGarantia);
     }
 
@@ -43,12 +43,11 @@ public class Electronica extends Productes
 
     @Override
     public String   toString() {
-        return "Electronica{" +
-                "diesDeGarantia=" + diesDeGarantia +
-                ", intPat=" + intPat +
-                ", preu=" + preu +
-                ", nom='" + nom + '\'' +
-                ", codiBarres='" + codiBarres + '\'' +
-                '}';
+        return nom + "//Alimentacio//" + preu + "//" + codiBarres + "//" + diesDeGarantia;
+    }
+
+    @Override
+    public int compare(Object o1, Object o2) {
+        return 0;
     }
 }

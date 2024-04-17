@@ -8,7 +8,7 @@ public class Textil extends Productes
         super(preu, nom, codiBarres);
         this.preu = Float.parseFloat(preu);
         this.nom = nom;
-        this.codiBarres = (codiBarres);
+        this.codiBarres = "T-" + codiBarres;
         this.compocisioTextil = compocisioTextil;
     }
 
@@ -51,11 +51,11 @@ public class Textil extends Productes
 
     @Override
     public String toString() {
-        return "Textil{" +
-                "compocisioTextil='" + compocisioTextil + '\'' +
-                ", preu=" + preu +
-                ", nom='" + nom + '\'' +
-                ", codiBarres='" + codiBarres + '\'' +
-                '}';
+        return nom + "//Alimentacio//" + preu + "//" + codiBarres + "//" + compocisioTextil;
+    }
+
+    @Override
+    public int compare(Object o1, Object o2) {
+        return 0;
     }
 }
