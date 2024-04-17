@@ -22,11 +22,7 @@ public class Electronica extends Productes
 
     public static float preuSegonsGarantia(float preu, int diesDeGarantia)
     {
-        // calcul original = preu + preu*(diesGarantia/365)*0.1
-        float calcul = (float) diesDeGarantia /365;
-        calcul = calcul * preu * 0.1f;
-        calcul = preu + calcul;
-        // per poder ajustar els decimals
+        float calcul = (float) (preu + preu*(diesDeGarantia/365)*0.1);
         preu = (int)(calcul*100);
         preu = (float)(preu/100);
         return preu;
@@ -46,7 +42,7 @@ public class Electronica extends Productes
     }
 
     @Override
-    public String toString() {
+    public String   toString() {
         return "Electronica{" +
                 "diesDeGarantia=" + diesDeGarantia +
                 ", intPat=" + intPat +

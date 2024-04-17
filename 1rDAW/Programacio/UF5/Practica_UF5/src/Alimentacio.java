@@ -33,12 +33,12 @@ public class Alimentacio extends Productes
     public static float preuSegonsCaducitat(float preu, Date data_caducitat)
     {
         Date actual = new Date();
-        int dataDif = (int)((data_caducitat.getTime() - actual.getTime())/(1000*60*60*24)+1);
-        // el calcul es divideixo en parts: preu - (preu*(1/(dataDif))) + (preu * 0.1f)
-        float calculPreu = ((float) 1 /(dataDif));
+        int dataDif = (int)((data_caducitat.getTime() - actual.getTime())/(1000*60*60*24));
+        // el calcul es divideixo en parts: preu - (preu*(1/(dataDif))) - (preu * 0.1f)
+        float calculPreu = ((float) 1 /(dataDif+1));
         calculPreu = calculPreu*preu;
-        calculPreu = preu -calculPreu;
-        calculPreu = calculPreu + (preu*0.1f);
+        calculPreu = preu - calculPreu;
+        calculPreu = calculPreu - (preu*0.1f);
         preu = ((int)(calculPreu*100)); // per poder tenir el numero amb 2 digits
         preu = preu/100;                // per poder tenir el numero amb 2 digits
        return preu;

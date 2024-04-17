@@ -116,7 +116,7 @@ public class Main
             composicio = scan.nextLine().trim();
             try {
                 Textil textil = new Textil(preu,nom,codiDeBarres,composicio);
-                carrito.add(textil);
+                if(noRepTextil(textil.codiBarres)) carrito.add(textil);
                 puedesSalirDelBucle = true;
             }catch (Exception e)
             {
@@ -124,6 +124,13 @@ public class Main
             }
         }
         IntroduirProducte();
+    }
+    public static boolean noRepTextil(String codiBarres)
+    {
+        for (int i = 0; i < carrito.size(); i++) {
+            if(carrito.get(i) instanceof Textil && carrito.get(i).getCodiBarres().equals(codiBarres)) return false;
+        }
+        return true;
     }
     public static void Electronica()
     {
