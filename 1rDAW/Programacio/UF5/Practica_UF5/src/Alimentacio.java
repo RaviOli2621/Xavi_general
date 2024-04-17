@@ -25,9 +25,10 @@ public class Alimentacio extends Productes
         this.preu = preuSegonsCaducitat(this.preu,this.data_caducitat);
     }
 
-    private void checkDataCad(String p)throws Exception
+    private String checkDataCad(String p)throws Exception
     {
         data_caducitat = paraParsearLaData.parse(p);
+        return paraParsearLaData.parse(p) + "";
     }
     public static float preuSegonsCaducitat(float preu, Date data_caducitat)
     {
@@ -99,13 +100,6 @@ public class Alimentacio extends Productes
 
     @Override
     public String toString() {
-        return "Alimentacio{" +
-                "data_caducitat=" + data_caducitat +
-                ", dataPat=" + dataPat +
-                ", paraParsearLaData=" + paraParsearLaData +
-                ", preu=" + preu +
-                ", nom='" + nom + '\'' +
-                ", codiBarres='" + codiBarres + '\'' +
-                '}';
+        return nom + "//Alimentacio//" + preu + "//" + codiBarres + "//" + paraParsearLaData.format(data_caducitat);
     }
 }
