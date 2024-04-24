@@ -51,11 +51,14 @@ public class Textil extends Productes
 
     @Override
     public String toString() {
-        return nom + "//Alimentacio//" + preu + "//" + codiBarres + "//" + compocisioTextil;
+        return nom + "//Textil//" + preu + "//" + codiBarres + "//" + compocisioTextil;
     }
 
     @Override
     public int compare(Object o1, Object o2) {
-        return 0;
+        Textil t1 = (Textil) o1;
+        Textil t2 = (Textil) o2;
+
+        return t1.getCompocisioTextil().compareToIgnoreCase(t2.getCompocisioTextil());
     }
 }

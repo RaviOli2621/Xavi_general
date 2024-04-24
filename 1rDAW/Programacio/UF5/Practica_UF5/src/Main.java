@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.PrintStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -37,6 +39,45 @@ public class Main
                 break;
             default:
                 break;
+        }
+    }
+    public static void DocExceptionsAdd(String archivoConRuta,String mensaje)
+    {
+        File rutaExept = new File(".\\logs");
+        File rutaTextilPrice = new File(".\\updates");
+        File fileExept = new File (".\\logs\\Exceptions.dat");
+        File fileTextilPrice = new File (".\\updates\\UpdateTextilPrices.dat");
+        String archivoATexto = "";
+
+        if(rutaExept.mkdirs())
+        {
+            System.out.println("creado con exito");
+        }
+        if(rutaTextilPrice.mkdirs())
+        {
+            System.out.println("creado con exito");
+        }
+
+        try {
+            // Guardar los datos originales del documento
+            fileExept.createNewFile();
+            fileTextilPrice.createNewFile();
+            Scanner reader = new Scanner(archivoConRuta);
+
+            while (reader.hasNextLine())
+            {
+                archivoATexto += reader.nextLine().trim() + "\n";
+            }
+
+            // Añadir el mensaje extra
+            PrintStream writer = new PrintStream(archivoConRuta);
+            writer.print(mensaje + archivoATexto);
+
+            writer.close();
+            reader.close();
+        }catch (Exception e)
+        {
+            System.out.println("Error en el processo de creacion/edicion del archivo de texto:\n\t" + e.getMessage());
         }
     }
 
@@ -92,9 +133,11 @@ public class Main
             }catch (java.text.ParseException e)//exepció en el parser de la data
             {
                 System.out.println("El format de la data es incorrecte");
+                DocExceptionsAdd(".\\logs\\Exceptions.dat",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").format(new Date()) + " :\t" + "El format de la data es incorrecte");
             }catch (Exception e)
             {
                 System.out.println(e.getMessage());
+                DocExceptionsAdd(".\\logs\\Exceptions.dat",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").format(new Date()) + " :\t" + e.getMessage());
             }
         }
         IntroduirProducte();
@@ -121,9 +164,41 @@ public class Main
             }catch (Exception e)
             {
                 System.out.println(e.getMessage());
+                DocExceptionsAdd(".\\logs\\Exceptions.dat",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").format(new Date()) + " :\t" + e.getMessage());
             }
         }
         IntroduirProducte();
+    }
+    public static boolean preuTextil(String codiBarres)
+    {
+        File file = new File (".\\updates\\UpdateTextilPrices.dat");
+        String archivoATexto = "";
+
+
+        try {
+            Scanner reader = new Scanner(file);
+
+            while (reader.hasNextLine())
+            {
+                archivoATexto += reader.nextLine().trim() + "\n";
+            }
+
+            // Añadir el mensaje extra
+            PrintStream writer = new PrintStream(archivoConRuta);
+            writer.print(mensaje + archivoATexto);
+
+            writer.close();
+            reader.close();
+
+            return true;
+        }catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return false;
+
+
+        }
+
     }
     public static boolean noRepTextil(String codiBarres)
     {
@@ -154,6 +229,7 @@ public class Main
             }catch (Exception e)
             {
                 System.out.println(e.getMessage());
+                DocExceptionsAdd(".\\logs\\Exceptions.dat",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").format(new Date()) + " :\t" + e.getMessage());
             }
         }
         IntroduirProducte();
@@ -181,8 +257,41 @@ public class Main
         carrito.clear();
         inici();
     }
+    public static void OrdenarMostrarCarret()
+    {
+        System.out.println();
+
+        carrito.sort((a,e) -> a.getClass().toString().split(" ")[1].compareToIgnoreCase(e.getClass().toString().split(" ")[1])); //ordenar todos los objetos por classe
+
+        carrito.sort((a,e) ->
+        {
+            if(a.getClass().toString().split(" ")[1].equals("Textil") && e.getClass().toString().split(" ")[1].equals("Textil"))
+            {
+                Textil t1 = (Textil) a;
+                Textil t2 = (Textil) e;
+
+                return t1.getCompocisioTextil().compareToIgnoreCase(t2.getCompocisioTextil());
+            }else return 0;
+        });
+    }
     public static void MostrarCarret()
     {
+        OrdenarMostrarCarret();
+        HashMap<String,String> tiquet = new HashMap<>(); // la clave guarda el codigo de barras y el precio, el segundo valor guarda el nombre del producto y la cantidad
 
+        for (int i = 0; i < carrito.size(); i++) {
+            String key = carrito.get(i).toString().split("//")[3];
+            if(!tiquet.containsKey(key))
+            {
+                tiquet.put(key,carrito.get(i).toString().split("//")[0] + "//1");
+            }else
+            {
+                tiquet.replace(key,tiquet.get(key).split("//")[0] + "//" + (Integer.parseInt(tiquet.get(key).split("//")[1]) + 1));
+            }
+        }
+        System.out.println("Carret");
+        tiquet.forEach((k,v) -> System.out.printf("%s\t%s\t%s\t\n",v.split("//")[0], " --> " ,v.split("//")[1]));
+        carrito.clear();
+        inici();
     }
 }

@@ -43,7 +43,7 @@ public class Electronica extends Productes
 
     @Override
     public String   toString() {
-        return nom + "//Alimentacio//" + preu + "//" + codiBarres + "//" + diesDeGarantia;
+        return nom + "//Electronica//" + preu + "//" + codiBarres + "//" + diesDeGarantia;
     }
 
     @Override

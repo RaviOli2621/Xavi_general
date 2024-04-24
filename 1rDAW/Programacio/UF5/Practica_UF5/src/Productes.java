@@ -16,7 +16,13 @@ public abstract class Productes implements Comparator
     public Productes(String preu, String nom, String codiBarres) throws Exception
     {
         checkPreu(preu);
-        this.nom = nom;
+        checkCodiBarres(codiBarres);
+        checkNom(nom);
+    }
+    private void checkNom(String p) throws Exception
+    {
+        if(!(p.length() <= 15 && !p.isEmpty())) throw new Exception("El nombre del producto tiene una longitud incorrecta");
+        nom = p;
     }
     private void checkPreu(String p) throws Exception
     {
@@ -60,4 +66,5 @@ public abstract class Productes implements Comparator
     public void setCodiBarres(String codiBarres)throws Exception {
         checkCodiBarres(codiBarres);
     }
+
 }
