@@ -14,42 +14,49 @@ public class Main
         System.out.println("BENVINGUT A SAPAMERCAT");
         inici();
     }
-    private static void inici()
-    {
+    private static void inici() {
         String resposta;
-        System.out.printf("%12s\n","------------");
-        System.out.printf("%12s\n","-- INICI ---");
-        System.out.printf("%12s\n","------------");
+        boolean seguir;
+        do {
+            System.out.printf("%12s\n", "------------");
+            System.out.printf("%12s\n", "-- INICI ---");
+            System.out.printf("%12s\n", "------------");
 
-        System.out.println("1) Introduir producte");
-        System.out.println("2) Passar per caixa");
-        System.out.println("3) Mostrar carret de compra");
-        System.out.println("0) Acabar");
+            System.out.println("1) Introduir producte");
+            System.out.println("2) Passar per caixa");
+            System.out.println("3) Mostrar carret de compra");
+            System.out.println("0) Acabar");
 
-        resposta = scan.nextLine().trim();
-        switch (resposta)
-        {
-            case "1":
-                IntroduirProducte();
-                break;
-            case "2":
-                PasarPerCaixa();
-                break;
-            case "3":
-                MostrarCarret();
-                break;
-            case "100": //Hecho para testear que funcione el limite de 100
-                try {
-                    for (int i = 0; carrito.size() < 100; i++)
-                    {
-                        carrito.add(new Electronica("10.0", i+"",i+""+(i+1),"10"));
+            seguir = true;
+            resposta = scan.nextLine().trim();
+            switch (resposta) {
+                case "1":
+                    seguir = false;
+                    IntroduirProducte();
+                    break;
+                case "2":
+                    seguir = false;
+                    PasarPerCaixa();
+                    break;
+                case "3":
+                    seguir = false;
+                    MostrarCarret();
+                    break;
+                case "100": //Hecho para testear que funcione el limite de 100
+                    try {
+                        for (int i = 0; carrito.size() < 100; i++) {
+                            carrito.add(new Electronica("10.0", i + "", i + "" + (i + 1), "10"));
+                        }
+                    } catch (Exception e) {
                     }
-                }catch (Exception e){}
-                inici();
-                break;
-            default:
-                break;
-        }
+                    inici();
+                    break;
+                case "0":
+                    seguir = false;
+                default:
+                    break;
+            }
+        } while (seguir);
     }
     public static void crearDocs()
     {
@@ -101,40 +108,50 @@ public class Main
 
     public static void IntroduirProducte()
     {
-        if(carrito.size() < 100)
-        {
-            String resposta;
-            System.out.printf("%15s\n","---------------");
-            System.out.printf("%15s\n","-- PRODUCTE ---");
-            System.out.printf("%15s\n","---------------");
-
-            System.out.println("1) Alimentació");
-            System.out.println("2) Tèxtil");
-            System.out.println("3) Electrònica");
-            System.out.println("0) Tornar");
-
-            resposta = scan.nextLine().trim();
-
-            switch (resposta)
+        boolean seguir;
+        do {
+            seguir = true;
+            if(carrito.size() < 100)
             {
-                case "1":
-                    Alimentacio();
-                    break;
-                case "2":
-                    Textil();
-                    break;
-                case "3":
-                    Electronica();
-                    break;
-                default:
-                    inici();
-                    break;
+                String resposta;
+                System.out.printf("%15s\n","---------------");
+                System.out.printf("%15s\n","-- PRODUCTE ---");
+                System.out.printf("%15s\n","---------------");
+
+                System.out.println("1) Alimentació");
+                System.out.println("2) Tèxtil");
+                System.out.println("3) Electrònica");
+                System.out.println("0) Tornar");
+
+                resposta = scan.nextLine().trim();
+
+                switch (resposta)
+                {
+                    case "1":
+                        seguir = false;
+                        Alimentacio();
+                        break;
+                    case "2":
+                        seguir = false;
+                        Textil();
+                        break;
+                    case "3":
+                        seguir = false;
+                        Electronica();
+                        break;
+                    case "0":
+                        seguir = false;
+                        inici();
+                        break;
+                    default:
+                        break;
+                }
+            }else
+            {
+                System.out.println("El carrito se encuentra lleno");
+                inici();
             }
-        }else
-        {
-            System.out.println("El carrito se encuentra lleno");
-            inici();
-        }
+        }while (seguir);
     }
     public static void Alimentacio()
     {
