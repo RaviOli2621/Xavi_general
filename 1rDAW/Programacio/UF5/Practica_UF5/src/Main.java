@@ -1,8 +1,8 @@
 import java.io.File;
 import java.io.PrintStream;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Pattern;
 
 public class Main
@@ -10,6 +10,7 @@ public class Main
     static Scanner scan = new Scanner(System.in);
     static ArrayList<Productes> carrito = new ArrayList<>();
     public static void main(String[] args) {
+        crearDocs();
         System.out.println("BENVINGUT A SAPAMERCAT");
         inici();
     }
@@ -37,17 +38,25 @@ public class Main
             case "3":
                 MostrarCarret();
                 break;
+            case "100": //Hecho para testear que funcione el limite de 100
+                try {
+                    for (int i = 0; carrito.size() < 100; i++)
+                    {
+                        carrito.add(new Electronica("10.0", i+"",i+""+(i+1),"10"));
+                    }
+                }catch (Exception e){}
+                inici();
+                break;
             default:
                 break;
         }
     }
-    public static void DocExceptionsAdd(String archivoConRuta,String mensaje)
+    public static void crearDocs()
     {
         File rutaExept = new File(".\\logs");
         File rutaTextilPrice = new File(".\\updates");
         File fileExept = new File (".\\logs\\Exceptions.dat");
         File fileTextilPrice = new File (".\\updates\\UpdateTextilPrices.dat");
-        String archivoATexto = "";
 
         if(rutaExept.mkdirs())
         {
@@ -57,12 +66,21 @@ public class Main
         {
             System.out.println("creado con exito");
         }
+        try {
+            fileExept.createNewFile();
+            fileTextilPrice.createNewFile();
+        }catch (Exception e)
+        {
+            System.out.println("Ha ocurrido un error en la creacion de losarchivos necessarios para ejecutar el programa");
+        }
+    }
+    public static void EditarDocumentos(String archivoConRuta, String mensaje)
+    {
+        String archivoATexto = "";
 
         try {
             // Guardar los datos originales del documento
-            fileExept.createNewFile();
-            fileTextilPrice.createNewFile();
-            Scanner reader = new Scanner(archivoConRuta);
+            Scanner reader = new Scanner(new File(archivoConRuta));
 
             while (reader.hasNextLine())
             {
@@ -70,45 +88,52 @@ public class Main
             }
 
             // Añadir el mensaje extra
-            PrintStream writer = new PrintStream(archivoConRuta);
-            writer.print(mensaje + archivoATexto);
+            PrintStream writer = new PrintStream(new File (archivoConRuta));
+            writer.print(mensaje + "\n" + archivoATexto);
 
             writer.close();
             reader.close();
         }catch (Exception e)
         {
-            System.out.println("Error en el processo de creacion/edicion del archivo de texto:\n\t" + e.getMessage());
+            System.out.println("Error en el processo de edicion de los archivos de texto:\n\t" + e.getMessage());
         }
     }
 
     public static void IntroduirProducte()
     {
-        String resposta;
-        System.out.printf("%15s\n","---------------");
-        System.out.printf("%15s\n","-- PRODUCTE ---");
-        System.out.printf("%15s\n","---------------");
-
-        System.out.println("1) Alimentació");
-        System.out.println("2) Tèxtil");
-        System.out.println("3) Electrònica");
-        System.out.println("0) Tornar");
-
-        resposta = scan.nextLine().trim();
-
-        switch (resposta)
+        if(carrito.size() < 100)
         {
-            case "1":
-                Alimentacio();
-                break;
-            case "2":
-                Textil();
-                break;
-            case "3":
-                Electronica();
-                break;
-            default:
-                inici();
-                break;
+            String resposta;
+            System.out.printf("%15s\n","---------------");
+            System.out.printf("%15s\n","-- PRODUCTE ---");
+            System.out.printf("%15s\n","---------------");
+
+            System.out.println("1) Alimentació");
+            System.out.println("2) Tèxtil");
+            System.out.println("3) Electrònica");
+            System.out.println("0) Tornar");
+
+            resposta = scan.nextLine().trim();
+
+            switch (resposta)
+            {
+                case "1":
+                    Alimentacio();
+                    break;
+                case "2":
+                    Textil();
+                    break;
+                case "3":
+                    Electronica();
+                    break;
+                default:
+                    inici();
+                    break;
+            }
+        }else
+        {
+            System.out.println("El carrito se encuentra lleno");
+            inici();
         }
     }
     public static void Alimentacio()
@@ -133,11 +158,11 @@ public class Main
             }catch (java.text.ParseException e)//exepció en el parser de la data
             {
                 System.out.println("El format de la data es incorrecte");
-                DocExceptionsAdd(".\\logs\\Exceptions.dat",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").format(new Date()) + " :\t" + "El format de la data es incorrecte");
+                EditarDocumentos(".\\logs\\Exceptions.dat",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").format(new Date()) + " :\t" + "El format de la data es incorrecte");
             }catch (Exception e)
             {
                 System.out.println(e.getMessage());
-                DocExceptionsAdd(".\\logs\\Exceptions.dat",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").format(new Date()) + " :\t" + e.getMessage());
+                EditarDocumentos(".\\logs\\Exceptions.dat",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").format(new Date()) + " :\t" + e.getMessage());
             }
         }
         IntroduirProducte();
@@ -158,21 +183,25 @@ public class Main
             System.out.println("Composicio tèxtil producte:");
             composicio = scan.nextLine().trim();
             try {
-                Textil textil = new Textil(preu,nom,codiDeBarres,composicio);
-                if(noRepTextil(textil.codiBarres)) carrito.add(textil);
+                if(noRepTextil(codiDeBarres))
+                {
+                    preu = preuTextil(codiDeBarres, preu);
+                    Textil textil = new Textil(preu,nom,codiDeBarres,composicio);
+                    carrito.add(textil);
+                }
                 puedesSalirDelBucle = true;
             }catch (Exception e)
             {
                 System.out.println(e.getMessage());
-                DocExceptionsAdd(".\\logs\\Exceptions.dat",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").format(new Date()) + " :\t" + e.getMessage());
+                EditarDocumentos(".\\logs\\Exceptions.dat",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").format(new Date()) + " :\t" + e.getMessage());
             }
         }
         IntroduirProducte();
     }
-    public static boolean preuTextil(String codiBarres)
+    public static String preuTextil(String codiBarres, String preu)
     {
         File file = new File (".\\updates\\UpdateTextilPrices.dat");
-        String archivoATexto = "";
+        ArrayList<String> archivoATexto = new ArrayList<>(); // archivoATexto.get(i).trim().split("//")[0] = codigo de barras, archivoATexto.get(i).trim().split("//")[1] = precio
 
 
         try {
@@ -180,30 +209,41 @@ public class Main
 
             while (reader.hasNextLine())
             {
-                archivoATexto += reader.nextLine().trim() + "\n";
+                archivoATexto.add(reader.nextLine().trim());
             }
 
             // Añadir el mensaje extra
-            PrintStream writer = new PrintStream(archivoConRuta);
-            writer.print(mensaje + archivoATexto);
-
-            writer.close();
-            reader.close();
-
-            return true;
+            if(archivoATexto.isEmpty())
+            {
+                EditarDocumentos(".\\updates\\UpdateTextilPrices.dat", codiBarres + "//" + preu);
+                return preu;
+            }else
+            {
+                for (int i = 0; i < archivoATexto.size(); i++) {
+                    if((codiBarres).equals(archivoATexto.get(i).split("//")[0]) && Float.parseFloat(preu) != Float.parseFloat(archivoATexto.get(i).split("//")[1]))
+                    {
+                        System.out.println("El codigo de barras proporcionado ya contiene un precio designado, actualizando precio");
+                        return archivoATexto.get(i).trim().split("//")[1];
+                    }
+                }
+                //No hay coincidencias de codigos entre el documento y el introducido, actualizando documento
+                EditarDocumentos(".\\updates\\UpdateTextilPrices.dat", codiBarres + "//" + preu);
+                return preu;
+            }
         }catch (Exception e)
         {
             System.out.println(e.getMessage());
-            return false;
-
-
+            return preu;
         }
-
     }
     public static boolean noRepTextil(String codiBarres)
     {
         for (int i = 0; i < carrito.size(); i++) {
-            if(carrito.get(i) instanceof Textil && carrito.get(i).getCodiBarres().equals(codiBarres)) return false;
+            if(carrito.get(i) instanceof Textil && carrito.get(i).getCodiBarres().equals(codiBarres))
+            {
+                System.out.println("Error: No pueden haber dos productos textiles con el mismo codigo de barras en el carrito");
+                return false;
+            }
         }
         return true;
     }
@@ -229,15 +269,17 @@ public class Main
             }catch (Exception e)
             {
                 System.out.println(e.getMessage());
-                DocExceptionsAdd(".\\logs\\Exceptions.dat",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").format(new Date()) + " :\t" + e.getMessage());
+                EditarDocumentos(".\\logs\\Exceptions.dat",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").format(new Date()) + " :\t" + e.getMessage());
             }
         }
         IntroduirProducte();
     }
     public static void PasarPerCaixa()
     {
+        OrdenarMostrarCarret();
         Pattern dataPat = Pattern.compile("dd-MM-yyyy");
         SimpleDateFormat paraParsearLaData = new SimpleDateFormat(dataPat.pattern());
+        AtomicReference<Float> precioFinal = new AtomicReference<>(0f);
 
         HashMap<String,String> tiquet = new HashMap<>(); // la clave guarda el codigo de barras y el precio, el segundo valor guarda el nombre del producto y la cantidad
 
@@ -252,7 +294,12 @@ public class Main
             }
         }
         System.out.println("--------------------\nSAPAMERCAT\n--------------------\nData: " + paraParsearLaData.format(new Date()) + "\n--------------------");
-        tiquet.forEach((k,v) -> System.out.printf("%-15s\t%-10s\t%-10s\t%-10s\t\n",v.split("//")[0],v.split("//")[1],k.split("//")[1],(Float.parseFloat(k.split("//")[1]) * Float.parseFloat(v.split("//")[1]))));
+        tiquet.forEach((k,v) ->
+        {
+            System.out.printf("%-15s\t%-10s\t%-10s\t%-10s\t\n",v.split("//")[0],v.split("//")[1],k.split("//")[1],(Float.parseFloat(k.split("//")[1]) * Float.parseFloat(v.split("//")[1])));
+            precioFinal.updateAndGet(v1 -> v1 + (Float.parseFloat(k.split("//")[1]) * Float.parseFloat(v.split("//")[1])));
+        });
+        System.out.println("Precio final: " + precioFinal);
         System.out.println("--------------------\n");
         carrito.clear();
         inici();
