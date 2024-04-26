@@ -9,7 +9,7 @@ public abstract class Productes implements Comparator
 
     String codiBarres;
 
-    Pattern floatPat = Pattern.compile("[0-9]++.[0-9]++");
+    Pattern floatPat = Pattern.compile("[0-9]++(.[0-9]++)?");
     Pattern intPat = Pattern.compile("[0-9]++");
 
 
