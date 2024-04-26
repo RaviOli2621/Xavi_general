@@ -291,14 +291,14 @@ public class Main
         }
         IntroduirProducte();
     }
-    public static void PasarPerCaixa()
+    public static void PasarPerCaixa() //Aqui utilizo solo el split de Strings
     {
-        OrdenarMostrarCarret();
+        carrito = OrdenarMostrarCarret();
         Pattern dataPat = Pattern.compile("dd-MM-yyyy");
         SimpleDateFormat paraParsearLaData = new SimpleDateFormat(dataPat.pattern());
         AtomicReference<Float> precioFinal = new AtomicReference<>(0f);
 
-        HashMap<String,String> tiquet = new HashMap<>(); // la clave guarda el codigo de barras y el precio, el segundo valor guarda el nombre del producto y la cantidad
+        LinkedHashMap<String,String> tiquet = new LinkedHashMap<>(); // la clave guarda el codigo de barras y el precio, el segundo valor guarda el nombre del producto y la cantidad
 
         for (int i = 0; i < carrito.size(); i++) {
             String key = carrito.get(i).toString().split("//")[3] + "//" + carrito.get(i).toString().split("//")[2];
@@ -321,7 +321,7 @@ public class Main
         carrito.clear();
         inici();
     }
-    public static void OrdenarMostrarCarret()
+    public static ArrayList<Productes> OrdenarMostrarCarret()
     {
         System.out.println();
 
@@ -337,25 +337,32 @@ public class Main
                 return t1.getCompocisioTextil().compareToIgnoreCase(t2.getCompocisioTextil());
             }else return 0;
         });
+        return carrito;
     }
-    public static void MostrarCarret()
+    public static void MostrarCarret() //Aqui tengo una array de Strings en el valor con el nombre y el valor
     {
-        OrdenarMostrarCarret();
-        HashMap<String,String> tiquet = new HashMap<>(); // la clave guarda el codigo de barras y el precio, el segundo valor guarda el nombre del producto y la cantidad
+        carrito = OrdenarMostrarCarret();
+        LinkedHashMap<String,String[]> tiquet = new LinkedHashMap<>(); // la clave guarda el codigo de barras y el precio, el segundo valor guarda el nombre del producto y la cantidad
 
         for (int i = 0; i < carrito.size(); i++) {
             String key = carrito.get(i).toString().split("//")[3];
             if(!tiquet.containsKey(key))
             {
-                tiquet.put(key,carrito.get(i).toString().split("//")[0] + "//1");
+                String [] valorHashmap = new String[2];
+                valorHashmap[0] = carrito.get(i).toString().split("//")[0];
+                valorHashmap[1] = "1";
+                tiquet.put(key,valorHashmap);
             }else
             {
-                tiquet.replace(key,tiquet.get(key).split("//")[0] + "//" + (Integer.parseInt(tiquet.get(key).split("//")[1]) + 1));
+                String [] valorHashmap = new String[2];
+                valorHashmap[0] = tiquet.get(key)[0];
+                valorHashmap[1] = (Integer.parseInt(tiquet.get(key)[1]) + 1) + "";
+                tiquet.replace(key,valorHashmap);
             }
         }
         System.out.println("Carret");
-        tiquet.forEach((k,v) -> System.out.printf("%s\t%s\t%s\t\n",v.split("//")[0], " --> " ,v.split("//")[1]));
-        carrito.clear();
+        tiquet.forEach((k,v) -> System.out.printf("%s\t%s\t%s\t\n",v[0], " --> " ,v[1]));
         inici();
     }
+
 }
