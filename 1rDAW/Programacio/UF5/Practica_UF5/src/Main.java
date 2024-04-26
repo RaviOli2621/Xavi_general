@@ -9,10 +9,19 @@ public class Main
 {
     static Scanner scan = new Scanner(System.in);
     static ArrayList<Productes> carrito = new ArrayList<>();
+
+    static String prefixRutas;
     public static void main(String[] args) {
+        estoyEnMiRepositorio();
         crearDocs();
         System.out.println("BENVINGUT A SAPAMERCAT");
         inici();
+    }
+    public static void estoyEnMiRepositorio()
+    {
+        File rutaDeDAW = new File(".\\1rDAW");
+        if(rutaDeDAW.exists()) prefixRutas = "\\1rDAW\\Programacio\\UF5\\Practica_UF5";
+        else prefixRutas = "";
     }
     private static void inici() {
         String resposta;
@@ -60,10 +69,10 @@ public class Main
     }
     public static void crearDocs()
     {
-        File rutaExept = new File(".\\logs");
-        File rutaTextilPrice = new File(".\\updates");
-        File fileExept = new File (".\\logs\\Exceptions.dat");
-        File fileTextilPrice = new File (".\\updates\\UpdateTextilPrices.dat");
+        File rutaExept = new File("." + prefixRutas + "\\logs");
+        File rutaTextilPrice = new File("." + prefixRutas + "\\updates");
+        File fileExept = new File ("." + prefixRutas + "\\logs\\Exceptions.dat");
+        File fileTextilPrice = new File ("." + prefixRutas + "\\updates\\UpdateTextilPrices.dat");
 
         if(rutaExept.mkdirs())
         {
@@ -175,11 +184,11 @@ public class Main
             }catch (java.text.ParseException e)//exepció en el parser de la data
             {
                 System.out.println("El format de la data es incorrecte");
-                EditarDocumentos(".\\logs\\Exceptions.dat",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").format(new Date()) + " :\t" + "El format de la data es incorrecte");
+                EditarDocumentos("." + prefixRutas + "\\logs\\Exceptions.dat",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").format(new Date()) + " :\t" + "El format de la data es incorrecte");
             }catch (Exception e)
             {
                 System.out.println(e.getMessage());
-                EditarDocumentos(".\\logs\\Exceptions.dat",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").format(new Date()) + " :\t" + e.getMessage());
+                EditarDocumentos("." + prefixRutas + "\\logs\\Exceptions.dat",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").format(new Date()) + " :\t" + e.getMessage());
             }
         }
         IntroduirProducte();
@@ -210,14 +219,14 @@ public class Main
             }catch (Exception e)
             {
                 System.out.println(e.getMessage());
-                EditarDocumentos(".\\logs\\Exceptions.dat",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").format(new Date()) + " :\t" + e.getMessage());
+                EditarDocumentos("." + prefixRutas + "\\logs\\Exceptions.dat",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").format(new Date()) + " :\t" + e.getMessage());
             }
         }
         IntroduirProducte();
     }
     public static String preuTextil(String codiBarres, String preu)
     {
-        File file = new File (".\\updates\\UpdateTextilPrices.dat");
+        File file = new File ("." + prefixRutas + "\\updates\\UpdateTextilPrices.dat");
         ArrayList<String> archivoATexto = new ArrayList<>(); // archivoATexto.get(i).trim().split("//")[0] = codigo de barras, archivoATexto.get(i).trim().split("//")[1] = precio
 
 
@@ -232,7 +241,7 @@ public class Main
             // Añadir el mensaje extra
             if(archivoATexto.isEmpty())
             {
-                EditarDocumentos(".\\updates\\UpdateTextilPrices.dat", codiBarres + "//" + preu);
+                EditarDocumentos("." + prefixRutas + "\\updates\\UpdateTextilPrices.dat", codiBarres + "//" + preu);
                 return preu;
             }else
             {
@@ -244,7 +253,7 @@ public class Main
                     }
                 }
                 //No hay coincidencias de codigos entre el documento y el introducido, actualizando documento
-                EditarDocumentos(".\\updates\\UpdateTextilPrices.dat", codiBarres + "//" + preu);
+                EditarDocumentos("." + prefixRutas + "\\updates\\UpdateTextilPrices.dat", codiBarres + "//" + preu);
                 return preu;
             }
         }catch (Exception e)
@@ -286,7 +295,7 @@ public class Main
             }catch (Exception e)
             {
                 System.out.println(e.getMessage());
-                EditarDocumentos(".\\logs\\Exceptions.dat",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").format(new Date()) + " :\t" + e.getMessage());
+                EditarDocumentos("." + prefixRutas + "\\logs\\Exceptions.dat",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").format(new Date()) + " :\t" + e.getMessage());
             }
         }
         IntroduirProducte();
