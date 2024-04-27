@@ -1,2 +1,3 @@
 # Ignorar arxivos .dat
-*.dat
+Exceptions.dat
+UpdateTextilPrices.dat
