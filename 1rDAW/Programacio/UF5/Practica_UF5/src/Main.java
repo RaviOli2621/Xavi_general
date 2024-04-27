@@ -270,7 +270,7 @@ public class Main
     public static boolean noRepTextil(String codiBarres)
     {
         for (int i = 0; i < carrito.size(); i++) {
-            if(carrito.get(i) instanceof Textil && carrito.get(i).getCodiBarres().equals(codiBarres))
+            if(carrito.get(i).getCodiBarres().equals("T-"+codiBarres))
             {
                 System.out.println("No pueden haber dos productos textiles con el mismo codigo de barras en el carrito");
                 EditarDocumentos("." + prefixRutas + "\\logs\\Exceptions.dat",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").format(new Date()) + " :\t" + "No pueden haber dos productos textiles con el mismo codigo de barras en el carrito");
