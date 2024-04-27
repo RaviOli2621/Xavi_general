@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 public class Main
 {
     static Scanner scan = new Scanner(System.in);
-    static ArrayList<Productes> carrito = new ArrayList<>();
+    static ArrayList<Productes> carrito = new ArrayList<>(); //sirve para guardar todos los productos
 
     static String prefixRutas;
     public static void main(String[] args) {
@@ -17,12 +17,14 @@ public class Main
         System.out.println("BENVINGUT A SAPAMERCAT");
         inici();
     }
+    //sirve para editar las rutas depende de si estoy trabajando desde mi github o por si se descarga el documento y se ejecuta desde otro sitio
     public static void estoyEnMiRepositorio()
     {
         File rutaDeDAW = new File(".\\1rDAW");
         if(rutaDeDAW.exists()) prefixRutas = "\\1rDAW\\Programacio\\UF5\\Practica_UF5";
         else prefixRutas = "";
     }
+    //Menu del inicio, si introduces el numero 100 se te rellena el carrito hasta llegar a 100 elementos
     private static void inici() {
         String resposta;
         boolean seguir;
@@ -67,6 +69,7 @@ public class Main
             }
         } while (seguir);
     }
+    //Sirve para inicializalizar los documentos
     public static void crearDocs()
     {
         File rutaExept = new File("." + prefixRutas + "\\logs");
@@ -114,7 +117,7 @@ public class Main
             System.out.println("Error en el processo de edicion de los archivos de texto:\n\t" + e.getMessage());
         }
     }
-
+    //Menu para elegir el tipos de producto. No te permitira hacer esta accion si en el carrito hay 100 elementos
     public static void IntroduirProducte()
     {
         boolean seguir;
@@ -211,8 +214,9 @@ public class Main
             try {
                 if(noRepTextil(codiDeBarres))
                 {
+                    Textil textil = new Textil(preu,nom,codiDeBarres,composicio); //se crea este objeto para saber si tiene que petar
                     preu = preuTextil(codiDeBarres, preu);
-                    Textil textil = new Textil(preu,nom,codiDeBarres,composicio);
+                    textil = new Textil(preu,nom,codiDeBarres,composicio);
                     carrito.add(textil);
                 }
                 puedesSalirDelBucle = true;
@@ -224,6 +228,7 @@ public class Main
         }
         IntroduirProducte();
     }
+
     public static String preuTextil(String codiBarres, String preu)
     {
         File file = new File ("." + prefixRutas + "\\updates\\UpdateTextilPrices.dat");
@@ -267,7 +272,9 @@ public class Main
         for (int i = 0; i < carrito.size(); i++) {
             if(carrito.get(i) instanceof Textil && carrito.get(i).getCodiBarres().equals(codiBarres))
             {
-                System.out.println("Error: No pueden haber dos productos textiles con el mismo codigo de barras en el carrito");
+                System.out.println("No pueden haber dos productos textiles con el mismo codigo de barras en el carrito");
+                EditarDocumentos("." + prefixRutas + "\\logs\\Exceptions.dat",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").format(new Date()) + " :\t" + "No pueden haber dos productos textiles con el mismo codigo de barras en el carrito");
+
                 return false;
             }
         }
