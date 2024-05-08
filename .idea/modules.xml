@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/1rDAW/Programacio/UF6/PracticaConBDUF6/PracticaConBDUF6.iml" filepath="$PROJECT_DIR$/1rDAW/Programacio/UF6/PracticaConBDUF6/PracticaConBDUF6.iml" />
       <module fileurl="file://$PROJECT_DIR$/1rDAW/Entorns/UF2/PracticaRefactor/PracticaUF2EntornsRefactor/PracticaUF2EntornsRefactor.iml" filepath="$PROJECT_DIR$/1rDAW/Entorns/UF2/PracticaRefactor/PracticaUF2EntornsRefactor/PracticaUF2EntornsRefactor.iml" />
       <module fileurl="file://$PROJECT_DIR$/1rDAW/Programacio/UF5/Practica_UF5/Practica_UF5.iml" filepath="$PROJECT_DIR$/1rDAW/Programacio/UF5/Practica_UF5/Practica_UF5.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/Xavi_general.iml" filepath="$PROJECT_DIR$/.idea/Xavi_general.iml" />
