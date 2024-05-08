@@ -1,7 +1,7 @@
 /* Eliminem la base de dades si existeix */
 DROP DATABASE IF EXISTS NBAData;
 
-/* Crear la base de dades */
+/* Crear la base de dades 1*/
 CREATE DATABASE NBAData;
 
 USE NBAData;
