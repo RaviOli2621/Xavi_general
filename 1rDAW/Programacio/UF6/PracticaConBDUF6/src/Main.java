@@ -1,3 +1,5 @@
+import com.mysql.cj.util.DnsSrv;
+
 import java.sql.*;
 public class Main {
 
@@ -37,12 +39,14 @@ public class Main {
     {
         try {
             Statement sta = con.createStatement();
-            ResultSet rs = sta.executeQuery("SELECT full_name FROM players");
+            ResultSet rs = sta.executeQuery("SELECT id,full_name FROM players");
+            System.out.printf("%-3s %-40s\n","id","nombre");
 
             while (rs.next())
             {
+                String id = rs.getString("id");
                 String nombre = rs.getString("full_name");
-                System.out.println(nombre);
+                System.out.printf("%-3s %-40s\n",id,nombre);
             }
         }catch (SQLException e)
         {
