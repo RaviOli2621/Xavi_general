@@ -6,16 +6,6 @@ CREATE DATABASE NBAData;
 
 USE NBAData;
 
-CREATE TABLE players
-(
-	id VARCHAR(10) NOT NULL,
-    full_name VARCHAR(65) GENERATED ALWAYS AS(concat(first_name," ", last_name)),
-    first_name VARCHAR(30) NOT NULL,
-    last_name VARCHAR(30) NOT NULL,
-    is_active BOOLEAN,
-    CONSTRAINT pk_players PRIMARY KEY(id)
-);
-
 CREATE TABLE teams
 (
 	id VARCHAR(10) NOT NULL,
@@ -26,6 +16,19 @@ CREATE TABLE teams
     state VARCHAR(30),
     is_active BOOLEAN,
     CONSTRAINT pk_teams PRIMARY KEY(id)
+);
+
+CREATE TABLE players
+(
+	id VARCHAR(10) NOT NULL,
+    team_id VARCHAR(10) NOT NULL,
+    full_name VARCHAR(65) GENERATED ALWAYS AS(concat(first_name," ", last_name)),
+    first_name VARCHAR(30) NOT NULL,
+    last_name VARCHAR(30) NOT NULL,
+    is_active BOOLEAN,
+    CONSTRAINT pk_players PRIMARY KEY(id),
+    CONSTRAINT fk_player_teams FOREIGN KEY (team_id)
+		REFERENCES teams(id)
 );
 
 CREATE TABLE matchupsrollup
@@ -39,16 +42,14 @@ CREATE TABLE matchupsrollup
 	DefPlayerID VARCHAR(30)
 );
 
-INSERT INTO players (id, first_name, last_name, is_active) VALUE
-	(1,"Mohamed", "Ali", true),
-    (2, "Pedro", "Sanchez", false),
-    (3, "Michael", "Jordan", true);
-
 INSERT INTO teams (id, full_name, abbreviation, nickname, city, state, is_active) VALUE 
 	(1,"Los Juanes", "LJ", "Siuuuu", "Barcelona", "BarcelonaState", true),
     (2,"Los Pepes", "LP", "Nouuuuu", "Madrid", "MadridState", true),
     (3,"Los Mindundis", "LM", "NoHaceNada", "Valladolid", "ValladolidState", true);
-
+INSERT INTO players (id, team_id,first_name, last_name, is_active) VALUE
+	(1,1,"Mohamed", "Ali", true),
+    (2,2, "Pedro", "Sanchez", false),
+    (3,3,"Michael", "Jordan", true);
 INSERT INTO matchupsrollup (LeagueId, Season, SeasonType, OffTeamID, OffPlayerID, DefTeamID, DefPlayerID) VALUE 
 	(1, 1, "Siu", 1, 1, 2,2),
     (2, 2, "Siu", 2, 2, 3,3),
