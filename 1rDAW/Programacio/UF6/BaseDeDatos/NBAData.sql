@@ -39,7 +39,8 @@ CREATE TABLE matchupsrollup
 	OffTeamID VARCHAR(30),
     OffPlayerID VARCHAR(30),
     DefTeamID VARCHAR(30),
-	DefPlayerID VARCHAR(30)
+	DefPlayerID VARCHAR(30),
+    
 );
 
 INSERT INTO teams (id, full_name, abbreviation, nickname, city, state, is_active) VALUE 
@@ -50,10 +51,10 @@ INSERT INTO players (id, team_id,first_name, last_name, is_active) VALUE
 	(1,1,"Mohamed", "Ali", true),
     (2,2, "Pedro", "Sanchez", false),
     (3,3,"Michael", "Jordan", true);
-INSERT INTO matchupsrollup (LeagueId, Season, SeasonType, OffTeamID, OffPlayerID, DefTeamID, DefPlayerID) VALUE 
+INSERT INTO matchupsrollup (LeagueId, Season, SeasonType, OffTeamID, OffPoints, DefTeamID, DefPoints, date) VALUE 
 	(1, 1, "Siu", 1, 1, 2,2),
     (2, 2, "Siu", 2, 2, 3,3),
     (3, 3, "Siu", 1, 1, 3,3	);
-
+SELECT p.id,p.full_name FROM players p INNER JOIN teams t ON t.id = p.team_id WHERE t.full_name = "Los Juanes";
 
 SELECT * FROM teams;
