@@ -1,4 +1,4 @@
 package model;
 
-public class MYSQLJugadoresDAO {
+public class MYSQLJugadoresDAO implements DAOGenerica{
 }

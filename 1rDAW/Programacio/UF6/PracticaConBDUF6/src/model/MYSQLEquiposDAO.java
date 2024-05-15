@@ -1,4 +1,5 @@
 package model;
 
-public class MYSQLEquiposDAO {
+public class MYSQLEquiposDAO implements DAOGenerica {
+
 }

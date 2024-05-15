@@ -1,4 +1,4 @@
 package model;
 
-public class MYSQLPartidosDAO {
+public class MYSQLPartidosDAO implements DAOGenerica{
 }

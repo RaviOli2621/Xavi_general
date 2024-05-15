@@ -1,4 +1,4 @@
 package model;
 
-public class MYSQLHistoricoDAO {
+public class MYSQLHistoricoDAO implements DAOGenerica{
 }
