@@ -6,6 +6,6 @@
 -Modificar la manera en la que es recorre l'array per evitar que, en el moment que peta per una dada incorrecte, es deixi de 
     recorre l'array en "recorrerJSONArray"
 
--Serparar JsonParser del main en diferents clases 
+-Serparar JsonParser del main en diferents clases ja que JsonParser es un objecte
 
 -Les rutes es troben modificades ja que el projecte es troba en el meu GitHub general 
