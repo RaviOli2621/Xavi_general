@@ -7,6 +7,28 @@ public class Jugadores {
     String nom, cognom, dorsal, posicio;
 
     //constructors
+    public Jugadores(int jugador_id){
+        this.jugador_id = jugador_id;
+        setPosicio(null);
+        setAlcada(0);
+        setCognom(null);
+        setDorsal(null);
+        setNom(null);
+        setPes(0);
+        setData_naixement(null);
+        setEquip_id(-1);
+    }
+    public Jugadores(Jugadores j){
+        this.jugador_id = j.jugador_id;
+        setPosicio(j.posicio);
+        setAlcada(j.alcada);
+        setCognom(j.cognom);
+        setDorsal(j.dorsal);
+        setNom(j.nom);
+        setPes(j.pes);
+        setData_naixement(j.data_naixement);
+        setEquip_id(j.equip_id);
+    }
     public Jugadores(int jugador_id, String nom, String cognom, Date data_naixement, float alcada, float pes, String dorsal, String posicio, int equip_id){
         this.jugador_id = jugador_id;
         this.nom = nom;
@@ -28,8 +50,8 @@ public class Jugadores {
         return equip_id;
     }
 
-    public java.sql.Date getData_naixement() {
-        return (java.sql.Date) data_naixement;
+    public Date getData_naixement() {
+        return data_naixement;
     }
 
     public float getAlcada() {
@@ -91,10 +113,5 @@ public class Jugadores {
 
     public void setPosicio(String posicio) {
         this.posicio = posicio;
-    }
-
-    public static void paco()
-    {
-
     }
 }
