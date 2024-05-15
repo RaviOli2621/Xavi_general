@@ -1,21 +1,46 @@
 package controlador;
+import model.Jugadores;
+import model.MYSQLJugadoresDAO;
 import model.Model;
 import vista.Vista;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Controlador
 {
     static Scanner scan = new Scanner(System.in);
-
+    private static Connection con;
     public static void comenzarPrograma()
     {
         String url = "jdbc:mysql://192.168.56.103:3306/NBAData";
         String username = "perepi";
         String paswrd = "pastanaga";
-        Model.openCon(url,username,paswrd);
+        openCon(url,username,paswrd);
         consultes();
-        Model.closeCon();
+        closeCon();
+    }
+    public static void openCon(String url, String nom, String contra) {
+        Connection conection = null;
+
+        try {
+            Vista.mostrarUnMisatgeGeneric("Conectando...");
+            conection = DriverManager.getConnection(url, nom, contra);
+            Vista.mostrarUnMisatgeGeneric("Connexió establerta");
+        } catch (SQLException e) {
+            Vista.mostrarUnMisatgeGeneric(e.getMessage());
+        }
+
+        con = conection;
+    }
+    public static void closeCon() {
+        try {
+            if (con != null) con.close();
+        } catch (SQLException e) {
+            Vista.mostrarUnMisatgeGeneric(e.getMessage());
+        }
     }
 
     public static void consultes()
@@ -30,6 +55,8 @@ public class Controlador
             case "1":
                 pregunta1();
                 break;
+            default:
+                prueba();
         }
     }
 
@@ -39,5 +66,16 @@ public class Controlador
         Vista.mostrarUnMisatgeGeneric("Que equipo quieres ver los jugadores?");
         respuesta = scan.nextLine().trim();
         Model.llistarJugadorsSegunEquipo(respuesta);
+    }
+
+    public static void prueba()
+    {
+        Jugadores prueba1 = new Jugadores(2544,null,null,null,0,0,null,null,0);
+
+        MYSQLJugadoresDAO.read(prueba1,con);
+
+        MYSQLJugadoresDAO.create(new Jugadores(9999999,"mindundi","jonson",null,0,0,"10","Forward",1610612747),con);
+
+        System.out.println("Hecho");
     }
 }

@@ -42,25 +42,76 @@ public class Jugadores {
     }
 
     //getters
-    public int getJugador_id() {return jugador_id;}
-    public int getEquip_id() {return equip_id;}
-    public Date getData_naixement() {return data_naixement;}
-    public float getAlcada() {return alcada;}
-    public float getPes() {return pes;}
-    public String getNom() {return nom;}
-    public String getCognom() {return cognom;}
-    public String getDorsal() {return dorsal;}
-    public String getPosicio() {return posicio;}
+    public int getJugador_id() {
+        return jugador_id;
+    }
+
+    public int getEquip_id() {
+        return equip_id;
+    }
+
+    public Date getData_naixement() {
+        return data_naixement;
+    }
+
+    public float getAlcada() {
+        return alcada;
+    }
+
+    public float getPes() {
+        return pes;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public String getCognom() {
+        return cognom;
+    }
+
+    public String getDorsal() {
+        return dorsal;
+    }
+
+    public String getPosicio() {
+        return posicio;
+    }
 
     //setters
-    public void setJugador_id(int jugador_id) {this.jugador_id = jugador_id;}
-    public void setEquip_id(int equip_id) {this.equip_id = equip_id;}
-    public void setData_naixement(Date data_naixement) {this.data_naixement = data_naixement;}
-    public void setAlcada(float alcada) {this.alcada = alcada;}
-    public void setPes(float pes) {this.pes = pes;}
-    public void setNom(String nom) {this.nom = nom;}
-    public void setCognom(String cognom) {this.cognom = cognom;}
-    public void setDorsal(String dorsal) {this.dorsal = dorsal;}
-    public void setPosicio(String posicio) {this.posicio = posicio;}
+    public void setJugador_id(int jugador_id) {
+        this.jugador_id = jugador_id;
+    }
 
+    public void setEquip_id(int equip_id) {
+        this.equip_id = equip_id;
+    }
+
+    public void setData_naixement(Date data_naixement) {
+        this.data_naixement = data_naixement;
+    }
+
+    public void setAlcada(float alcada) {
+        this.alcada = alcada;
+    }
+
+    public void setPes(float pes) {
+        this.pes = pes;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public void setCognom(String cognom) {
+        this.cognom = cognom;
+    }
+
+    public void setDorsal(String dorsal) {
+        this.dorsal = dorsal;
+    }
+
+    public void setPosicio(String posicio) {
+        this.posicio = posicio;
+    }
 }
