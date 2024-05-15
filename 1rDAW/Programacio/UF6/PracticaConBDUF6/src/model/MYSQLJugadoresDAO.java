@@ -5,7 +5,7 @@ import java.util.List;
 
 public class MYSQLJugadoresDAO
 {
-    // CRUD
+    // CRUD, implementarlo como objeto
     public static boolean create(Jugadores e, Connection con) {
         PreparedStatement sta;
         try {
