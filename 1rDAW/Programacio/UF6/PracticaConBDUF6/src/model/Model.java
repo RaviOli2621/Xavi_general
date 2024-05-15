@@ -69,4 +69,5 @@ public class Model
             Vista.mostrarUnMisatgeGeneric(e.getMessage());
         }
     }
+
 }
