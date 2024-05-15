@@ -3,10 +3,16 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MYSQLJugadoresDAO
+public class MYSQLJugadoresDAO implements DAOGenerica<Jugadores>
 {
+    Connection con;
+
+    public MYSQLJugadoresDAO(Connection con) {
+        this.con = con;
+    }
+
     // CRUD, implementarlo como objeto
-    public static boolean create(Jugadores e, Connection con) {
+    public boolean create(Jugadores e, Connection con) {
         PreparedStatement sta;
         try {
             sta = con.prepareStatement("INSERT INTO jugadors (jugador_id,equip_id,nom,cognom,data_naixement,alcada,pes,dorsal,posicio) " +
@@ -29,7 +35,7 @@ public class MYSQLJugadoresDAO
         return false;
     }
 
-    public static boolean read(Jugadores j, Connection con) {
+    public boolean read(Jugadores j, Connection con) {
         Jugadores jd = read(j.getJugador_id(),con);
         if (jd == null) return false;
         j.setNom(jd.getNom());
