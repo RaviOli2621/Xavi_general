@@ -6,7 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 public class JsonParser {
-    public void parseJsonFile(String filePath) {
+    public void parseJsonFile(String filePath) { // separar el recorre la array amb inicialitzar els objectes
         JSONParser parser = new JSONParser();
         
         try (FileReader reader = new FileReader(filePath)) {
@@ -54,9 +54,5 @@ public class JsonParser {
             }
             recorrerJSONArray(jsonArray);
         }
-    }
-    public static void main(String[] args) {
-        JsonParser jsonParser = new JsonParser();
-        jsonParser.parseJsonFile(".\\1rDAW\\Entorns\\UF2\\Practica4EntornsRefactor\\src\\example.json");
     }
 }

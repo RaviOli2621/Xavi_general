@@ -4,12 +4,11 @@
     "age": 30
   },
   {
-    "name": "Marta",
+    "name": 23,
     "age": 25
   },
   {
     "name": "Maria",
-    "age": 35,
-    "siu": 12
+    "age": 35
   }
 ]
