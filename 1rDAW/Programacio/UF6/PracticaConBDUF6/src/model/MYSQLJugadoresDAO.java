@@ -26,11 +26,11 @@ public class MYSQLJugadoresDAO implements DAOGenerica<Jugadores>
             sta.setFloat(7,e.getPes());
             sta.setString(8,e.getDorsal());
             sta.setString(9,e.getPosicio());
-            sta.executeQuery();
+            sta.executeUpdate();
             return true;
         }catch (SQLException s)
         {
-            System.out.println("Error al crear");
+            System.out.println("Error al crear: " + s.getMessage());
         }
         return false;
     }
@@ -74,7 +74,7 @@ public class MYSQLJugadoresDAO implements DAOGenerica<Jugadores>
         PreparedStatement sta;
         try {
             sta = con.prepareStatement("UPDATE jugadors SET equip_id =?,nom =?,cognom =?,data_naixement =?,alcada =?,pes =?" +
-                    ",dorsal =?,posicio =? WHERE id =? ");
+                    ",dorsal =?,posicio =? WHERE jugador_id =? ");
             sta.setInt(1,e.getEquip_id());
             sta.setString(2,e.getNom());
             sta.setString(3,e.getCognom());
@@ -84,7 +84,7 @@ public class MYSQLJugadoresDAO implements DAOGenerica<Jugadores>
             sta.setString(7,e.getDorsal());
             sta.setString(8,e.getPosicio());
             sta.setInt(9,e.getJugador_id());
-            ResultSet rs = sta.executeQuery();
+            sta.executeUpdate();
             return true;
         }catch (SQLException s)
         {
@@ -96,13 +96,13 @@ public class MYSQLJugadoresDAO implements DAOGenerica<Jugadores>
     public boolean delete(Jugadores e, Connection con) {
         PreparedStatement sta;
         try {
-            sta = con.prepareStatement("DELETE FROM jugadors WHERE id =? ");
+            sta = con.prepareStatement("DELETE FROM jugadors WHERE jugador_id =? ");
             sta.setInt(1,e.getJugador_id());
-            ResultSet rs = sta.executeQuery();
+            sta.executeUpdate();
             return true;
         }catch (SQLException s)
         {
-            System.out.println("Error al fer update");
+            System.out.println("Error al borrar: " + s.getMessage());
         }
         return false;
     }

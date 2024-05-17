@@ -76,7 +76,12 @@ public class Controlador
 
         dao.read(prueba1,con);
 
-        //dao.create(new Jugadores(9999999,"mindundi","jonson",null,0,0,"10","Forward",1610612747),con);
+        dao.create(new Jugadores(9999999,"mindundi","jonson",null,0,0,"10","Forward",1610612747),con);
+
+        dao.update(new Jugadores(9999999,"mindundi2","jonson",null,0,0,"10","Forward",1610612747),con);
+
+        dao.delete(new Jugadores(9999999,"mindundi","jonson",null,0,0,"10","Forward",1610612747),con);
+
 
         System.out.println(prueba1.getNom() + " " + prueba1.getEquip_id());
     }
