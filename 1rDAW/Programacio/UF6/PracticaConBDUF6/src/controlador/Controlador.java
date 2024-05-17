@@ -1,7 +1,5 @@
 package controlador;
-import model.Jugadores;
-import model.MYSQLJugadoresDAO;
-import model.Model;
+import model.*;
 import vista.Vista;
 
 import java.sql.Connection;
@@ -55,6 +53,30 @@ public class Controlador
             case "1":
                 pregunta1();
                 break;
+            case "2":
+                //pregunta2();
+                break;
+            case "3":
+                //pregunta3();
+                break;
+            case "4":
+                pregunta4();
+                break;
+            case "5":
+                //pregunta5();
+                break;
+            case "6":
+                //pregunta6();
+                break;
+            case "7":
+                //pregunta7();
+                break;
+            case "8":
+                //pregunta8();
+                break;
+            case "9":
+                //pregunta9();
+                break;
             default:
                 prueba();
         }
@@ -68,21 +90,23 @@ public class Controlador
         Model.llistarJugadorsSegunEquipo(respuesta,con);
     }
 
+    private static void pregunta4()
+    {
+        String nombre, equipo;
+        Vista.mostrarUnMisatgeGeneric("Indique el nombre del jugador");
+        nombre = scan.nextLine().trim();
+        Vista.mostrarUnMisatgeGeneric("Ahora indique su equipo");
+        equipo = scan.nextLine().trim();
+        Model.crearJugadorEnEquipo(nombre,equipo,con);
+    }
     public static void prueba()
     {
-        Jugadores prueba1 = new Jugadores(2544,null,null,null,0,0,null,null,0);
+        Jugadores prueba1 = new Jugadores(2544);
 
         MYSQLJugadoresDAO dao = new MYSQLJugadoresDAO(con);
 
-        dao.read(prueba1,con);
-
-        dao.create(new Jugadores(9999999,"mindundi","jonson",null,0,0,"10","Forward",1610612747),con);
-
-        dao.update(new Jugadores(9999999,"mindundi2","jonson",null,0,0,"10","Forward",1610612747),con);
-
-        dao.delete(new Jugadores(9999999,"mindundi","jonson",null,0,0,"10","Forward",1610612747),con);
+        dao.create(prueba1);
 
 
-        System.out.println(prueba1.getNom() + " " + prueba1.getEquip_id());
     }
 }

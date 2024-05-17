@@ -5,14 +5,15 @@ import java.util.List;
 
 public class MYSQLJugadoresDAO implements DAOGenerica<Jugadores>
 {
-    Connection con;
+    static Connection con;
 
     public MYSQLJugadoresDAO(Connection con) {
         this.con = con;
     }
 
     // CRUD, implementarlo como objeto
-    public boolean create(Jugadores e, Connection con) {
+    public boolean create(Jugadores e)
+    {
         PreparedStatement sta;
         try {
             sta = con.prepareStatement("INSERT INTO jugadors (jugador_id,equip_id,nom,cognom,data_naixement,alcada,pes,dorsal,posicio) " +
@@ -28,6 +29,9 @@ public class MYSQLJugadoresDAO implements DAOGenerica<Jugadores>
             sta.setString(9,e.getPosicio());
             sta.executeUpdate();
             return true;
+        }catch (SQLIntegrityConstraintViolationException s)
+        {
+            System.out.println("Ya existe la id");
         }catch (SQLException s)
         {
             System.out.println("Error al crear: " + s.getMessage());
@@ -35,8 +39,8 @@ public class MYSQLJugadoresDAO implements DAOGenerica<Jugadores>
         return false;
     }
 
-    public boolean read(Jugadores j, Connection con) {
-        Jugadores jd = readQuery(j.getJugador_id(),con);
+    public boolean read(Jugadores j) {
+        Jugadores jd = readQuery(j.getJugador_id());
         if (jd == null) return false;
         j.setNom(jd.getNom());
         j.setCognom(jd.getCognom());
@@ -48,13 +52,13 @@ public class MYSQLJugadoresDAO implements DAOGenerica<Jugadores>
         j.setEquip_id(jd.getEquip_id());
         return true;
     }
-    public boolean read(ArrayList<Jugadores> jugadores, Connection con) {
-        jugadores.addAll(readQuery(con));
+    public boolean read(ArrayList<Jugadores> jugadores) {
+        jugadores.addAll(readQuery());
         if (jugadores.isEmpty()) return false;
         return true;
     }
 
-    private static Jugadores readQuery(int id, Connection con) {
+    private static Jugadores readQuery(int id) {
         PreparedStatement sta;
         ResultSet rs;
         try {
@@ -75,7 +79,7 @@ public class MYSQLJugadoresDAO implements DAOGenerica<Jugadores>
         }
         return null;
     }
-    private static ArrayList<Jugadores> readQuery(Connection con) {
+    private static ArrayList<Jugadores> readQuery() {
         PreparedStatement sta;
         ResultSet rs;
         ArrayList<Jugadores> jugadors = new ArrayList<>();
@@ -104,7 +108,7 @@ public class MYSQLJugadoresDAO implements DAOGenerica<Jugadores>
         }
         return jugadors;
     }
-    public boolean update(Jugadores e, Connection con) {
+    public boolean update(Jugadores e) {
         PreparedStatement sta;
         try {
             sta = con.prepareStatement("UPDATE jugadors SET equip_id =?,nom =?,cognom =?,data_naixement =?,alcada =?,pes =?" +
@@ -127,7 +131,7 @@ public class MYSQLJugadoresDAO implements DAOGenerica<Jugadores>
         return false;
     }
 
-    public boolean delete(Jugadores e, Connection con) {
+    public boolean delete(Jugadores e) {
         PreparedStatement sta;
         try {
             sta = con.prepareStatement("DELETE FROM jugadors WHERE jugador_id =? ");
@@ -142,7 +146,7 @@ public class MYSQLJugadoresDAO implements DAOGenerica<Jugadores>
     }
 
     // ALTRES DAO
-    public boolean exists(Jugadores e, Connection con) {
+    public boolean exists(Jugadores e) {
         return true;
     }
 

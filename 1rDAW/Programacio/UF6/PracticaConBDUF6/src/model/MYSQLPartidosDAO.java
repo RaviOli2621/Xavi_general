@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MYSQLPartidosDAO implements DAOGenerica<Partidos>{
-    Connection con;
+    static Connection con;
 
     public MYSQLPartidosDAO(Connection con) {
         this.con = con;
@@ -17,7 +17,7 @@ public class MYSQLPartidosDAO implements DAOGenerica<Partidos>{
     // CRUD, implementarlo como objeto
 
     @Override
-    public boolean create(Partidos p, Connection con) {
+    public boolean create(Partidos p) {
         PreparedStatement sta;
         try {
             sta = con.prepareStatement("INSERT INTO partits (partit_id, equip_id, resultat, data_partit, matx) " +
@@ -37,8 +37,8 @@ public class MYSQLPartidosDAO implements DAOGenerica<Partidos>{
     }
 
     @Override
-    public boolean read(Partidos p, Connection con) {
-        Partidos par = read(p.getPartit_id(),con);
+    public boolean read(Partidos p) {
+        Partidos par = read(p.getPartit_id());
         if (par == null) return false;
         p.setEquip_id(par.getEquip_id());
         p.setResultat(par.getResultat());
@@ -46,7 +46,7 @@ public class MYSQLPartidosDAO implements DAOGenerica<Partidos>{
         p.setMatx(par.getMatx());
         return true;
     }
-    private static Partidos read(int partit_id, Connection con) {
+    private static Partidos read(int partit_id) {
         PreparedStatement sta;
         ResultSet rs;
         try {
@@ -68,7 +68,7 @@ public class MYSQLPartidosDAO implements DAOGenerica<Partidos>{
     }
 
     @Override
-    public boolean update(Partidos p, Connection con) {
+    public boolean update(Partidos p) {
         PreparedStatement sta;
         try {
             sta = con.prepareStatement("UPDATE jugadors SET partit_id =?,equip_id =?,resultat =?,data_partit =?,matx =?");
@@ -87,7 +87,7 @@ public class MYSQLPartidosDAO implements DAOGenerica<Partidos>{
     }
 
     @Override
-    public boolean delete(Partidos p, Connection con) {
+    public boolean delete(Partidos p) {
         PreparedStatement sta;
         try {
             sta = con.prepareStatement("DELETE FROM partits WHERE partit_id =? ");
@@ -102,7 +102,7 @@ public class MYSQLPartidosDAO implements DAOGenerica<Partidos>{
     }
 
     @Override
-    public boolean exists(Partidos partidos, Connection con) {
+    public boolean exists(Partidos partidos) {
         return true;
     }
 

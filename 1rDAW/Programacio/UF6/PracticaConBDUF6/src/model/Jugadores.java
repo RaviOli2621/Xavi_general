@@ -9,14 +9,14 @@ public class Jugadores {
     //constructors
     public Jugadores(int jugador_id){
         this.jugador_id = jugador_id;
-        setPosicio(null);
+        setPosicio("");
         setAlcada(0);
-        setCognom(null);
-        setDorsal(null);
-        setNom(null);
+        setCognom("");
+        setDorsal("");
+        setNom("");
         setPes(0);
         setData_naixement(null);
-        setEquip_id(-1);
+        setEquip_id(0);
     }
     public Jugadores(Jugadores j){
         this.jugador_id = j.jugador_id;

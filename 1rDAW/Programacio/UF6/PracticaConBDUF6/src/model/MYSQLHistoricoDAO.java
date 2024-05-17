@@ -5,27 +5,27 @@ import java.util.List;
 
 public class MYSQLHistoricoDAO implements DAOGenerica{
     @Override
-    public boolean create(Object o, Connection con) {
+    public boolean create(Object o) {
         return false;
     }
 
     @Override
-    public boolean read(Object o, Connection con) {
+    public boolean read(Object o) {
         return false;
     }
 
     @Override
-    public boolean update(Object o, Connection con) {
+    public boolean update(Object o) {
         return false;
     }
 
     @Override
-    public boolean delete(Object o, Connection con) {
+    public boolean delete(Object o) {
         return false;
     }
 
     @Override
-    public boolean exists(Object o, Connection con) {
+    public boolean exists(Object o) {
         return false;
     }
 
