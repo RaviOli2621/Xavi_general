@@ -65,7 +65,7 @@ public class Controlador
         String respuesta;
         Vista.mostrarUnMisatgeGeneric("Que equipo quieres ver los jugadores?");
         respuesta = scan.nextLine().trim();
-        Model.llistarJugadorsSegunEquipo(respuesta);
+        Model.llistarJugadorsSegunEquipo(respuesta,con);
     }
 
     public static void prueba()

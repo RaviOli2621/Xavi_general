@@ -36,7 +36,7 @@ public class MYSQLJugadoresDAO implements DAOGenerica<Jugadores>
     }
 
     public boolean read(Jugadores j, Connection con) {
-        Jugadores jd = read(j.getJugador_id(),con);
+        Jugadores jd = readQuery(j.getJugador_id(),con);
         if (jd == null) return false;
         j.setNom(jd.getNom());
         j.setCognom(jd.getCognom());
@@ -48,8 +48,13 @@ public class MYSQLJugadoresDAO implements DAOGenerica<Jugadores>
         j.setEquip_id(jd.getEquip_id());
         return true;
     }
+    public boolean read(ArrayList<Jugadores> jugadores, Connection con) {
+        jugadores.addAll(readQuery(con));
+        if (jugadores.isEmpty()) return false;
+        return true;
+    }
 
-    private static Jugadores read(int id, Connection con) {
+    private static Jugadores readQuery(int id, Connection con) {
         PreparedStatement sta;
         ResultSet rs;
         try {
@@ -69,6 +74,35 @@ public class MYSQLJugadoresDAO implements DAOGenerica<Jugadores>
             return null;
         }
         return null;
+    }
+    private static ArrayList<Jugadores> readQuery(Connection con) {
+        PreparedStatement sta;
+        ResultSet rs;
+        ArrayList<Jugadores> jugadors = new ArrayList<>();
+        Jugadores j;
+        try {
+            sta = con.prepareStatement("SELECT * FROM jugadors");
+            rs = sta.executeQuery();
+            while (rs.next())
+            {
+                j = new Jugadores(0);
+                j.setJugador_id(rs.getInt(1));
+                j.setNom(rs.getString(2));
+                j.setCognom(rs.getString(3));
+                j.setData_naixement(rs.getDate(4));
+                j.setAlcada(rs.getFloat(5));
+                j.setPes(rs.getFloat(6));
+                j.setDorsal(rs.getString(7));
+                j.setPosicio(rs.getString(8));
+                j.setEquip_id(rs.getInt(9));
+                jugadors.add(j);
+            }
+        }catch (SQLException s)
+        {
+            System.out.println("Error al hacer select");
+            return null;
+        }
+        return jugadors;
     }
     public boolean update(Jugadores e, Connection con) {
         PreparedStatement sta;
