@@ -38,7 +38,7 @@ public class Model
         {
             if(jug.getNom().equals(nom) && jug.getCognom().equals(cognom))
             {
-                id_jugador.set(jug.jugador_id);
+                id_jugador.set(jug.getJugador_id());
             }
         });
         return id_jugador.get();
@@ -46,10 +46,18 @@ public class Model
     private static int sacarIdEquipoConNombre(String equipo, Connection con)
     {
         ArrayList<Equipos> equipos = new ArrayList<>();
-        //MYSQLEquiposDAO daoEqu = new MYSQLEquiposDAO(con);
-        AtomicInteger id_jugador = new AtomicInteger(-1);
+        MYSQLEquiposDAO daoEqu = new MYSQLEquiposDAO(con);
+        AtomicInteger id_equipo = new AtomicInteger(-1);
 
-        //daoEqu.read(equipos);
+        daoEqu.read(equipos);
+
+        equipos.forEach((eq) ->
+        {
+            if(eq.getNom().equals(equipo))
+            {
+                id_equipo.set(eq.getEquip_id());
+            }
+        });
 
         return 0;
     }
@@ -73,7 +81,7 @@ public class Model
             {
                 try {
                     idRep = false;
-                    daoJug.create(new Jugadores((int)(Math.random()*(2147483646+1-1)+1),nombre,apellido,null,0,0,null,null,Integer.parseInt(equipo)));
+                    daoJug.create(new Jugadores((int)(Math.random()*(2147483646+1-1)+1),nombre,apellido,null,0,0,null,null,sacarIdEquipoConNombre(equipo,con)));
                 }catch (Exception e)
                 {
                     if(e.getMessage().equals("Ya existe la id"))
@@ -89,13 +97,21 @@ public class Model
         }else
         {
             Vista.mostrarUnMisatgeGeneric("El nombre ya existe, transpassando jugador al nuevo equipo");
-            moverJugador(id_jugadorRepetit);
+            moverJugador(id_jugadorRepetit, equipo, con);
         }
 
     }
-    public static void moverJugador(int id, String equipo)
+    public static void moverJugador(int id, String equipo, Connection con)
     {
-
+        int id_equipo = sacarIdEquipoConNombre(equipo, con);
+        MYSQLJugadoresDAO DAOjug = new MYSQLJugadoresDAO(con);
+        if (id_equipo >= 0 )
+        {
+            Jugadores j = new Jugadores(id);
+            DAOjug.read(j);
+            j.setEquip_id(id_equipo);
+            DAOjug.update(j);
+        }
     }
 
 

@@ -63,7 +63,7 @@ public class Controlador
                 pregunta4();
                 break;
             case "5":
-                //pregunta5();
+                pregunta5();
                 break;
             case "6":
                 //pregunta6();
@@ -98,6 +98,16 @@ public class Controlador
         Vista.mostrarUnMisatgeGeneric("Ahora indique su equipo");
         equipo = scan.nextLine().trim();
         Model.crearJugadorEnEquipo(nombre,equipo,con);
+    }
+    private static void pregunta5()
+    {
+        int id;
+        String equipo;
+        Vista.mostrarUnMisatgeGeneric("Indique el id del jugador a mover");
+        id = scan.nextInt();
+        Vista.mostrarUnMisatgeGeneric("Ahora indique su nuevo equipo");
+        equipo = scan.nextLine().trim();
+        Model.moverJugador(id,equipo,con);
     }
     public static void prueba()
     {
