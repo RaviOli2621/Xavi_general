@@ -38,7 +38,7 @@ public class MYSQLPartidosDAO implements DAOGenerica<Partidos>{
 
     @Override
     public boolean read(Partidos p) {
-        Partidos par = read(p.getPartit_id());
+        Partidos par = readQuery(p.getPartit_id());
         if (par == null) return false;
         p.setEquip_id(par.getEquip_id());
         p.setResultat(par.getResultat());
@@ -46,7 +46,12 @@ public class MYSQLPartidosDAO implements DAOGenerica<Partidos>{
         p.setMatx(par.getMatx());
         return true;
     }
-    private static Partidos read(int partit_id) {
+    public boolean read(ArrayList<Partidos> partits) {
+        partits.addAll(readQuery());
+        if (partits.isEmpty()) return false;
+        return true;
+    }
+    private static Partidos readQuery(int partit_id) {
         PreparedStatement sta;
         ResultSet rs;
         try {
@@ -65,6 +70,31 @@ public class MYSQLPartidosDAO implements DAOGenerica<Partidos>{
             return null;
         }
         return null;
+    }
+    private static ArrayList<Partidos> readQuery() {
+        PreparedStatement sta;
+        ResultSet rs;
+        ArrayList<Partidos> partits = new ArrayList<>();
+        Partidos p;
+        try {
+            sta = con.prepareStatement("SELECT * FROM jugadors");
+            rs = sta.executeQuery();
+            while (rs.next())
+            {
+                p = new Partidos(0);
+                p.setEquip_id(rs.getInt(1));
+                p.setResultat(rs.getString(2));
+                p.setData_partit(rs.getDate(3));
+                p.setMatx(rs.getString(4));
+
+                partits.add(p);
+            }
+        }catch (SQLException s)
+        {
+            System.out.println("Error al hacer select");
+            return null;
+        }
+        return partits;
     }
 
     @Override

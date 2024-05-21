@@ -7,6 +7,20 @@ public class Partidos {
     String matx;
 
     //constructors
+    public Partidos(int partit_id){
+        this.partit_id = partit_id;
+        setEquip_id(-1);
+        setResultat(null);
+        setData_partit(null);
+        setMatx(null);
+    }
+    public Partidos(Partidos p){
+        this.partit_id = p.partit_id;
+        setEquip_id(p.equip_id);
+        setResultat(p.resultat);
+        setData_partit(p.data_partit);
+        setMatx(p.matx);
+    }
     public Partidos(int partit_id, int equip_id, String resultat, Date data_partit, String matx) {
         this.partit_id = partit_id;
         this.equip_id = equip_id;

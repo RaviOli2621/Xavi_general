@@ -2,10 +2,32 @@ package model;
 
 public class Estadisticas_jugadores {
     int tirs_anotats, tirs_tirats, tir_triples_anotats, tirs_triples_tirats, tirs_lliures_anotats, tir_lliures_tirats,
-            rebots_ofensius, rebots_defensius, assistencies, robades, bloqueigs;
+            rebots_ofensius, rebots_defensius, assistencies, robades, bloqueigs, jugador_id, partit_id, punts;
+    float minuts_jugats;
 
     //constructors
-    public Estadisticas_jugadores(int tirs_anotats, int tirs_tirats, int tir_triples_anotats, int tirs_triples_tirats, int tirs_lliures_anotats, int tir_lliures_tirats, int rebots_ofensius, int rebots_defensius, int assistencies, int robades, int bloqueigs) {
+    public Estadisticas_jugadores(int jugador_id){
+        this.jugador_id = jugador_id;
+        setPartit_id(0);
+        setPunts(0);
+        setTirs_anotats(0);
+        setTirs_tirats(0);
+        setTir_triples_anotats(0);
+        setTirs_triples_tirats(0);
+        setTirs_lliures_anotats(0);
+        setTir_lliures_tirats(0);
+        setRebots_ofensius(0);
+        setRebots_defensius(0);
+        setAssistencies(0);
+        setRobades(0);
+        setBloqueigs(0);
+        setMinuts_jugats(0);
+
+    }
+    public Estadisticas_jugadores(int jugador_id, int partit_id, int punts, int tirs_anotats, int tirs_tirats, int tir_triples_anotats, int tirs_triples_tirats, int tirs_lliures_anotats, int tir_lliures_tirats, int rebots_ofensius, int rebots_defensius, int assistencies, int robades, int bloqueigs, float minuts_jugats) {
+        this.jugador_id = jugador_id;
+        this.partit_id = partit_id;
+        this.punts = punts;
         this.tirs_anotats = tirs_anotats;
         this.tirs_tirats = tirs_tirats;
         this.tir_triples_anotats = tir_triples_anotats;
@@ -17,9 +39,14 @@ public class Estadisticas_jugadores {
         this.assistencies = assistencies;
         this.robades = robades;
         this.bloqueigs = bloqueigs;
+        this.minuts_jugats = minuts_jugats;
     }
 
     //getters
+    public int getJugador_id() {return jugador_id;}
+    public int getPartit_id() {return partit_id;}
+    public int getPunts() {return punts;}
+    public float getMinuts_jugats() {return minuts_jugats;}
     public int getTirs_anotats() {return tirs_anotats;}
     public int getTirs_tirats() {return tirs_tirats;}
     public int getTir_triples_anotats() {return tir_triples_anotats;}
@@ -33,6 +60,11 @@ public class Estadisticas_jugadores {
     public int getBloqueigs() {return bloqueigs;}
 
     //setters
+
+    public void setJugador_id(int jugador_id) {this.jugador_id = jugador_id;}
+    public void setPartit_id(int equip_id) {this.partit_id = equip_id;}
+    public void setPunts(int punts) {this.punts = punts;}
+    public void setMinuts_jugats(float minuts_jugats) {this.minuts_jugats = minuts_jugats;}
     public void setTirs_anotats(int tirs_anotats) {this.tirs_anotats = tirs_anotats;}
     public void setTirs_tirats(int tirs_tirats) {this.tirs_tirats = tirs_tirats;}
     public void setTir_triples_anotats(int tir_triples_anotats) {this.tir_triples_anotats = tir_triples_anotats;}
