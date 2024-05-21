@@ -80,6 +80,10 @@ public class Model
                     {
                         idRep = true;
                     }
+                    else
+                    {
+                        System.out.println(e.getMessage());
+                    }
                 }
             }
         }else

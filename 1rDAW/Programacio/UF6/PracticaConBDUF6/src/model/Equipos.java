@@ -20,7 +20,7 @@ public class Equipos {
         setNom(e.nom);
         setCiutat(e.ciutat);
         setAcronim(e.acronim);
-        setDivisio(e.divisio;
+        setDivisio(e.divisio);
     }
     public Equipos(int equip_id, int guanyades, int perdudes, String nom, String ciutat, String acronim, String divisio) {
         this.equip_id = equip_id;

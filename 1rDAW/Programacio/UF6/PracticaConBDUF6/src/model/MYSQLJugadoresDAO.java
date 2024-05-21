@@ -12,21 +12,21 @@ public class MYSQLJugadoresDAO implements DAOGenerica<Jugadores>
     }
 
     // CRUD, implementarlo como objeto
-    public boolean create(Jugadores e)
+    public boolean create(Jugadores j)
     {
         PreparedStatement sta;
         try {
             sta = con.prepareStatement("INSERT INTO jugadors (jugador_id,equip_id,nom,cognom,data_naixement,alcada,pes,dorsal,posicio) " +
                     "VALUES (?,?,?,?,?,?,?,?,?)" );
-            sta.setInt(1,e.getJugador_id());
-            sta.setInt(2,e.getEquip_id());
-            sta.setString(3,e.getNom());
-            sta.setString(4,e.getCognom());
-            sta.setDate(5,e.getData_naixement());
-            sta.setFloat(6,e.getAlcada());
-            sta.setFloat(7,e.getPes());
-            sta.setString(8,e.getDorsal());
-            sta.setString(9,e.getPosicio());
+            sta.setInt(1,j.getJugador_id());
+            sta.setInt(2,j.getEquip_id());
+            sta.setString(3,j.getNom());
+            sta.setString(4,j.getCognom());
+            sta.setDate(5,j.getData_naixement());
+            sta.setFloat(6,j.getAlcada());
+            sta.setFloat(7,j.getPes());
+            sta.setString(8,j.getDorsal());
+            sta.setString(9,j.getPosicio());
             sta.executeUpdate();
             return true;
         }catch (SQLIntegrityConstraintViolationException s)
