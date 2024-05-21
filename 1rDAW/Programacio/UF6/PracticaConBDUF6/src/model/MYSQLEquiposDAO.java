@@ -25,6 +25,7 @@ public class MYSQLEquiposDAO implements DAOGenerica {
         return false;
     }
 
+    // ALTRES DAO
     @Override
     public boolean exists(Object o) {
         return false;

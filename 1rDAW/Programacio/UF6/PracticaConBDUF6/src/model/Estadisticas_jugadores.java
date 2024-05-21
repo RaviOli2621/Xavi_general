@@ -24,6 +24,23 @@ public class Estadisticas_jugadores {
         setMinuts_jugats(0);
 
     }
+    public Estadisticas_jugadores(Estadisticas_jugadores e){
+        this.jugador_id = e.jugador_id;
+        setPartit_id(e.partit_id);
+        setPunts(e.punts);
+        setTirs_anotats(e.tirs_anotats);
+        setTirs_tirats(e.tirs_tirats);
+        setTir_triples_anotats(e.tir_triples_anotats);
+        setTirs_triples_tirats(e.tirs_triples_tirats);
+        setTirs_lliures_anotats(e.tirs_lliures_anotats);
+        setTir_lliures_tirats(e.tir_lliures_tirats);
+        setRebots_ofensius(e.rebots_ofensius);
+        setRebots_defensius(e.rebots_defensius);
+        setAssistencies(e.assistencies);
+        setRobades(e.robades);
+        setBloqueigs(e.bloqueigs);
+        setMinuts_jugats(e.minuts_jugats);
+    }
     public Estadisticas_jugadores(int jugador_id, int partit_id, int punts, int tirs_anotats, int tirs_tirats, int tir_triples_anotats, int tirs_triples_tirats, int tirs_lliures_anotats, int tir_lliures_tirats, int rebots_ofensius, int rebots_defensius, int assistencies, int robades, int bloqueigs, float minuts_jugats) {
         this.jugador_id = jugador_id;
         this.partit_id = partit_id;

@@ -4,6 +4,24 @@ public class Equipos {
     int equip_id, guanyades, perdudes;
     String nom, ciutat, acronim, divisio;
 
+    public Equipos(int equip_id){
+        this.equip_id = equip_id;
+        setGuanyades(0);
+        setPerdudes(0);
+        setNom("");
+        setCiutat("");
+        setAcronim("");
+        setDivisio("");
+    }
+    public Equipos(Equipos e){
+        this.equip_id = e.equip_id;
+        setGuanyades(e.guanyades);
+        setPerdudes(e.perdudes);
+        setNom(e.nom);
+        setCiutat(e.ciutat);
+        setAcronim(e.acronim);
+        setDivisio(e.divisio;
+    }
     public Equipos(int equip_id, int guanyades, int perdudes, String nom, String ciutat, String acronim, String divisio) {
         this.equip_id = equip_id;
         this.guanyades = guanyades;

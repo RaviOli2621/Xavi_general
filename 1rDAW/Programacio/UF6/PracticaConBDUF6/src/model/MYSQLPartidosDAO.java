@@ -131,6 +131,7 @@ public class MYSQLPartidosDAO implements DAOGenerica<Partidos>{
         return false;
     }
 
+    // ALTRES DAO
     @Override
     public boolean exists(Partidos partidos) {
         return true;
