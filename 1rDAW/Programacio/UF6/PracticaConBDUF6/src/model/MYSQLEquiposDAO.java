@@ -52,17 +52,17 @@ public class MYSQLEquiposDAO implements DAOGenerica<Equipos>{
         if (equipos.isEmpty()) return false;
         return true;
     }
-    private static Equipos readQuery(int id) {
+    private static Equipos readQuery(int equip_id) {
         PreparedStatement sta;
         ResultSet rs;
         try {
             sta = con.prepareStatement("SELECT * FROM equips WHERE equip_id = ?");
-            sta.setInt(1,id);
+            sta.setInt(1,equip_id);
             rs = sta.executeQuery();
             while (rs.next())
             {
                 if (rs.getString("equip_id").isEmpty()) return null;
-                return new Equipos(id, rs.getInt("guanyades"),rs.getInt("perdudes"),rs.getString("nom")
+                return new Equipos(equip_id, rs.getInt("guanyades"),rs.getInt("perdudes"),rs.getString("nom")
                         ,rs.getString("ciutat"),rs.getString("acronim"),rs.getString("divisio"));
             }
         }catch (SQLException s)
@@ -78,7 +78,7 @@ public class MYSQLEquiposDAO implements DAOGenerica<Equipos>{
         ArrayList<Equipos> equipos = new ArrayList<>();
         Equipos e;
         try {
-            sta = con.prepareStatement("SELECT * FROM jugadors");
+            sta = con.prepareStatement("SELECT * FROM equips");
             rs = sta.executeQuery();
             while (rs.next())
             {

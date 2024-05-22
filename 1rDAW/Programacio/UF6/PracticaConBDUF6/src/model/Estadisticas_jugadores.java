@@ -61,7 +61,7 @@ public class Estadisticas_jugadores {
              this.equip_id = equip_id;
          }
 
-    //getters
+    //Getters
     public int getJugador_id() {return jugador_id;}
     public int getPartit_id() {return partit_id;}
     public int getPunts() {return punts;}

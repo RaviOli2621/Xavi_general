@@ -9,6 +9,7 @@ public class MYSQLEstadisticas_jugadoresDAO implements DAOGenerica<Estadisticas_
     public MYSQLEstadisticas_jugadoresDAO(Connection con) {
         this.con = con;
     }
+
     // CRUD, implementarlo como objeto
     public boolean create(Estadisticas_jugadores e)
     {
@@ -29,8 +30,8 @@ public class MYSQLEstadisticas_jugadoresDAO implements DAOGenerica<Estadisticas_
             sta.setInt(10,e.getRebots_ofensius());
             sta.setInt(11,e.getRebots_defensius());
             sta.setInt(12,e.getAssistencies());
-            sta.setInt(13,e.getBloqueigs());
-            sta.setInt(14,e.getRobades());
+            sta.setInt(13,e.getRobades());
+            sta.setInt(14,e.getBloqueigs());
             sta.setFloat(15,e.getMinuts_jugats());
             sta.setInt(16,e.getEquip_id());
             sta.executeUpdate();
@@ -69,17 +70,17 @@ public class MYSQLEstadisticas_jugadoresDAO implements DAOGenerica<Estadisticas_
         if (estadisticasJugadores.isEmpty()) return false;
         return true;
     }
-    private static Estadisticas_jugadores readQuery(int id) {
+    private static Estadisticas_jugadores readQuery(int jugador_id) {
         PreparedStatement sta;
         ResultSet rs;
         try {
             sta = con.prepareStatement("SELECT * FROM estadistiques_jugadors WHERE jugador_id = ?");
-            sta.setInt(1,id);
+            sta.setInt(1,jugador_id);
             rs = sta.executeQuery();
             while (rs.next())
             {
                 if (rs.getString("jugador_id").isEmpty()) return null;
-                return new Estadisticas_jugadores(id, rs.getInt("partit_id"),rs.getInt("tirs_anotats")
+                return new Estadisticas_jugadores(jugador_id, rs.getInt("partit_id"),rs.getInt("tirs_anotats")
                         ,rs.getInt("tirs_tirats"),rs.getInt("punts"),rs.getInt("tir_triples_anotats")
                         ,rs.getInt("tirs_triples_tirats"),rs.getInt("tirs_lliures_anotats")
                         ,rs.getInt("tir_lliures_tirats"),rs.getInt("rebots_ofensius"),rs.getInt("rebots_defensius")

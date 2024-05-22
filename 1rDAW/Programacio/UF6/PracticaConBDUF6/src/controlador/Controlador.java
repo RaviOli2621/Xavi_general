@@ -56,10 +56,10 @@ public class Controlador
                 pregunta1();
                 break;
             case "2":
-                //pregunta2();
+                pregunta2();
                 break;
             case "3":
-                //pregunta3();
+                pregunta3();
                 break;
             case "4":
                 pregunta4();
@@ -68,16 +68,16 @@ public class Controlador
                 pregunta5();
                 break;
             case "6":
-                //pregunta6();
+                pregunta6();
                 break;
             case "7":
-                //pregunta7();
+                pregunta7();
                 break;
             case "8":
-                //pregunta8();
+                pregunta8();
                 break;
             case "9":
-                //pregunta9();
+                pregunta9();
                 break;
             default:
                 prueba();
@@ -91,7 +91,27 @@ public class Controlador
         respuesta = scan.nextLine().trim();
         Model.llistarJugadorsSegunEquipo(respuesta,con);
     }
+    private static void pregunta2()
+    {
+        String nom;
+        String [] jugador;
+        int jugador_id;
 
+        Vista.mostrarUnMisatgeGeneric("De quin jugador vols veure la mitjana d'estadistiques?");
+        nom = scan.nextLine();
+        jugador = Model.separarNombreEnApellido(nom);
+        jugador_id = Model.trobaId(jugador[0], jugador[1], con);
+        Model.mostrarAVGJugaor(jugador_id,con);
+    }
+    private static void pregunta3()
+    {
+        String nom;
+        int id;
+        Vista.mostrarUnMisatgeGeneric("Que equipo quieres ver los partidos");
+        nom = scan.nextLine().trim();
+        id = Model.sacarIdEquipoConNombre(nom, con);
+        Model.partidosDelEquipo(id,con);
+    }
     private static void pregunta4()
     {
         String nombre, equipo;
@@ -138,7 +158,6 @@ public class Controlador
         MYSQLJugadoresDAO dao = new MYSQLJugadoresDAO(con);
 
         dao.create(prueba1);
-
 
     }
 }

@@ -58,17 +58,17 @@ public class MYSQLJugadoresDAO implements DAOGenerica<Jugadores>
         return true;
     }
 
-    private static Jugadores readQuery(int id) {
+    private static Jugadores readQuery(int jugador_id) {
         PreparedStatement sta;
         ResultSet rs;
         try {
             sta = con.prepareStatement("SELECT * FROM jugadors WHERE jugador_id = ?");
-            sta.setInt(1,id);
+            sta.setInt(1,jugador_id);
             rs = sta.executeQuery();
             while (rs.next())
             {
                 if (rs.getString("jugador_id").isEmpty()) return null;
-                return new Jugadores(id, rs.getString("nom"),rs.getString("cognom"),rs.getDate("data_naixement")
+                return new Jugadores(jugador_id, rs.getString("nom"),rs.getString("cognom"),rs.getDate("data_naixement")
                         ,rs.getFloat("alcada"),rs.getFloat("pes"),rs.getString("dorsal")
                         ,rs.getString("posicio"),rs.getInt("equip_id"));
             }

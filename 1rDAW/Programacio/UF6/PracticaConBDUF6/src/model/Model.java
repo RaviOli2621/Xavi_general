@@ -88,7 +88,7 @@ public class Model
         {
             if(equipo.equals(j.equip_id + ""))
             {
-                System.out.println(j.jugador_id + " " + j.nom);
+                Vista.mostrarUnMisatgeGeneric(j.jugador_id + " " + j.nom);
             }
         });
     }
@@ -184,6 +184,69 @@ public class Model
             j.setEquip_id(id_equipo);
             DAOjug.update(j);
         }
+    }
+    public static int trobaId(String nom, String cognom, Connection con){
+
+        ArrayList<Jugadores> jugadores = new ArrayList<>();
+        MYSQLJugadoresDAO daoEqu = new MYSQLJugadoresDAO(con);
+        AtomicInteger jugador_id = new AtomicInteger(-1);
+        daoEqu.read(jugadores);
+
+        jugadores.forEach((eq) ->
+        {
+            if(eq.getNom().equals(nom) && eq.getCognom().equals(cognom))
+            {
+                jugador_id.set(eq.getEquip_id());
+            }
+        });
+        return jugador_id.get();
+    }
+    public static void mostrarAVGJugaor(int jugador_id, Connection con){
+        MYSQLEstadisticas_jugadoresDAO statsDAO = new MYSQLEstadisticas_jugadoresDAO(con);
+        Estadisticas_jugadores stats = new Estadisticas_jugadores(jugador_id);
+        ArrayList<Estadisticas_jugadores> stats_jug = new ArrayList<>();
+
+        statsDAO.read(stats);
+        statsDAO.read(stats_jug);
+        //todo: faltan muchas cosas por hacer, no hace nada
+
+    }
+
+    public static void partidosDelEquipo(int id, Connection con)
+    {
+        MYSQLPartidosDAO partDAO = new MYSQLPartidosDAO(con);
+        MYSQLEquiposDAO equDAO = new MYSQLEquiposDAO(con);
+        ArrayList<Partidos> part = new ArrayList<>();
+        ArrayList<Partidos> partDeUnEquipo = new ArrayList<>();
+        ArrayList<Equipos> equipos = new ArrayList<>();
+
+        partDAO.read(part);
+        equDAO.read(equipos);
+
+        part.forEach((p) ->
+        {
+            if(p.equip_id == id) partDeUnEquipo.add(p);
+        });
+
+        partDeUnEquipo.forEach((p) ->
+        {
+            AtomicReference<String> local = new AtomicReference<>();
+            AtomicReference<String> vis = new AtomicReference<>();
+            equipos.forEach((e) ->
+            {
+                if(id == e.equip_id) local.set(e.nom);
+                if((p.matx.split(" @ ").length > 1))
+                {
+                    if(p.matx.split(" @ ")[1].equals(e.getAcronim())) vis.set(e.getNom());
+                }
+                if(p.matx.split(" vs. ").length > 1)
+                {
+                    if(p.matx.split(" vs. ")[1].equals(e.getAcronim())) vis.set(e.getNom());
+                }
+            });
+            Vista.mostrarUnMisatgeGeneric(local + " vs " + vis + ": " + p.resultat);
+        });
+
     }
 
 
