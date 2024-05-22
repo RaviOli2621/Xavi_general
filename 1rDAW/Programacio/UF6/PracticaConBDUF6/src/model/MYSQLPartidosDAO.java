@@ -1,9 +1,6 @@
 package model;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,15 +74,16 @@ public class MYSQLPartidosDAO implements DAOGenerica<Partidos>{
         ArrayList<Partidos> partits = new ArrayList<>();
         Partidos p;
         try {
-            sta = con.prepareStatement("SELECT * FROM jugadors");
+            sta = con.prepareStatement("SELECT * FROM partits");
             rs = sta.executeQuery();
             while (rs.next())
             {
                 p = new Partidos(0);
-                p.setEquip_id(rs.getInt(1));
-                p.setResultat(rs.getString(2));
+                p.setPartit_id(rs.getInt(1));
+                p.setEquip_id(rs.getInt(2));
                 p.setData_partit(rs.getDate(3));
                 p.setMatx(rs.getString(4));
+                p.setResultat(rs.getString(5));
 
                 partits.add(p);
             }

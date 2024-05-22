@@ -6,55 +6,78 @@ CREATE DATABASE NBAData;
 
 USE NBAData;
 
-CREATE TABLE teams
-(
-	id VARCHAR(10) NOT NULL,
-    full_name VARCHAR(65) NOT NULL,
-    abbreviation VARCHAR(10) NOT NULL,
-    nickname VARCHAR(30),
-	city VARCHAR(30),
-    state VARCHAR(30),
-    is_active BOOLEAN,
-    CONSTRAINT pk_teams PRIMARY KEY(id)
-);
+CREATE TABLE `equips` (
+  `equip_id` int UNSIGNED NOT NULL,
+  `ciutat` varchar(50) NOT NULL,
+  `nom` varchar(50) NOT NULL,
+  `acronim` char(3) NOT NULL,
+  `divisio` varchar(50) NOT NULL,
+  `guanyades` tinyint UNSIGNED NOT NULL DEFAULT '0',
+  `perdudes` tinyint UNSIGNED NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-CREATE TABLE players
-(
-	id VARCHAR(10) NOT NULL,
-    team_id VARCHAR(10) NOT NULL,
-    full_name VARCHAR(65) GENERATED ALWAYS AS(concat(first_name," ", last_name)),
-    first_name VARCHAR(30) NOT NULL,
-    last_name VARCHAR(30) NOT NULL,
-    is_active BOOLEAN,
-    CONSTRAINT pk_players PRIMARY KEY(id),
-    CONSTRAINT fk_player_teams FOREIGN KEY (team_id)
-		REFERENCES teams(id)
-);
+CREATE TABLE `estadistiques_jugadors` (
+  `jugador_id` int UNSIGNED NOT NULL,
+  `partit_id` int UNSIGNED NOT NULL,
+  `minuts_jugats` decimal(5,3) UNSIGNED NOT NULL,
+  `punts` tinyint UNSIGNED NOT NULL,
+  `tirs_anotats` tinyint UNSIGNED NOT NULL,
+  `tirs_tirats` tinyint UNSIGNED NOT NULL,
+  `tirs_triples_anotats` tinyint UNSIGNED NOT NULL,
+  `tirs_triples_tirats` tinyint UNSIGNED NOT NULL,
+  `tirs_lliures_anotats` tinyint UNSIGNED NOT NULL,
+  `tirs_lliures_tirats` tinyint UNSIGNED NOT NULL,
+  `rebots_ofensius` tinyint UNSIGNED NOT NULL,
+  `rebots_defensius` tinyint UNSIGNED NOT NULL,
+  `assistencies` tinyint UNSIGNED NOT NULL,
+  `robades` tinyint UNSIGNED NOT NULL,
+  `bloqueigs` tinyint UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-CREATE TABLE matchupsrollup
-(
-	LeagueID VARCHAR(10) NOT NULL,
-    Season DECIMAL NOT NULL,
-    SeasonType VARCHAR(30) NOT NULL,
-	OffTeamID VARCHAR(30),
-    OffPlayerID VARCHAR(30),
-    DefTeamID VARCHAR(30),
-	DefPlayerID VARCHAR(30),
-    
-);
+CREATE TABLE `jugadors` (
+  `jugador_id` int UNSIGNED NOT NULL,
+  `nom` varchar(150) NOT NULL,
+  `cognom` varchar(150) NOT NULL,
+  `data_naixement` date DEFAULT NULL,
+  `alcada` decimal(5,2) UNSIGNED DEFAULT NULL,
+  `pes` decimal(5,2) UNSIGNED DEFAULT NULL,
+  `dorsal` char(2) NOT NULL,
+  `posicio` varchar(25) NOT NULL,
+  `equip_id` int UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-INSERT INTO teams (id, full_name, abbreviation, nickname, city, state, is_active) VALUE 
-	(1,"Los Juanes", "LJ", "Siuuuu", "Barcelona", "BarcelonaState", true),
-    (2,"Los Pepes", "LP", "Nouuuuu", "Madrid", "MadridState", true),
-    (3,"Los Mindundis", "LM", "NoHaceNada", "Valladolid", "ValladolidState", true);
-INSERT INTO players (id, team_id,first_name, last_name, is_active) VALUE
-	(1,1,"Mohamed", "Ali", true),
-    (2,2, "Pedro", "Sanchez", false),
-    (3,3,"Michael", "Jordan", true);
-INSERT INTO matchupsrollup (LeagueId, Season, SeasonType, OffTeamID, OffPoints, DefTeamID, DefPoints, date) VALUE 
-	(1, 1, "Siu", 1, 1, 2,2),
-    (2, 2, "Siu", 2, 2, 3,3),
-    (3, 3, "Siu", 1, 1, 3,3	);
-SELECT p.id,p.full_name FROM players p INNER JOIN teams t ON t.id = p.team_id WHERE t.full_name = "Los Juanes";
+CREATE TABLE `partits` (
+  `partit_id` int UNSIGNED NOT NULL,
+  `equip_id` int UNSIGNED NOT NULL,
+  `data_partit` date NOT NULL,
+  `matx` char(12) NOT NULL,
+  `resultat` char(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-SELECT * FROM teams;
+CREATE TABLE `historic`(
+  `jugador_id` int UNSIGNED NOT NULL,
+  `ultim_equip_id` int UNSIGNED NOT NULL,
+  `tot_min_jugats` decimal(5,3) UNSIGNED NOT NULL,
+  `punts_tot` tinyint UNSIGNED NOT NULL,
+  `tirs_anotats` tinyint UNSIGNED NOT NULL,
+  `tirs_tirats` tinyint UNSIGNED NOT NULL,
+  `tirs_triples_anotats` tinyint UNSIGNED NOT NULL,
+  `tirs_triples_tirats` tinyint UNSIGNED NOT NULL,
+  `tirs_lliures_anotats` tinyint UNSIGNED NOT NULL,
+  `tirs_lliures_tirats` tinyint UNSIGNED NOT NULL,
+  `rebots_ofensius` tinyint UNSIGNED NOT NULL,
+  `rebots_defensius` tinyint UNSIGNED NOT NULL,
+  `assistencies` tinyint UNSIGNED NOT NULL,
+  `robades` tinyint UNSIGNED NOT NULL,
+  `bloqueigs` tinyint UNSIGNED NOT NULL
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+alter table estadistiques_jugadors
+add equip_id int unsigned not null;
+
+SELECT * FROM estadistiques_jugadors;
+
+
+SELECT equip_id
+FROM jugadors
+WHERE jugador_id = this;

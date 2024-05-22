@@ -2,15 +2,81 @@ package model;
 
 import vista.Vista;
 
+import java.io.File;
+import java.io.PrintStream;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class Model
 {
+    //Generar dades
+    public static void crearDocs()
+    {
+        File ruta = new File(".\\1rDAW\\Programacio\\UF6\\PracticaConBDUF6\\Datos");
+        File fileEquip = new File (ruta + "\\Equips.txt");
+        File fileJug = new File (ruta + "\\Jugadores.txt");
+        File filePart = new File (ruta + "\\Partidos.txt");
+        File fileEstadíst = new File (ruta + "\\Estadísticas_jug.txt");
+        File fileHist = new File (ruta + "\\Historic.txt");
 
+        if(ruta.mkdirs())
+        {
+            System.out.println("creado con exito");
+        }
+        try {
+            fileEquip.createNewFile();
+            fileJug.createNewFile();
+            filePart.createNewFile();
+            fileEstadíst.createNewFile();
+            fileHist.createNewFile();
+        }catch (Exception e)
+        {
+            System.out.println("Ha ocurrido un error en la creacion de los archivos necessarios para ejecutar el programa");
+        }
+    }
+    public static void EditarDocumentos(String archivoConRuta, String mensaje)
+    {
+        String archivoATexto = "";
 
+        try {
+            // Guardar los datos originales del documento
+            Scanner reader = new Scanner(new File(archivoConRuta));
 
+            while (reader.hasNextLine())
+            {
+                archivoATexto += reader.nextLine().trim() + "\n";
+            }
+
+            // Añadir el mensaje extra
+            PrintStream writer = new PrintStream(new File (archivoConRuta));
+            writer.print(mensaje + "\n" + archivoATexto);
+
+            writer.close();
+            reader.close();
+        }catch (Exception e)
+        {
+            System.out.println("Error en el processo de edicion de los archivos de texto:\n\t" + e.getMessage());
+        }
+    }
+    public static void generarDades()
+    {
+        //Generar equipo (falta los partidos ganados y perdidos)
+        if(new File(".\\1rDAW\\Programacio\\UF6\\PracticaConBDUF6\\Datos\\Equips.txt").length() == 0)
+        {
+            for (int i = 1; i <= 100; i++)
+            {
+                String nom = i+"nom";
+                EditarDocumentos(".\\1rDAW\\Programacio\\UF6\\PracticaConBDUF6\\Datos\\Equips.txt",
+                        i + "," + (i + "ciutat") + "," + nom + "," + nom.toUpperCase().substring(0,3) + "," +
+                                ((int)(Math.random()*(4-1+1)+1) + "DIV") + "," + "Ganar" + "," + "Perder");
+            }
+        }
+    }
+
+    //Exersicis-----------------------------------------------------------------------------------------------------------------------------------
     public static void llistarJugadorsSegunEquipo(String equipo, Connection con)
     {
         ArrayList<Jugadores> jugadores = new ArrayList<>();
@@ -43,7 +109,7 @@ public class Model
         });
         return id_jugador.get();
     }
-    private static int sacarIdEquipoConNombre(String equipo, Connection con)
+    public static int sacarIdEquipoConNombre(String equipo, Connection con)
     {
         ArrayList<Equipos> equipos = new ArrayList<>();
         MYSQLEquiposDAO daoEqu = new MYSQLEquiposDAO(con);
@@ -59,21 +125,27 @@ public class Model
             }
         });
 
-        return 0;
+        return id_equipo.get();
     }
-
+    public static String[] separarNombreEnApellido(String nombre)
+    {
+        String []nombreApelliod = new String[2];
+        if(nombre.contains(" "))
+        {
+            for (int i = 1; i < nombre.split(" ").length; i++) nombreApelliod[1] += nombre.split(" ")[0] + " ";
+            nombreApelliod[1] = nombreApelliod[1].trim();
+            nombreApelliod[0] = nombre.split(" ")[0];
+        }
+        return nombreApelliod;
+    }
     public static void crearJugadorEnEquipo(String nombre, String equipo, Connection con)
     {
         MYSQLJugadoresDAO daoJug = new MYSQLJugadoresDAO(con);
         String apellido = "";
         boolean idRep = false;
         int id_jugadorRepetit; // si el jugador ya existe aqui se guarda la id del juagdpr antiguo
-        if(nombre.contains(" "))
-        {
-            for (int i = 1; i < nombre.split(" ").length; i++) apellido += nombre.split(" ")[0] + " ";
-            apellido = apellido.trim();
-            nombre = nombre.split(" ")[0];
-        }
+        apellido = separarNombreEnApellido(nombre)[1];
+        nombre = separarNombreEnApellido(nombre)[0];
         id_jugadorRepetit = comrpobarNombresCoincidir(nombre,apellido,con);
         if(id_jugadorRepetit >= 0)
         {

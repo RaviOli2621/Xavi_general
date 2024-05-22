@@ -2,7 +2,7 @@ package model;
 
 public class Estadisticas_jugadores {
     int tirs_anotats, tirs_tirats, tir_triples_anotats, tirs_triples_tirats, tirs_lliures_anotats, tir_lliures_tirats,
-            rebots_ofensius, rebots_defensius, assistencies, robades, bloqueigs, jugador_id, partit_id, punts;
+            rebots_ofensius, rebots_defensius, assistencies, robades, bloqueigs, jugador_id, partit_id, punts, equip_id;
     float minuts_jugats;
 
     //constructors
@@ -22,7 +22,7 @@ public class Estadisticas_jugadores {
         setRobades(0);
         setBloqueigs(0);
         setMinuts_jugats(0);
-
+        setEquip_id(0);
     }
     public Estadisticas_jugadores(Estadisticas_jugadores e){
         this.jugador_id = e.jugador_id;
@@ -40,24 +40,26 @@ public class Estadisticas_jugadores {
         setRobades(e.robades);
         setBloqueigs(e.bloqueigs);
         setMinuts_jugats(e.minuts_jugats);
+        setEquip_id(e.equip_id);
     }
-    public Estadisticas_jugadores(int jugador_id, int partit_id, int punts, int tirs_anotats, int tirs_tirats, int tir_triples_anotats, int tirs_triples_tirats, int tirs_lliures_anotats, int tir_lliures_tirats, int rebots_ofensius, int rebots_defensius, int assistencies, int robades, int bloqueigs, float minuts_jugats) {
-        this.jugador_id = jugador_id;
-        this.partit_id = partit_id;
-        this.punts = punts;
-        this.tirs_anotats = tirs_anotats;
-        this.tirs_tirats = tirs_tirats;
-        this.tir_triples_anotats = tir_triples_anotats;
-        this.tirs_triples_tirats = tirs_triples_tirats;
-        this.tirs_lliures_anotats = tirs_lliures_anotats;
-        this.tir_lliures_tirats = tir_lliures_tirats;
-        this.rebots_ofensius = rebots_ofensius;
-        this.rebots_defensius = rebots_defensius;
-        this.assistencies = assistencies;
-        this.robades = robades;
-        this.bloqueigs = bloqueigs;
-        this.minuts_jugats = minuts_jugats;
-    }
+    public Estadisticas_jugadores(int jugador_id, int partit_id, int punts, int tirs_anotats, int tirs_tirats, int tir_triples_anotats, int tirs_triples_tirats, int tirs_lliures_anotats, int tir_lliures_tirats, int rebots_ofensius, int rebots_defensius, int assistencies, int robades, int bloqueigs, float minuts_jugats, int equip_id) {
+             this.jugador_id = jugador_id;
+             this.partit_id = partit_id;
+             this.punts = punts;
+             this.tirs_anotats = tirs_anotats;
+             this.tirs_tirats = tirs_tirats;
+             this.tir_triples_anotats = tir_triples_anotats;
+             this.tirs_triples_tirats = tirs_triples_tirats;
+             this.tirs_lliures_anotats = tirs_lliures_anotats;
+             this.tir_lliures_tirats = tir_lliures_tirats;
+             this.rebots_ofensius = rebots_ofensius;
+             this.rebots_defensius = rebots_defensius;
+             this.assistencies = assistencies;
+             this.robades = robades;
+             this.bloqueigs = bloqueigs;
+             this.minuts_jugats = minuts_jugats;
+             this.equip_id = equip_id;
+         }
 
     //getters
     public int getJugador_id() {return jugador_id;}
@@ -75,9 +77,9 @@ public class Estadisticas_jugadores {
     public int getAssistencies() {return assistencies;}
     public int getRobades() {return robades;}
     public int getBloqueigs() {return bloqueigs;}
+    public int getEquip_id() {return equip_id;}
 
-    //setters
-
+    //Setters
     public void setJugador_id(int jugador_id) {this.jugador_id = jugador_id;}
     public void setPartit_id(int equip_id) {this.partit_id = equip_id;}
     public void setPunts(int punts) {this.punts = punts;}
@@ -93,4 +95,5 @@ public class Estadisticas_jugadores {
     public void setAssistencies(int assistencies) {this.assistencies = assistencies;}
     public void setRobades(int robades) {this.robades = robades;}
     public void setBloqueigs(int bloqueigs) {this.bloqueigs = bloqueigs;}
+    public void setEquip_id(int equip_id) {this.equip_id = equip_id;}
 }

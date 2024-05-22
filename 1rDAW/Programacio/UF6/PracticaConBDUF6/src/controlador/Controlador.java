@@ -17,6 +17,8 @@ public class Controlador
         String username = "perepi";
         String paswrd = "pastanaga";
         openCon(url,username,paswrd);
+        Model.crearDocs();
+        Model.generarDades();
         consultes();
         closeCon();
     }
@@ -108,6 +110,26 @@ public class Controlador
         Vista.mostrarUnMisatgeGeneric("Ahora indique su nuevo equipo");
         equipo = scan.nextLine().trim();
         Model.moverJugador(id,equipo,con);
+    }
+
+    private static void pregunta6()
+    {
+
+    }
+
+    private static void pregunta7()
+    {
+
+    }
+
+    private static void pregunta8()
+    {
+
+    }
+
+    private static void pregunta9()
+    {
+
     }
     public static void prueba()
     {

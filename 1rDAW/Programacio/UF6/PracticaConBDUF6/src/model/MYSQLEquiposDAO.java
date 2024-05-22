@@ -84,12 +84,12 @@ public class MYSQLEquiposDAO implements DAOGenerica<Equipos>{
             {
                 e = new Equipos(0);
                 e.setEquip_id(rs.getInt(1));
-                e.setGuanyades(rs.getInt(2));
-                e.setPerdudes(rs.getInt(3));
-                e.setNom(rs.getString(4));
-                e.setCiutat(rs.getString(5));
-                e.setAcronim(rs.getString(6));
-                e.setDivisio(rs.getString(7));
+                e.setCiutat(rs.getString(2));
+                e.setNom(rs.getString(3));
+                e.setAcronim(rs.getString(4));
+                e.setDivisio(rs.getString(5));
+                e.setGuanyades(rs.getInt(6));
+                e.setPerdudes(rs.getInt(7));
                 equipos.add(e);
             }
         }catch (SQLException s)
