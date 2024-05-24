@@ -15,12 +15,13 @@ public class Model
     //Generar dades
     public static void crearDocs()
     {
-        File ruta = new File(".\\1rDAW\\Programacio\\UF6\\PracticaConBDUF6\\Datos");
+        File ruta = new File(".\\1rDAW\\Programacio\\UF6\\PracticaConBDUF6\\Arxius");
         File fileEquip = new File (ruta + "\\Equips.txt");
         File fileJug = new File (ruta + "\\Jugadores.txt");
         File filePart = new File (ruta + "\\Partidos.txt");
         File fileEstadíst = new File (ruta + "\\Estadísticas_jug.txt");
         File fileHist = new File (ruta + "\\Historic.txt");
+        File docEx6 = new File(ruta + "\\DadesPartit.scv");
 
         if(ruta.mkdirs())
         {
@@ -32,6 +33,7 @@ public class Model
             filePart.createNewFile();
             fileEstadíst.createNewFile();
             fileHist.createNewFile();
+            docEx6.createNewFile();
         }catch (Exception e)
         {
             System.out.println("Ha ocurrido un error en la creacion de los archivos necessarios para ejecutar el programa");
@@ -64,12 +66,12 @@ public class Model
     public static void generarDades()
     {
         //Generar equipo (falta los partidos ganados y perdidos)
-        if(new File(".\\1rDAW\\Programacio\\UF6\\PracticaConBDUF6\\Datos\\Equips.txt").length() == 0)
+        if(new File(".\\1rDAW\\Programacio\\UF6\\PracticaConBDUF6\\Arxius\\Equips.txt").length() == 0)
         {
             for (int i = 1; i <= 100; i++)
             {
                 String nom = i+"nom";
-                EditarDocumentos(".\\1rDAW\\Programacio\\UF6\\PracticaConBDUF6\\Datos\\Equips.txt",
+                EditarDocumentos(".\\1rDAW\\Programacio\\UF6\\PracticaConBDUF6\\Arxius\\Equips.txt",
                         i + "," + (i + "ciutat") + "," + nom + "," + nom.toUpperCase().substring(0,3) + "," +
                                 ((int)(Math.random()*(4-1+1)+1) + "DIV") + "," + "Ganar" + "," + "Perder");
             }
@@ -130,9 +132,10 @@ public class Model
     public static String[] separarNombreEnApellido(String nombre)
     {
         String []nombreApelliod = new String[2];
+        nombreApelliod[1] = "";
         if(nombre.contains(" "))
         {
-            for (int i = 1; i < nombre.split(" ").length; i++) nombreApelliod[1] += nombre.split(" ")[0] + " ";
+            for (int i = 1; i < nombre.split(" ").length; i++) nombreApelliod[1] += nombre.split(" ")[i] + " ";
             nombreApelliod[1] = nombreApelliod[1].trim();
             nombreApelliod[0] = nombre.split(" ")[0];
         }
@@ -142,50 +145,46 @@ public class Model
     {
         MYSQLJugadoresDAO daoJug = new MYSQLJugadoresDAO(con);
         String apellido = "";
-        boolean idRep = false;
+        boolean idRep = true;
         int id_jugadorRepetit; // si el jugador ya existe aqui se guarda la id del juagdpr antiguo
         apellido = separarNombreEnApellido(nombre)[1];
         nombre = separarNombreEnApellido(nombre)[0];
         id_jugadorRepetit = comrpobarNombresCoincidir(nombre,apellido,con);
-        if(id_jugadorRepetit >= 0)
+        if(id_jugadorRepetit == -1)
         {
             while (idRep)
             {
-                try {
                     idRep = false;
-                    daoJug.create(new Jugadores((int)(Math.random()*(2147483646+1-1)+1),nombre,apellido,null,0,0,null,null,sacarIdEquipoConNombre(equipo,con)));
-                }catch (Exception e)
-                {
-                    if(e.getMessage().equals("Ya existe la id"))
-                    {
-                        idRep = true;
-                    }
-                    else
-                    {
-                        System.out.println(e.getMessage());
-                    }
-                }
+                    int id = (int)(Math.random()*(2147483646+1-1)+1);
+                    Jugadores j = new Jugadores(id,nombre,apellido,null,0,0,"0","",sacarIdEquipoConNombre(equipo,con));
+                    if(!daoJug.exists(j)) daoJug.create(j);
+                    else idRep = true;
             }
         }else
         {
             Vista.mostrarUnMisatgeGeneric("El nombre ya existe, transpassando jugador al nuevo equipo");
-            moverJugador(id_jugadorRepetit, equipo, con);
+            moverJugador((nombre + " " + apellido), equipo, con);
         }
 
     }
-    public static void moverJugador(int id, String equipo, Connection con)
+    public static void moverJugador(String nom, String equipo, Connection con)
     {
-        int id_equipo = sacarIdEquipoConNombre(equipo, con);
+        int id_equipo = sacarIdEquipoConNombre(equipo, con), id_jug;
         MYSQLJugadoresDAO DAOjug = new MYSQLJugadoresDAO(con);
+        String apellido = "";
+        apellido = separarNombreEnApellido(nom)[1];
+        nom = separarNombreEnApellido(nom)[0];
+        id_jug = trobaIdJugador(nom,apellido,con);
+
         if (id_equipo >= 0 )
         {
-            Jugadores j = new Jugadores(id);
+            Jugadores j = new Jugadores(id_jug);
             DAOjug.read(j);
             j.setEquip_id(id_equipo);
             DAOjug.update(j);
         }
     }
-    public static int trobaId(String nom, String cognom, Connection con){
+    public static int trobaIdJugador(String nom, String cognom, Connection con){
 
         ArrayList<Jugadores> jugadores = new ArrayList<>();
         MYSQLJugadoresDAO daoEqu = new MYSQLJugadoresDAO(con);
@@ -201,15 +200,33 @@ public class Model
         });
         return jugador_id.get();
     }
-    public static void mostrarAVGJugaor(int jugador_id, Connection con){
+    public static void mostrarAVGJugador(int jugador_id, Connection con){
         MYSQLEstadisticas_jugadoresDAO statsDAO = new MYSQLEstadisticas_jugadoresDAO(con);
-        Estadisticas_jugadores stats = new Estadisticas_jugadores(jugador_id);
-        ArrayList<Estadisticas_jugadores> stats_jug = new ArrayList<>();
+        ArrayList<Estadisticas_jugadores> stats_jugadors = new ArrayList<>();
+        Estadisticas_jugadores mediaJug = new Estadisticas_jugadores(jugador_id);
+        int totalPartits;
 
-        statsDAO.read(stats);
-        statsDAO.read(stats_jug);
-        //todo: faltan muchas cosas por hacer, no hace nada
+        statsDAO.read(jugador_id,stats_jugadors);
 
+        stats_jugadors.forEach((e) ->
+        {
+            mediaJug.setTirs_anotats(mediaJug.getTirs_anotats() + e.getTirs_anotats());
+            mediaJug.setTirs_tirats(mediaJug.getTirs_tirats() + e.getTirs_tirats());
+            mediaJug.setTir_triples_anotats(mediaJug.getTir_triples_anotats() + e.getTir_triples_anotats());
+            mediaJug.setTirs_triples_tirats(mediaJug.getTirs_triples_tirats() + e.getTirs_triples_tirats());
+            mediaJug.setTirs_lliures_anotats(mediaJug.getTirs_lliures_anotats() + e.getTirs_lliures_anotats());
+            mediaJug.setTir_lliures_tirats(mediaJug.getTir_lliures_tirats() + e.getTir_lliures_tirats());
+            mediaJug.setRebots_defensius(mediaJug.getRebots_defensius() + e.getRebots_defensius());
+            mediaJug.setRebots_ofensius(mediaJug.getRebots_ofensius() + e.getRebots_ofensius());
+            mediaJug.setBloqueigs(mediaJug.getBloqueigs() + e.getBloqueigs());
+            mediaJug.setRobades(mediaJug.getRobades() + e.getRobades());
+            mediaJug.setAssistencies(mediaJug.getAssistencies() + e.getAssistencies());
+            mediaJug.setMinuts_jugats(mediaJug.getMinuts_jugats() + e.getMinuts_jugats());
+            mediaJug.setPunts(mediaJug.getPunts() + e.getPunts());
+            mediaJug.setEquip_id(e.getEquip_id());
+        });
+        totalPartits = stats_jugadors.size();
+        
     }
 
     public static void partidosDelEquipo(int id, Connection con)
@@ -249,5 +266,24 @@ public class Model
 
     }
 
+    public static void editarJugador(String nom, int partit_id, Connection con)
+    {
+        MYSQLPartidosDAO partidosDAO = new MYSQLPartidosDAO(con);
+        MYSQLEstadisticas_jugadoresDAO estadisticasDAO = new MYSQLEstadisticas_jugadoresDAO(con);
+
+
+        if(partidosDAO.exists(new Partidos(partit_id))){
+            int id_jugador = trobaIdJugador(separarNombreEnApellido(nom)[0],separarNombreEnApellido(nom)[1],con);
+            ArrayList<Estadisticas_jugadores> totEst = new ArrayList<>();
+
+            //Crear el objeto Estadisticas_jugadores con los nuevos datos menos idjug, idpart i idequip i insertar los datos donde toca
+
+            estadisticasDAO.read(id_jugador,totEst);
+
+        }else
+        {
+            System.out.println("El partido seleccionado no existe");
+        }
+    }
 
 }

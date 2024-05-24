@@ -2,6 +2,7 @@ package model;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MYSQLJugadoresDAO implements DAOGenerica<Jugadores>
 {
@@ -29,9 +30,6 @@ public class MYSQLJugadoresDAO implements DAOGenerica<Jugadores>
             sta.setString(9,j.getPosicio());
             sta.executeUpdate();
             return true;
-        }catch (SQLIntegrityConstraintViolationException s)
-        {
-            System.out.println("Ya existe la id");
         }catch (SQLException s)
         {
             System.out.println("Error al crear: " + s.getMessage());
@@ -147,7 +145,13 @@ public class MYSQLJugadoresDAO implements DAOGenerica<Jugadores>
 
     // ALTRES DAO
     public boolean exists(Jugadores e) {
-        return true;
+        ArrayList<Jugadores> jugadores = readQuery();
+        AtomicBoolean existe = new AtomicBoolean(false);
+        jugadores.forEach((j) ->
+        {
+            if(j.getJugador_id() == e.getJugador_id()) existe.set(true);
+        });
+        return existe.get();
     }
 
     public int count() {

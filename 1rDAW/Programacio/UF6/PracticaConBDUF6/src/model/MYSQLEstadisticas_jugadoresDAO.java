@@ -65,8 +65,8 @@ public class MYSQLEstadisticas_jugadoresDAO implements DAOGenerica<Estadisticas_
         e.setEquip_id(ej.getEquip_id());
         return true;
     }
-    public boolean read(ArrayList<Estadisticas_jugadores> estadisticasJugadores) {
-        estadisticasJugadores.addAll(readQuery());
+    public boolean read(int jug_id,ArrayList<Estadisticas_jugadores> estadisticasJugadores) {
+        estadisticasJugadores.addAll(readQuery(estadisticasJugadores, jug_id));
         if (estadisticasJugadores.isEmpty()) return false;
         return true;
     }
@@ -81,7 +81,7 @@ public class MYSQLEstadisticas_jugadoresDAO implements DAOGenerica<Estadisticas_
             {
                 if (rs.getString("jugador_id").isEmpty()) return null;
                 return new Estadisticas_jugadores(jugador_id, rs.getInt("partit_id"),rs.getInt("tirs_anotats")
-                        ,rs.getInt("tirs_tirats"),rs.getInt("punts"),rs.getInt("tir_triples_anotats")
+                        ,rs.getInt("tirs_tirats"),rs.getInt("punts"),rs.getInt("tirs_triples_anotats")
                         ,rs.getInt("tirs_triples_tirats"),rs.getInt("tirs_lliures_anotats")
                         ,rs.getInt("tir_lliures_tirats"),rs.getInt("rebots_ofensius"),rs.getInt("rebots_defensius")
                         ,rs.getInt("assistencies"),rs.getInt("robades"),rs.getInt("bloqueigs")
@@ -94,13 +94,13 @@ public class MYSQLEstadisticas_jugadoresDAO implements DAOGenerica<Estadisticas_
         }
         return null;
     }
-    private static ArrayList<Estadisticas_jugadores> readQuery() {
+    private static ArrayList<Estadisticas_jugadores> readQuery(ArrayList<Estadisticas_jugadores> estadisticasJugadores, int jugd_id) {
         PreparedStatement sta;
         ResultSet rs;
-        ArrayList<Estadisticas_jugadores> estadisticasJugadores = new ArrayList<>();
         Estadisticas_jugadores ej;
         try {
-            sta = con.prepareStatement("SELECT * FROM estaistiques_jugadors");
+            sta = con.prepareStatement("SELECT * FROM estadistiques_jugadors WHERE jugador_id = ?");
+            sta.setInt(1,jugd_id);
             rs = sta.executeQuery();
             while (rs.next())
             {
@@ -133,26 +133,26 @@ public class MYSQLEstadisticas_jugadoresDAO implements DAOGenerica<Estadisticas_
     public boolean update(Estadisticas_jugadores e) {
         PreparedStatement sta;
         try {
-            sta = con.prepareStatement("UPDATE estadistiques_jugadors SET partit_id =?,punts =?,tirs_anotats =?," +
+            sta = con.prepareStatement("UPDATE estadistiques_jugadors SET punts =?,tirs_anotats =?," +
                     "tirs_tirats =?,tir_triples_anotats =?,tirs_triples_tirats =?,tirs_lliures_anotats =?,tir_lliures_tirats =?" +
                     ",rebots_ofensius =?,rebots_defensius =?,assistencies =?,robades =?,bloqueigs =?,minuts_jugats =?,equip_id =?" +
-                    " WHERE jugador_id =? ");
-            sta.setInt(1,e.getPartit_id());
-            sta.setInt(2,e.getPunts());
-            sta.setInt(3,e.getTirs_anotats());
-            sta.setInt(4,e.getTirs_tirats());
-            sta.setInt(5,e.getTir_triples_anotats());
-            sta.setInt(6,e.getTirs_triples_tirats());
-            sta.setInt(7,e.getTirs_lliures_anotats());
-            sta.setInt(8,e.getTir_lliures_tirats());
-            sta.setInt(9,e.getRebots_ofensius());
-            sta.setInt(10,e.getRebots_defensius());
-            sta.setInt(11,e.getAssistencies());
-            sta.setInt(12,e.getRobades());
-            sta.setInt(13,e.getBloqueigs());
-            sta.setFloat(14,e.getMinuts_jugats());
-            sta.setInt(15,e.getEquip_id());
-            sta.setInt(16, e.getJugador_id());
+                    " WHERE jugador_id =? AND partit_id =?");
+            sta.setInt(1,e.getPunts());
+            sta.setInt(2,e.getTirs_anotats());
+            sta.setInt(3,e.getTirs_tirats());
+            sta.setInt(4,e.getTir_triples_anotats());
+            sta.setInt(5,e.getTirs_triples_tirats());
+            sta.setInt(6,e.getTirs_lliures_anotats());
+            sta.setInt(7,e.getTir_lliures_tirats());
+            sta.setInt(8,e.getRebots_ofensius());
+            sta.setInt(9,e.getRebots_defensius());
+            sta.setInt(10,e.getAssistencies());
+            sta.setInt(11,e.getRobades());
+            sta.setInt(12,e.getBloqueigs());
+            sta.setFloat(13,e.getMinuts_jugats());
+            sta.setInt(14,e.getEquip_id());
+            sta.setInt(15, e.getJugador_id());
+            sta.setInt(16,e.getPartit_id());
             sta.executeUpdate();
             return true;
         }catch (SQLException s)

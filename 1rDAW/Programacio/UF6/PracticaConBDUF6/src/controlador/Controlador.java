@@ -5,6 +5,7 @@ import vista.Vista;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Controlador
@@ -100,8 +101,8 @@ public class Controlador
         Vista.mostrarUnMisatgeGeneric("De quin jugador vols veure la mitjana d'estadistiques?");
         nom = scan.nextLine();
         jugador = Model.separarNombreEnApellido(nom);
-        jugador_id = Model.trobaId(jugador[0], jugador[1], con);
-        Model.mostrarAVGJugaor(jugador_id,con);
+        jugador_id = Model.trobaIdJugador(jugador[0], jugador[1], con);
+        Model.mostrarAVGJugador(jugador_id,con);
     }
     private static void pregunta3()
     {
@@ -123,13 +124,13 @@ public class Controlador
     }
     private static void pregunta5()
     {
-        int id;
+        String nom;
         String equipo;
-        Vista.mostrarUnMisatgeGeneric("Indique el id del jugador a mover");
-        id = scan.nextInt();
+        Vista.mostrarUnMisatgeGeneric("Indique el nombre del jugador a mover");
+        nom = scan.nextLine().trim();
         Vista.mostrarUnMisatgeGeneric("Ahora indique su nuevo equipo");
         equipo = scan.nextLine().trim();
-        Model.moverJugador(id,equipo,con);
+        Model.moverJugador(nom,equipo,con);
     }
 
     private static void pregunta6()
@@ -139,7 +140,15 @@ public class Controlador
 
     private static void pregunta7()
     {
-
+        String nom;
+        int partit_id;
+        Vista.mostrarUnMisatgeGeneric("Indique el nombre del jugador a mover");
+        nom = scan.nextLine().trim();
+        Vista.mostrarUnMisatgeGeneric("Ahora indique su partido_id");
+        try {
+            partit_id = scan.nextInt();
+        }catch (InputMismatchException i) {partit_id = 0;}
+        Model.editarJugador(nom,partit_id,con);
     }
 
     private static void pregunta8()

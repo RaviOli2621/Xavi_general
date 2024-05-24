@@ -3,6 +3,7 @@ package model;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MYSQLPartidosDAO implements DAOGenerica<Partidos>{
     static Connection con;
@@ -131,8 +132,14 @@ public class MYSQLPartidosDAO implements DAOGenerica<Partidos>{
 
     // ALTRES DAO
     @Override
-    public boolean exists(Partidos partidos) {
-        return true;
+    public boolean exists(Partidos partido) {
+        ArrayList<Partidos> partidos = readQuery();
+        AtomicBoolean existe = new AtomicBoolean(false);
+        partidos.forEach((j) ->
+        {
+            if(j.getPartit_id() == partido.getPartit_id()) existe.set(true);
+        });
+        return existe.get();
     }
 
     @Override
