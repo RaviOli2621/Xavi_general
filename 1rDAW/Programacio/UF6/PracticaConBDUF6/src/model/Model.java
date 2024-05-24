@@ -195,7 +195,7 @@ public class Model
         {
             if(eq.getNom().equals(nom) && eq.getCognom().equals(cognom))
             {
-                jugador_id.set(eq.getEquip_id());
+                jugador_id.set(eq.getJugador_id());
             }
         });
         return jugador_id.get();
@@ -226,7 +226,24 @@ public class Model
             mediaJug.setEquip_id(e.getEquip_id());
         });
         totalPartits = stats_jugadors.size();
-        
+        //todo :llamar funcion para guardar resultado final
+    }
+    private static Estadisticas_jugadores calcularAVG(Estadisticas_jugadores mediaJug, int totalPartits){
+
+        mediaJug.setTirs_anotats(mediaJug.getTirs_anotats() / totalPartits);
+        mediaJug.setTirs_tirats(mediaJug.getTirs_tirats() / totalPartits);
+        mediaJug.setTir_triples_anotats(mediaJug.getTir_triples_anotats() / totalPartits);
+        mediaJug.setTirs_triples_tirats(mediaJug.getTirs_triples_tirats() / totalPartits);
+        mediaJug.setTirs_lliures_anotats(mediaJug.getTirs_lliures_anotats() / totalPartits);
+        mediaJug.setTir_lliures_tirats(mediaJug.getTir_lliures_tirats() / totalPartits);
+        mediaJug.setRebots_defensius(mediaJug.getRebots_defensius() / totalPartits);
+        mediaJug.setRebots_ofensius(mediaJug.getRebots_ofensius() / totalPartits);
+        mediaJug.setBloqueigs(mediaJug.getBloqueigs() / totalPartits);
+        mediaJug.setRobades(mediaJug.getRobades() / totalPartits);
+        mediaJug.setAssistencies(mediaJug.getAssistencies() / totalPartits);
+        mediaJug.setMinuts_jugats(mediaJug.getMinuts_jugats() / totalPartits);
+        mediaJug.setPunts(mediaJug.getPunts() / totalPartits);
+        return mediaJug;
     }
 
     public static void partidosDelEquipo(int id, Connection con)

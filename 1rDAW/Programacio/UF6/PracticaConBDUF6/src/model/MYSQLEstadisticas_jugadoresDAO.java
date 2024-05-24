@@ -83,7 +83,7 @@ public class MYSQLEstadisticas_jugadoresDAO implements DAOGenerica<Estadisticas_
                 return new Estadisticas_jugadores(jugador_id, rs.getInt("partit_id"),rs.getInt("tirs_anotats")
                         ,rs.getInt("tirs_tirats"),rs.getInt("punts"),rs.getInt("tirs_triples_anotats")
                         ,rs.getInt("tirs_triples_tirats"),rs.getInt("tirs_lliures_anotats")
-                        ,rs.getInt("tir_lliures_tirats"),rs.getInt("rebots_ofensius"),rs.getInt("rebots_defensius")
+                        ,rs.getInt("tirs_lliures_tirats"),rs.getInt("rebots_ofensius"),rs.getInt("rebots_defensius")
                         ,rs.getInt("assistencies"),rs.getInt("robades"),rs.getInt("bloqueigs")
                         ,rs.getFloat("minuts_jugats"),rs.getInt("equip_id"));
             }
