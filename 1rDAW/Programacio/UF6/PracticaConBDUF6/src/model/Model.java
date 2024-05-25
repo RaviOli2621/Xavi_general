@@ -201,10 +201,19 @@ public class Model
         });
         return jugador_id.get();
     }
+    private static void mostrarEstadisticas_jugadores(Estadisticas_jugadores e){
+        Vista.mostrarUnMisatgeGeneric(e.toString());
+
+    }
     public static void mostrarAVGJugador(int jugador_id, Connection con){
+        Estadisticas_jugadores mediaJug = new Estadisticas_jugadores(jugador_id);
+
+        prepararAVGJugador(mediaJug, jugador_id, con);
+        mostrarEstadisticas_jugadores(mediaJug);
+    }
+    private static void prepararAVGJugador(Estadisticas_jugadores mediaJug, int jugador_id, Connection con){
         MYSQLEstadisticas_jugadoresDAO statsDAO = new MYSQLEstadisticas_jugadoresDAO(con);
         ArrayList<Estadisticas_jugadores> stats_jugadors = new ArrayList<>();
-        Estadisticas_jugadores mediaJug = new Estadisticas_jugadores(jugador_id);
         int totalPartits;
 
         statsDAO.read(jugador_id,stats_jugadors);
@@ -227,9 +236,9 @@ public class Model
             mediaJug.setEquip_id(e.getEquip_id());
         });
         totalPartits = stats_jugadors.size();
-        //todo :llamar funcion para guardar resultado final
+        calcularAVG(mediaJug, totalPartits);
     }
-    private static Estadisticas_jugadores calcularAVG(Estadisticas_jugadores mediaJug, int totalPartits){
+    private static void calcularAVG(Estadisticas_jugadores mediaJug, int totalPartits){
 
         mediaJug.setTirs_anotats(mediaJug.getTirs_anotats() / totalPartits);
         mediaJug.setTirs_tirats(mediaJug.getTirs_tirats() / totalPartits);
@@ -244,7 +253,6 @@ public class Model
         mediaJug.setAssistencies(mediaJug.getAssistencies() / totalPartits);
         mediaJug.setMinuts_jugats(mediaJug.getMinuts_jugats() / totalPartits);
         mediaJug.setPunts(mediaJug.getPunts() / totalPartits);
-        return mediaJug;
     }
 
     public static void partidosDelEquipo(int id, Connection con)

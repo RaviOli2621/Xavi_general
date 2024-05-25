@@ -1,5 +1,7 @@
 package model;
 
+import vista.Vista;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,18 +22,18 @@ public class MYSQLEstadisticas_jugadoresDAO implements DAOGenerica<Estadisticas_
                     " rebots_defensius, assistencies, robades, bloqueigs, minuts_jugats, equip_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)" );
             sta.setInt(1,e.getJugador_id());
             sta.setInt(2,e.getPartit_id());
-            sta.setInt(3,e.getPunts());
-            sta.setInt(4,e.getTirs_anotats());
-            sta.setInt(5,e.getTirs_tirats());
-            sta.setInt(6,e.getTir_triples_anotats());
-            sta.setInt(7,e.getTirs_triples_tirats());
-            sta.setInt(8,e.getTirs_lliures_anotats());
-            sta.setInt(9,e.getTir_lliures_tirats());
-            sta.setInt(10,e.getRebots_ofensius());
-            sta.setInt(11,e.getRebots_defensius());
-            sta.setInt(12,e.getAssistencies());
-            sta.setInt(13,e.getRobades());
-            sta.setInt(14,e.getBloqueigs());
+            sta.setFloat(3,e.getPunts());
+            sta.setFloat(4,e.getTirs_anotats());
+            sta.setFloat(5,e.getTirs_tirats());
+            sta.setFloat(6,e.getTir_triples_anotats());
+            sta.setFloat(7,e.getTirs_triples_tirats());
+            sta.setFloat(8,e.getTirs_lliures_anotats());
+            sta.setFloat(9,e.getTir_lliures_tirats());
+            sta.setFloat(10,e.getRebots_ofensius());
+            sta.setFloat(11,e.getRebots_defensius());
+            sta.setFloat(12,e.getAssistencies());
+            sta.setFloat(13,e.getRobades());
+            sta.setFloat(14,e.getBloqueigs());
             sta.setFloat(15,e.getMinuts_jugats());
             sta.setInt(16,e.getEquip_id());
             sta.executeUpdate();
@@ -80,11 +82,11 @@ public class MYSQLEstadisticas_jugadoresDAO implements DAOGenerica<Estadisticas_
             while (rs.next())
             {
                 if (rs.getString("jugador_id").isEmpty()) return null;
-                return new Estadisticas_jugadores(jugador_id, rs.getInt("partit_id"),rs.getInt("tirs_anotats")
-                        ,rs.getInt("tirs_tirats"),rs.getInt("punts"),rs.getInt("tirs_triples_anotats")
-                        ,rs.getInt("tirs_triples_tirats"),rs.getInt("tirs_lliures_anotats")
-                        ,rs.getInt("tirs_lliures_tirats"),rs.getInt("rebots_ofensius"),rs.getInt("rebots_defensius")
-                        ,rs.getInt("assistencies"),rs.getInt("robades"),rs.getInt("bloqueigs")
+                return new Estadisticas_jugadores(jugador_id, rs.getInt("partit_id"),rs.getFloat("tirs_anotats")
+                        ,rs.getFloat("tirs_tirats"),rs.getFloat("punts"),rs.getFloat("tirs_triples_anotats")
+                        ,rs.getFloat("tirs_triples_tirats"),rs.getFloat("tirs_lliures_anotats")
+                        ,rs.getFloat("tirs_lliures_tirats"),rs.getFloat("rebots_ofensius"),rs.getFloat("rebots_defensius")
+                        ,rs.getFloat("assistencies"),rs.getFloat("robades"),rs.getFloat("bloqueigs")
                         ,rs.getFloat("minuts_jugats"),rs.getInt("equip_id"));
             }
         }catch (SQLException s)
@@ -137,18 +139,18 @@ public class MYSQLEstadisticas_jugadoresDAO implements DAOGenerica<Estadisticas_
                     "tirs_tirats =?,tirs_triples_anotats =?,tirs_triples_tirats =?,tirs_lliures_anotats =?,tirs_lliures_tirats =?" +
                     ",rebots_ofensius =?,rebots_defensius =?,assistencies =?,robades =?,bloqueigs =?,minuts_jugats =?,equip_id =?" +
                     " WHERE jugador_id =? AND partit_id =?");
-            sta.setInt(1,e.getPunts());
-            sta.setInt(2,e.getTirs_anotats());
-            sta.setInt(3,e.getTirs_tirats());
-            sta.setInt(4,e.getTir_triples_anotats());
-            sta.setInt(5,e.getTirs_triples_tirats());
-            sta.setInt(6,e.getTirs_lliures_anotats());
-            sta.setInt(7,e.getTir_lliures_tirats());
-            sta.setInt(8,e.getRebots_ofensius());
-            sta.setInt(9,e.getRebots_defensius());
-            sta.setInt(10,e.getAssistencies());
-            sta.setInt(11,e.getRobades());
-            sta.setInt(12,e.getBloqueigs());
+            sta.setFloat(1,e.getPunts());
+            sta.setFloat(2,e.getTirs_anotats());
+            sta.setFloat(3,e.getTirs_tirats());
+            sta.setFloat(4,e.getTir_triples_anotats());
+            sta.setFloat(5,e.getTirs_triples_tirats());
+            sta.setFloat(6,e.getTirs_lliures_anotats());
+            sta.setFloat(7,e.getTir_lliures_tirats());
+            sta.setFloat(8,e.getRebots_ofensius());
+            sta.setFloat(9,e.getRebots_defensius());
+            sta.setFloat(10,e.getAssistencies());
+            sta.setFloat(11,e.getRobades());
+            sta.setFloat(12,e.getBloqueigs());
             sta.setFloat(13,e.getMinuts_jugats());
             sta.setInt(14,e.getEquip_id());
             sta.setInt(15, e.getJugador_id());
@@ -170,7 +172,7 @@ public class MYSQLEstadisticas_jugadoresDAO implements DAOGenerica<Estadisticas_
             return true;
         }catch (SQLException s)
         {
-            System.out.println("Error al borrar: " + s.getMessage());
+            Vista.mostrarUnMisatgeGeneric("Error al borrar: " + s.getMessage());
         }
         return false;
     }
