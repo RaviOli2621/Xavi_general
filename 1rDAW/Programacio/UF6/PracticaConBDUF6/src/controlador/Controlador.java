@@ -81,7 +81,7 @@ public class Controlador
                 pregunta9();
                 break;
             default:
-                prueba();
+                Vista.mostrarUnMisatgeGeneric("Te equivocaste");
         }
     }
 
@@ -142,7 +142,7 @@ public class Controlador
     {
         String nom;
         int partit_id;
-        Vista.mostrarUnMisatgeGeneric("Indique el nombre del jugador a mover");
+        Vista.mostrarUnMisatgeGeneric("Indique el nombre del jugador");
         nom = scan.nextLine().trim();
         Vista.mostrarUnMisatgeGeneric("Ahora indique su partido_id");
         try {
@@ -153,20 +153,15 @@ public class Controlador
 
     private static void pregunta8()
     {
+        String nom;
 
+        Vista.mostrarUnMisatgeGeneric("Introduzca el nombre del jugador al qual quieres jubilar");
+        nom = scan.nextLine().trim();
+        Model.moverAHistoric(nom, con);
     }
 
     private static void pregunta9()
     {
-
-    }
-    public static void prueba()
-    {
-        Jugadores prueba1 = new Jugadores(2544);
-
-        MYSQLJugadoresDAO dao = new MYSQLJugadoresDAO(con);
-
-        dao.create(prueba1);
 
     }
 }

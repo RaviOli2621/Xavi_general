@@ -4,10 +4,11 @@ public class Historico {
     int tirs_anotats, tirs_tirats, tir_triples_anotats, tirs_triples_tirats, tirs_lliures_anotats, tir_lliures_tirats,
             rebots_ofensius, rebots_defensius, assistencies, robades, bloqueigs, jugador_id, ultim_Equip_id, punts_tot;
     float tot_min_jugats;
-
+    String nom;
     //constructors
     public Historico(int jugador_id){
         this.jugador_id = jugador_id;
+        setNom("");
         setUltim_Equip_id(0);
         setPunts_tot(0);
         setTirs_anotats(0);
@@ -25,6 +26,7 @@ public class Historico {
     }
     public Historico(Historico h){
         this.jugador_id = h.jugador_id;
+        setNom(h.nom);
         setUltim_Equip_id(h.ultim_Equip_id);
         setPunts_tot(h.punts_tot);
         setTirs_anotats(h.tirs_anotats);
@@ -40,7 +42,8 @@ public class Historico {
         setBloqueigs(h.bloqueigs);
         setTot_min_jugats(h.tot_min_jugats);
     }
-    public Historico(int jugador_id, int ultim_Equip_id, int punts_tot, int tirs_anotats, int tirs_tirats, int tir_triples_anotats, int tirs_triples_tirats, int tirs_lliures_anotats, int tir_lliures_tirats, int rebots_ofensius, int rebots_defensius, int assistencies, int robades, int bloqueigs, float tot_min_jugats) {
+    public Historico(String nom, int jugador_id, int ultim_Equip_id, int punts_tot, int tirs_anotats, int tirs_tirats, int tir_triples_anotats, int tirs_triples_tirats, int tirs_lliures_anotats, int tir_lliures_tirats, int rebots_ofensius, int rebots_defensius, int assistencies, int robades, int bloqueigs, float tot_min_jugats) {
+        this.nom = nom;
         this.jugador_id = jugador_id;
         this.ultim_Equip_id = ultim_Equip_id;
         this.punts_tot = punts_tot;
@@ -59,6 +62,11 @@ public class Historico {
     }
 
     //Getters
+
+    public String getNom() {
+        return nom;
+    }
+
     public int getTirs_anotats() {return tirs_anotats;}
     public int getTirs_tirats() {return tirs_tirats;}
     public int getTir_triples_anotats() {return tir_triples_anotats;}
@@ -76,6 +84,10 @@ public class Historico {
     public float getTot_min_jugats() {return tot_min_jugats;}
 
     //Setters
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
     public void setTirs_anotats(int tirs_anotats) {this.tirs_anotats = tirs_anotats;}
     public void setTirs_tirats(int tirs_tirats) {this.tirs_tirats = tirs_tirats;}
     public void setTir_triples_anotats(int tir_triples_anotats) {this.tir_triples_anotats = tir_triples_anotats;}

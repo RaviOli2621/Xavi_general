@@ -16,7 +16,7 @@ public class MYSQLEstadisticas_jugadoresDAO implements DAOGenerica<Estadisticas_
         PreparedStatement sta;
         try {
             sta = con.prepareStatement("INSERT INTO estadistiques_jugadors (jugador_id, partit_id, punts, tirs_anotats," +
-                    " tirs_tirats, tir_triples_anotats, tirs_triples_tirats, tirs_lliures_anotats, tir_lliures_tirats, rebots_ofensius," +
+                    " tirs_tirats, tirs_triples_anotats, tirs_triples_tirats, tirs_lliures_anotats, tirs_lliures_tirats, rebots_ofensius," +
                     " rebots_defensius, assistencies, robades, bloqueigs, minuts_jugats, equip_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)" );
             sta.setInt(1,e.getJugador_id());
             sta.setInt(2,e.getPartit_id());
@@ -66,7 +66,7 @@ public class MYSQLEstadisticas_jugadoresDAO implements DAOGenerica<Estadisticas_
         return true;
     }
     public boolean read(int jug_id,ArrayList<Estadisticas_jugadores> estadisticasJugadores) {
-        estadisticasJugadores.addAll(readQuery(estadisticasJugadores, jug_id));
+        readQuery(estadisticasJugadores, jug_id);
         if (estadisticasJugadores.isEmpty()) return false;
         return true;
     }
@@ -107,19 +107,19 @@ public class MYSQLEstadisticas_jugadoresDAO implements DAOGenerica<Estadisticas_
                 ej = new Estadisticas_jugadores(0);
                 ej.setJugador_id(rs.getInt(1));
                 ej.setPartit_id(rs.getInt(2));
-                ej.setPunts(rs.getInt(3));
-                ej.setTirs_anotats(rs.getInt(4));
-                ej.setTirs_tirats(rs.getInt(5));
-                ej.setTir_triples_anotats(rs.getInt(6));
-                ej.setTirs_triples_tirats(rs.getInt(7));
-                ej.setTirs_lliures_anotats(rs.getInt(8));
-                ej.setTir_lliures_tirats(rs.getInt(9));
-                ej.setRebots_ofensius(rs.getInt(10));
-                ej.setRebots_defensius(rs.getInt(11));
-                ej.setAssistencies(rs.getInt(12));
-                ej.setRobades(rs.getInt(13));
-                ej.setBloqueigs(rs.getInt(14));
-                ej.setMinuts_jugats(rs.getFloat(15));
+                ej.setMinuts_jugats(rs.getFloat(3));
+                ej.setPunts(rs.getFloat(4));
+                ej.setTirs_anotats(rs.getFloat(5));
+                ej.setTirs_tirats(rs.getFloat(6));
+                ej.setTir_triples_anotats(rs.getFloat(7));
+                ej.setTirs_triples_tirats(rs.getFloat(8));
+                ej.setTirs_lliures_anotats(rs.getFloat(9));
+                ej.setTir_lliures_tirats(rs.getFloat(10));
+                ej.setRebots_ofensius(rs.getFloat(11));
+                ej.setRebots_defensius(rs.getFloat(12));
+                ej.setAssistencies(rs.getFloat(13));
+                ej.setRobades(rs.getFloat(14));
+                ej.setBloqueigs(rs.getFloat(15));
                 ej.setEquip_id(rs.getInt(16));
                 estadisticasJugadores.add(ej);
             }
@@ -134,7 +134,7 @@ public class MYSQLEstadisticas_jugadoresDAO implements DAOGenerica<Estadisticas_
         PreparedStatement sta;
         try {
             sta = con.prepareStatement("UPDATE estadistiques_jugadors SET punts =?,tirs_anotats =?," +
-                    "tirs_tirats =?,tir_triples_anotats =?,tirs_triples_tirats =?,tirs_lliures_anotats =?,tir_lliures_tirats =?" +
+                    "tirs_tirats =?,tirs_triples_anotats =?,tirs_triples_tirats =?,tirs_lliures_anotats =?,tirs_lliures_tirats =?" +
                     ",rebots_ofensius =?,rebots_defensius =?,assistencies =?,robades =?,bloqueigs =?,minuts_jugats =?,equip_id =?" +
                     " WHERE jugador_id =? AND partit_id =?");
             sta.setInt(1,e.getPunts());
@@ -157,7 +157,7 @@ public class MYSQLEstadisticas_jugadoresDAO implements DAOGenerica<Estadisticas_
             return true;
         }catch (SQLException s)
         {
-            System.out.println("Error al fer update");
+            Vista.mostrarUnMisatgeGeneric("Error al fer update " +s.getMessage() );
         }
         return false;
     }

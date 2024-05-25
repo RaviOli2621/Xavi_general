@@ -75,9 +75,13 @@ CREATE TABLE `historic`(
 alter table estadistiques_jugadors
 add equip_id int unsigned not null;
 
-SELECT * FROM estadistiques_jugadors;
+SELECT * FROM partits WHERE equip_id = 1610612741;
+select * from equips;
+
+Select * FROM jugadors WHERE equip_id = 1610612741;
 
 
-SELECT equip_id
-FROM jugadors
+
+
+
 WHERE jugador_id = this;

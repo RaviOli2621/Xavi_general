@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.PrintStream;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
@@ -292,15 +293,237 @@ public class Model
         if(partidosDAO.exists(new Partidos(partit_id))){
             int id_jugador = trobaIdJugador(separarNombreEnApellido(nom)[0],separarNombreEnApellido(nom)[1],con);
             ArrayList<Estadisticas_jugadores> totEst = new ArrayList<>();
-
-            //Crear el objeto Estadisticas_jugadores con los nuevos datos menos idjug, idpart i idequip i insertar los datos donde toca
-
+            Estadisticas_jugadores estadAModif = new Estadisticas_jugadores(id_jugador);
             estadisticasDAO.read(id_jugador,totEst);
 
+            totEst.forEach((e) ->
+            {
+                if(e.getPartit_id() == partit_id)
+                {
+                    estadAModif.setPartit_id(partit_id);
+                    estadAModif.setEquip_id(e.getEquip_id());
+                    estadAModif.setPunts(e.getPunts());
+                    estadAModif.setTirs_anotats(e.getTirs_anotats());
+                    estadAModif.setTirs_tirats(e.getTirs_tirats());
+                    estadAModif.setTir_triples_anotats(e.getTir_triples_anotats());
+                    estadAModif.setTirs_triples_tirats(e.getTirs_triples_tirats());
+                    estadAModif.setTirs_lliures_anotats(e.getTirs_lliures_anotats());
+                    estadAModif.setTir_lliures_tirats(e.getTir_lliures_tirats());
+                    estadAModif.setRebots_ofensius(e.getRebots_ofensius());
+                    estadAModif.setRebots_defensius(e.getRebots_defensius());
+                    estadAModif.setAssistencies(e.getAssistencies());
+                    estadAModif.setRobades(e.getRobades());
+                    estadAModif.setBloqueigs(e.getBloqueigs());
+                    estadAModif.setMinuts_jugats(e.getMinuts_jugats());
+                }
+            });
+            editarElJugador(estadAModif);
+            estadisticasDAO.update(estadAModif);
+            //Crear el objeto Estadisticas_jugadores con los nuevos datos menos idjug, idpart i idequip i insertar los datos donde toca
         }else
         {
             System.out.println("El partido seleccionado no existe");
         }
+    }
+    private static Estadisticas_jugadores editarElJugador(Estadisticas_jugadores est)//funcion complementaria a editarJugador
+    {
+        Scanner scan = new Scanner(System.in);
+        boolean mantenerBucle = true;
+        while (mantenerBucle)
+        {
+            Vista.editarJugadorDades();
+            switch (scan.next())
+            {
+                case "1":
+                    Vista.mostrarUnMisatgeGeneric("Introduzca el nuevo id del equipo:");
+                    try {
+                        est.setEquip_id(scan.nextInt());
+                    }catch (InputMismatchException i)
+                    {
+                        System.out.println("Valor no valido");
+                    }
+                    break;
+                case "2":
+                    Vista.mostrarUnMisatgeGeneric("Introduzca los puntos totales del jugador:");
+                    try {
+                        est.setPunts(scan.nextInt());
+                    }catch (InputMismatchException i)
+                    {
+                        System.out.println("Valor no valido");
+                    }
+                    break;
+                case "3":
+                    Vista.mostrarUnMisatgeGeneric("Introduzca los tiros metidos:");
+                    try {
+                        est.setTirs_anotats(scan.nextInt());
+                    }catch (InputMismatchException i)
+                    {
+                        System.out.println("Valor no valido");
+                    }
+                    break;
+                case "4":
+                    Vista.mostrarUnMisatgeGeneric("Introduzca los tiros tirados");
+                    try {
+                        est.setTirs_tirats(scan.nextInt());
+                    }catch (InputMismatchException i)
+                    {
+                        System.out.println("Valor no valido");
+                    }
+                    break;
+                case "5":
+                    Vista.mostrarUnMisatgeGeneric("Introduzca los triple metidos");
+                    try {
+                        est.setTir_triples_anotats(scan.nextInt());
+                    }catch (InputMismatchException i)
+                    {
+                        System.out.println("Valor no valido");
+                    }
+                    break;
+                case "6":
+                    Vista.mostrarUnMisatgeGeneric("Introduzca los triple tirados");
+                    try {
+                        est.setTirs_triples_tirats(scan.nextInt());
+                    }catch (InputMismatchException i)
+                    {
+                        System.out.println("Valor no valido");
+                    }
+                    break;
+                case "7":
+                    Vista.mostrarUnMisatgeGeneric("Introduzca los tiros libres metidos");
+                    try {
+                        est.setTirs_lliures_anotats(scan.nextInt());
+                    }catch (InputMismatchException i)
+                    {
+                        System.out.println("Valor no valido");
+                    }
+                    break;
+                case "8":
+                    Vista.mostrarUnMisatgeGeneric("Introduzca los tiros libres tirados");
+                    try {
+                        est.setTir_lliures_tirats(scan.nextInt());
+                    }catch (InputMismatchException i)
+                    {
+                        System.out.println("Valor no valido");
+                    }
+                    break;
+                case "9":
+                    Vista.mostrarUnMisatgeGeneric("Introduzca los rebotes ofensivos");
+                    try {
+                        est.setRebots_ofensius(scan.nextInt());
+                    }catch (InputMismatchException i)
+                    {
+                        System.out.println("Valor no valido");
+                    }
+                    break;
+                case "10":
+                    Vista.mostrarUnMisatgeGeneric("Introduzca los rebotes defensivos");
+                    try {
+                        est.setRebots_defensius(scan.nextInt());
+                    }catch (InputMismatchException i)
+                    {
+                        System.out.println("Valor no valido");
+                    }
+                    break;
+                case "11":
+                    Vista.mostrarUnMisatgeGeneric("Introduzca las assistencias");
+                    try {
+                        est.setAssistencies(scan.nextInt());
+                    }catch (InputMismatchException i)
+                    {
+                        System.out.println("Valor no valido");
+                    }
+                    break;
+                case "12":
+                    Vista.mostrarUnMisatgeGeneric("Introduzca las robadas");
+                    try {
+                        est.setRobades(scan.nextInt());
+                    }catch (InputMismatchException i)
+                    {
+                        System.out.println("Valor no valido");
+                    }
+                    break;
+                case "13":
+                    Vista.mostrarUnMisatgeGeneric("Introduzca los bloqueos");
+                    try {
+                        est.setBloqueigs(scan.nextInt());
+                    }catch (InputMismatchException i)
+                    {
+                        System.out.println("Valor no valido");
+                    }
+                    break;
+                case "14":
+                    Vista.mostrarUnMisatgeGeneric("Introduzca los minutos jugados");
+                    try {
+                        est.setMinuts_jugats(scan.nextInt());
+                    }catch (InputMismatchException i)
+                    {
+                        System.out.println("Valor no valido");
+                    }
+                    break;
+                case "0":
+                    mantenerBucle = false;
+                    break;
+                default:
+                    Vista.mostrarUnMisatgeGeneric("Te equivocaste mi loco");
+                    break;
+            }
+        }
+        Vista.mostrarUnMisatgeGeneric("Los datos modificados estan siendo subidos a la base de datos");
+        return est;
+    }
+    private static void prepararSUMJugador(Estadisticas_jugadores sumJugador, int jugador_id, Connection con){
+        MYSQLEstadisticas_jugadoresDAO statsDAO = new MYSQLEstadisticas_jugadoresDAO(con);
+        ArrayList<Estadisticas_jugadores> stats_jugadors = new ArrayList<>();
+
+        statsDAO.read(jugador_id,stats_jugadors);
+
+        stats_jugadors.forEach((e) ->
+        {
+            sumJugador.setTirs_anotats(sumJugador.getTirs_anotats() + e.getTirs_anotats());
+            sumJugador.setTirs_tirats(sumJugador.getTirs_tirats() + e.getTirs_tirats());
+            sumJugador.setTir_triples_anotats(sumJugador.getTir_triples_anotats() + e.getTir_triples_anotats());
+            sumJugador.setTirs_triples_tirats(sumJugador.getTirs_triples_tirats() + e.getTirs_triples_tirats());
+            sumJugador.setTirs_lliures_anotats(sumJugador.getTirs_lliures_anotats() + e.getTirs_lliures_anotats());
+            sumJugador.setTir_lliures_tirats(sumJugador.getTir_lliures_tirats() + e.getTir_lliures_tirats());
+            sumJugador.setRebots_defensius(sumJugador.getRebots_defensius() + e.getRebots_defensius());
+            sumJugador.setRebots_ofensius(sumJugador.getRebots_ofensius() + e.getRebots_ofensius());
+            sumJugador.setBloqueigs(sumJugador.getBloqueigs() + e.getBloqueigs());
+            sumJugador.setRobades(sumJugador.getRobades() + e.getRobades());
+            sumJugador.setAssistencies(sumJugador.getAssistencies() + e.getAssistencies());
+            sumJugador.setMinuts_jugats(sumJugador.getMinuts_jugats() + e.getMinuts_jugats());
+            sumJugador.setPunts(sumJugador.getPunts() + e.getPunts());
+            sumJugador.setEquip_id(e.getEquip_id());
+        });
+    }
+    public static void moverAHistoric(String nom, Connection con)
+    {
+        int id = trobaIdJugador(separarNombreEnApellido(nom)[0], separarNombreEnApellido(nom)[1],con);
+        MYSQLHistoricoDAO histDAO = new MYSQLHistoricoDAO(con);
+        Historico hist = new Historico(id);
+        MYSQLJugadoresDAO jugDAO = new MYSQLJugadoresDAO(con);
+        Jugadores jug = new Jugadores(id);
+        jugDAO.read(jug);
+        Estadisticas_jugadores sumJugador = new Estadisticas_jugadores(id);
+        prepararSUMJugador(sumJugador,id,con);
+
+        hist.setNom((jug.getNom() + " " + jug.getCognom()));
+        hist.setUltim_Equip_id(jug.getEquip_id());
+        hist.setTot_min_jugats(sumJugador.getMinuts_jugats());
+        hist.setPunts_tot((int)sumJugador.getPunts());
+        hist.setTirs_anotats((int)sumJugador.getTirs_anotats());
+        hist.setTirs_tirats((int)sumJugador.getTirs_tirats());
+        hist.setTir_triples_anotats((int)sumJugador.getTir_triples_anotats());
+        hist.setTirs_triples_tirats((int)sumJugador.getTirs_triples_tirats());
+        hist.setTirs_lliures_anotats((int)sumJugador.getTirs_lliures_anotats());
+        hist.setTir_lliures_tirats((int)sumJugador.getTir_lliures_tirats());
+        hist.setRebots_ofensius((int)sumJugador.getRebots_ofensius());
+        hist.setRebots_defensius((int)sumJugador.rebots_defensius);
+        hist.setAssistencies((int)sumJugador.getAssistencies());
+        hist.setRobades((int)sumJugador.getRobades());
+        hist.setBloqueigs((int)sumJugador.getBloqueigs());
+
+        histDAO.create(hist);
+        jugDAO.delete(jug);
     }
 
 }
