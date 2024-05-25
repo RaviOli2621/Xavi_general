@@ -1,5 +1,7 @@
 package vista;
 
+import model.Estadisticas_jugadores;
+
 import java.util.ArrayList;
 
 public class Vista {
@@ -15,6 +17,17 @@ public class Vista {
             System.out.printf("%-10s %-40s\n",missatge.get(i),missatge.get(i+1));
             i++;
         }
+    }
+    public static void mostrarMenu(){
+        System.out.println("1- Listar tots els jugadors d'un equip");
+        System.out.println("2- Calcular la mitjana de punts, rebots, assistencies, ... d'un jugador");
+        System.out.println("3- Llistar tots els partits jugats per un equip amb el seu resultat");
+        System.out.println("4- Inserir un nou jugador a un equip");
+        System.out.println("5- Traspassar un judador a un altra equip");
+        System.out.println("6- Actualitzar les dades de jugadors o equips després d'un partit");
+        System.out.println("7- Modificar les estadístiques d’un jugador");
+        System.out.println("8- Retirar (Eliminar) un jugador");
+        System.out.println("9- Canviar nom franquícia d’un equip");
     }
     public static void editarJugadorDades()
     {
@@ -34,6 +47,10 @@ public class Vista {
         System.out.println("\t13. Bloqueos");
         System.out.println("\t14. Minutos jugados");
         System.out.println("\t0. Nada, me equivoque de boton al seleccionar la funcion / no quiero editar mas (creo que no era necessario un texto tan largo para esta opción aunque el daño ya esta hecho. Bueno ya que estamo, saludos Xavi)");
+
+    }
+    public static void mostrarEstadisticas_jugadores(Estadisticas_jugadores e){
+        Vista.mostrarUnMisatgeGeneric(e.toString());
 
     }
 }

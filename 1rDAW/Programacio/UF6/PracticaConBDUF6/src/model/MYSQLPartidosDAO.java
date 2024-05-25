@@ -1,5 +1,7 @@
 package model;
 
+import vista.Vista;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +31,7 @@ public class MYSQLPartidosDAO implements DAOGenerica<Partidos>{
             return true;
         }catch (SQLException s)
         {
-            System.out.println("Error al crear: " + s.getMessage());
+            Vista.mostrarUnMisatgeGeneric("Error al crear: " + s.getMessage());
         }
         return false;
     }
@@ -64,7 +66,7 @@ public class MYSQLPartidosDAO implements DAOGenerica<Partidos>{
             }
         }catch (SQLException s)
         {
-            System.out.println("Error al hacer select");
+            Vista.mostrarUnMisatgeGeneric("Error al hacer select");
             return null;
         }
         return null;
@@ -90,7 +92,7 @@ public class MYSQLPartidosDAO implements DAOGenerica<Partidos>{
             }
         }catch (SQLException s)
         {
-            System.out.println("Error al hacer select");
+            Vista.mostrarUnMisatgeGeneric("Error al hacer select");
             return null;
         }
         return partits;
@@ -110,7 +112,7 @@ public class MYSQLPartidosDAO implements DAOGenerica<Partidos>{
             return true;
         }catch (SQLException s)
         {
-            System.out.println("Error al fer update");
+            Vista.mostrarUnMisatgeGeneric("Error al fer update");
         }
         return false;
     }
@@ -125,7 +127,7 @@ public class MYSQLPartidosDAO implements DAOGenerica<Partidos>{
             return true;
         }catch (SQLException s)
         {
-            System.out.println("Error al borrar: " + s.getMessage());
+            Vista.mostrarUnMisatgeGeneric("Error al borrar: " + s.getMessage());
         }
         return false;
     }

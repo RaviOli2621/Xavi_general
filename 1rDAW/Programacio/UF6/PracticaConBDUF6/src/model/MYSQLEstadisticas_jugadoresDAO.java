@@ -40,10 +40,10 @@ public class MYSQLEstadisticas_jugadoresDAO implements DAOGenerica<Estadisticas_
             return true;
         }catch (SQLIntegrityConstraintViolationException s)
         {
-            System.out.println("Ya existe la id");
+            Vista.mostrarUnMisatgeGeneric("Ya existe la id");
         }catch (SQLException s)
         {
-            System.out.println("Error al crear: " + s.getMessage());
+            Vista.mostrarUnMisatgeGeneric("Error al crear: " + s.getMessage());
         }
         return false;
     }
@@ -91,7 +91,7 @@ public class MYSQLEstadisticas_jugadoresDAO implements DAOGenerica<Estadisticas_
             }
         }catch (SQLException s)
         {
-            System.out.println("Error al hacer select");
+            Vista.mostrarUnMisatgeGeneric("Error al hacer select");
             return null;
         }
         return null;
@@ -127,7 +127,7 @@ public class MYSQLEstadisticas_jugadoresDAO implements DAOGenerica<Estadisticas_
             }
         }catch (SQLException s)
         {
-            System.out.println("Error al hacer select");
+            Vista.mostrarUnMisatgeGeneric("Error al hacer select");
             return null;
         }
         return estadisticasJugadores;

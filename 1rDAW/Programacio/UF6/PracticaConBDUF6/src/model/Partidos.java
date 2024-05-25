@@ -41,4 +41,14 @@ public class Partidos {
     public void setResultat(String resultat) {this.resultat = resultat;}
     public void setData_partit(Date data_partit) {this.data_partit = (Date)data_partit;}
     public void setMatx(String matx) {this.matx = matx;}
+
+    @Override
+    public String toString() {
+        return "Partidos: " + "\n" +
+                "Partit_id: " + partit_id + "\n" +
+                "Equip_id: " + equip_id + "\n" +
+                "Resultat: " + resultat + "\n" +
+                "Data_partit: " + data_partit + "\n" +
+                "Matx: " + matx + "\n";
+    }
 }

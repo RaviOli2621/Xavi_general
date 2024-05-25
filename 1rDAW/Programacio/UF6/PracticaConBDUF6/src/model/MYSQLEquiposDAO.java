@@ -1,5 +1,7 @@
 package model;
 
+import vista.Vista;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,10 +31,10 @@ public class MYSQLEquiposDAO implements DAOGenerica<Equipos>{
             return true;
         }catch (SQLIntegrityConstraintViolationException s)
         {
-            System.out.println("Ya existe la id");
+            Vista.mostrarUnMisatgeGeneric("Ya existe la id");
         }catch (SQLException s)
         {
-            System.out.println("Error al crear: " + s.getMessage());
+            Vista.mostrarUnMisatgeGeneric("Error al crear: " + s.getMessage());
         }
         return false;
     }
@@ -67,7 +69,7 @@ public class MYSQLEquiposDAO implements DAOGenerica<Equipos>{
             }
         }catch (SQLException s)
         {
-            System.out.println("Error al hacer select");
+            Vista.mostrarUnMisatgeGeneric("Error al hacer select");
             return null;
         }
         return null;
@@ -94,7 +96,7 @@ public class MYSQLEquiposDAO implements DAOGenerica<Equipos>{
             }
         }catch (SQLException s)
         {
-            System.out.println("Error al hacer select");
+            Vista.mostrarUnMisatgeGeneric("Error al hacer select");
             return null;
         }
         return equipos;
@@ -115,7 +117,7 @@ public class MYSQLEquiposDAO implements DAOGenerica<Equipos>{
             return true;
         }catch (SQLException s)
         {
-            System.out.println("Error al fer update");
+            Vista.mostrarUnMisatgeGeneric("Error al fer update");
         }
         return false;
     }
@@ -128,7 +130,7 @@ public class MYSQLEquiposDAO implements DAOGenerica<Equipos>{
             return true;
         }catch (SQLException s)
         {
-            System.out.println("Error al borrar: " + s.getMessage());
+            Vista.mostrarUnMisatgeGeneric("Error al borrar: " + s.getMessage());
         }
         return false;
     }

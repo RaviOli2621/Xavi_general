@@ -26,7 +26,7 @@ public class Model
 
         if(ruta.mkdirs())
         {
-            System.out.println("creado con exito");
+            Vista.mostrarUnMisatgeGeneric("creado con exito");
         }
         try {
             fileEquip.createNewFile();
@@ -37,7 +37,7 @@ public class Model
             docEx6.createNewFile();
         }catch (Exception e)
         {
-            System.out.println("Ha ocurrido un error en la creacion de los archivos necessarios para ejecutar el programa");
+            Vista.mostrarUnMisatgeGeneric("Ha ocurrido un error en la creacion de los archivos necessarios para ejecutar el programa");
         }
     }
     public static void EditarDocumentos(String archivoConRuta, String mensaje)
@@ -61,7 +61,7 @@ public class Model
             reader.close();
         }catch (Exception e)
         {
-            System.out.println("Error en el processo de edicion de los archivos de texto:\n\t" + e.getMessage());
+            Vista.mostrarUnMisatgeGeneric("Error en el processo de edicion de los archivos de texto:\n\t" + e.getMessage());
         }
     }
     public static void generarDades()
@@ -201,15 +201,11 @@ public class Model
         });
         return jugador_id.get();
     }
-    private static void mostrarEstadisticas_jugadores(Estadisticas_jugadores e){
-        Vista.mostrarUnMisatgeGeneric(e.toString());
-
-    }
     public static void mostrarAVGJugador(int jugador_id, Connection con){
         Estadisticas_jugadores mediaJug = new Estadisticas_jugadores(jugador_id);
 
         prepararAVGJugador(mediaJug, jugador_id, con);
-        mostrarEstadisticas_jugadores(mediaJug);
+        Vista.mostrarEstadisticas_jugadores(mediaJug);
     }
     private static void prepararAVGJugador(Estadisticas_jugadores mediaJug, int jugador_id, Connection con){
         MYSQLEstadisticas_jugadoresDAO statsDAO = new MYSQLEstadisticas_jugadoresDAO(con);
@@ -330,7 +326,7 @@ public class Model
             //Crear el objeto Estadisticas_jugadores con los nuevos datos menos idjug, idpart i idequip i insertar los datos donde toca
         }else
         {
-            System.out.println("El partido seleccionado no existe");
+            Vista.mostrarUnMisatgeGeneric("El partido seleccionado no existe");
         }
     }
     private static Estadisticas_jugadores editarElJugador(Estadisticas_jugadores est)//funcion complementaria a editarJugador
@@ -348,7 +344,7 @@ public class Model
                         est.setEquip_id(scan.nextInt());
                     }catch (InputMismatchException i)
                     {
-                        System.out.println("Valor no valido");
+                        Vista.mostrarUnMisatgeGeneric("Valor no valido");
                     }
                     break;
                 case "2":
@@ -357,7 +353,7 @@ public class Model
                         est.setPunts(scan.nextInt());
                     }catch (InputMismatchException i)
                     {
-                        System.out.println("Valor no valido");
+                        Vista.mostrarUnMisatgeGeneric("Valor no valido");
                     }
                     break;
                 case "3":
@@ -366,7 +362,7 @@ public class Model
                         est.setTirs_anotats(scan.nextInt());
                     }catch (InputMismatchException i)
                     {
-                        System.out.println("Valor no valido");
+                        Vista.mostrarUnMisatgeGeneric("Valor no valido");
                     }
                     break;
                 case "4":
@@ -375,7 +371,7 @@ public class Model
                         est.setTirs_tirats(scan.nextInt());
                     }catch (InputMismatchException i)
                     {
-                        System.out.println("Valor no valido");
+                        Vista.mostrarUnMisatgeGeneric("Valor no valido");
                     }
                     break;
                 case "5":
@@ -384,7 +380,7 @@ public class Model
                         est.setTir_triples_anotats(scan.nextInt());
                     }catch (InputMismatchException i)
                     {
-                        System.out.println("Valor no valido");
+                       Vista.mostrarUnMisatgeGeneric("Valor no valido");
                     }
                     break;
                 case "6":
@@ -393,7 +389,7 @@ public class Model
                         est.setTirs_triples_tirats(scan.nextInt());
                     }catch (InputMismatchException i)
                     {
-                        System.out.println("Valor no valido");
+                        Vista.mostrarUnMisatgeGeneric("Valor no valido");
                     }
                     break;
                 case "7":
@@ -402,7 +398,7 @@ public class Model
                         est.setTirs_lliures_anotats(scan.nextInt());
                     }catch (InputMismatchException i)
                     {
-                        System.out.println("Valor no valido");
+                        Vista.mostrarUnMisatgeGeneric("Valor no valido");
                     }
                     break;
                 case "8":
@@ -411,7 +407,7 @@ public class Model
                         est.setTir_lliures_tirats(scan.nextInt());
                     }catch (InputMismatchException i)
                     {
-                        System.out.println("Valor no valido");
+                        Vista.mostrarUnMisatgeGeneric("Valor no valido");
                     }
                     break;
                 case "9":
@@ -420,7 +416,7 @@ public class Model
                         est.setRebots_ofensius(scan.nextInt());
                     }catch (InputMismatchException i)
                     {
-                        System.out.println("Valor no valido");
+                        Vista.mostrarUnMisatgeGeneric("Valor no valido");
                     }
                     break;
                 case "10":
@@ -429,7 +425,7 @@ public class Model
                         est.setRebots_defensius(scan.nextInt());
                     }catch (InputMismatchException i)
                     {
-                        System.out.println("Valor no valido");
+                        Vista.mostrarUnMisatgeGeneric("Valor no valido");
                     }
                     break;
                 case "11":
@@ -438,7 +434,7 @@ public class Model
                         est.setAssistencies(scan.nextInt());
                     }catch (InputMismatchException i)
                     {
-                        System.out.println("Valor no valido");
+                        Vista.mostrarUnMisatgeGeneric("Valor no valido");
                     }
                     break;
                 case "12":
@@ -447,7 +443,7 @@ public class Model
                         est.setRobades(scan.nextInt());
                     }catch (InputMismatchException i)
                     {
-                        System.out.println("Valor no valido");
+                        Vista.mostrarUnMisatgeGeneric("Valor no valido");
                     }
                     break;
                 case "13":
@@ -456,7 +452,7 @@ public class Model
                         est.setBloqueigs(scan.nextInt());
                     }catch (InputMismatchException i)
                     {
-                        System.out.println("Valor no valido");
+                        Vista.mostrarUnMisatgeGeneric("Valor no valido");
                     }
                     break;
                 case "14":
@@ -465,7 +461,7 @@ public class Model
                         est.setMinuts_jugats(scan.nextInt());
                     }catch (InputMismatchException i)
                     {
-                        System.out.println("Valor no valido");
+                        Vista.mostrarUnMisatgeGeneric("Valor no valido");
                     }
                     break;
                 case "0":
@@ -533,5 +529,7 @@ public class Model
         histDAO.create(hist);
         jugDAO.delete(jug);
     }
+    public static void actualizarDadesPartit(String nom, int partit){
 
+    }
 }

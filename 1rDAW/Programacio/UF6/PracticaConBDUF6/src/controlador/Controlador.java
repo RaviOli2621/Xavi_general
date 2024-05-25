@@ -47,7 +47,7 @@ public class Controlador
     public static void consultes()
     {
         String respuesta;
-        Vista.mostrarUnMisatgeGeneric("Que pregunta quieres");
+        Vista.mostrarMenu();
 
         respuesta = scan.next().trim();
         scan.nextLine();
@@ -80,6 +80,9 @@ public class Controlador
             case "9":
                 pregunta9();
                 break;
+            case "0":
+                Vista.mostrarUnMisatgeGeneric("Sortint...");
+                break;
             default:
                 Vista.mostrarUnMisatgeGeneric("Te equivocaste");
         }
@@ -92,6 +95,7 @@ public class Controlador
         respuesta = scan.nextLine().trim();
         Model.llistarJugadorsSegunEquipo(respuesta,con);
     }
+
     private static void pregunta2()
     {
         String nom;
@@ -104,28 +108,33 @@ public class Controlador
         jugador_id = Model.trobaIdJugador(jugador[0], jugador[1], con);
         Model.mostrarAVGJugador(jugador_id,con);
     }
+
     private static void pregunta3()
     {
         String nom;
         int id;
+
         Vista.mostrarUnMisatgeGeneric("Que equipo quieres ver los partidos");
         nom = scan.nextLine().trim();
         id = Model.sacarIdEquipoConNombre(nom, con);
         Model.partidosDelEquipo(id,con);
     }
+
     private static void pregunta4()
     {
         String nombre, equipo;
+
         Vista.mostrarUnMisatgeGeneric("Indique el nombre del jugador");
         nombre = scan.nextLine().trim();
         Vista.mostrarUnMisatgeGeneric("Ahora indique su equipo");
         equipo = scan.nextLine().trim();
         Model.crearJugadorEnEquipo(nombre,equipo,con);
     }
+
     private static void pregunta5()
     {
-        String nom;
-        String equipo;
+        String nom, equipo;
+
         Vista.mostrarUnMisatgeGeneric("Indique el nombre del jugador a mover");
         nom = scan.nextLine().trim();
         Vista.mostrarUnMisatgeGeneric("Ahora indique su nuevo equipo");
@@ -135,6 +144,17 @@ public class Controlador
 
     private static void pregunta6()
     {
+        String nom;
+        int partit_id;
+
+        Vista.mostrarUnMisatgeGeneric("Indique el nombre del jugador");
+        nom = scan.nextLine().trim();
+        Vista.mostrarUnMisatgeGeneric("Ahora indique su partido_id");
+        try {
+            partit_id = scan.nextInt();
+        }catch (InputMismatchException i) {partit_id = 0;}
+        Vista.mostrarUnMisatgeGeneric("Indique el partido");
+        Model.actualizarDadesPartit(nom, partit_id);
 
     }
 
@@ -142,6 +162,7 @@ public class Controlador
     {
         String nom;
         int partit_id;
+
         Vista.mostrarUnMisatgeGeneric("Indique el nombre del jugador");
         nom = scan.nextLine().trim();
         Vista.mostrarUnMisatgeGeneric("Ahora indique su partido_id");

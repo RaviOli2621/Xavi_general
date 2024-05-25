@@ -103,4 +103,25 @@ public class Historico {
     public void setUltim_Equip_id(int ultim_Equip_id) {this.ultim_Equip_id = ultim_Equip_id;}
     public void setPunts_tot(int punts_tot) {this.punts_tot = punts_tot;}
     public void setTot_min_jugats(float tot_min_jugats) {this.tot_min_jugats = tot_min_jugats;}
+
+    @Override
+    public String toString() {
+        return "Historico: " + "\n" +
+                "Tirs_anotats: " + tirs_anotats + "\n" +
+                "Tirs_tirats: " + tirs_tirats + "\n" +
+                "Tir_triples_anotats: " + tir_triples_anotats + "\n" +
+                "Tirs_triples_tirats: " + tirs_triples_tirats + "\n" +
+                "Tirs_lliures_anotats: " + tirs_lliures_anotats + "\n" +
+                "Tir_lliures_tirats: " + tir_lliures_tirats + "\n" +
+                "Rebots_ofensius: " + rebots_ofensius + "\n" +
+                "Rebots_defensius: " + rebots_defensius + "\n" +
+                "Assistencies: " + assistencies + "\n" +
+                "Robades: " + robades + "\n" +
+                "Bloqueigs: " + bloqueigs + "\n" +
+                "Jugador_id: " + jugador_id + "\n" +
+                "Ultim_Equip_id: " + ultim_Equip_id + "\n" +
+                "Punts_tot: " + punts_tot + "\n" +
+                "Tot_min_jugats: " + tot_min_jugats + "\n" +
+                "Nom: " + nom + "\n";
+    }
 }

@@ -1,4 +1,6 @@
 package model;
+import vista.Vista;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +34,7 @@ public class MYSQLJugadoresDAO implements DAOGenerica<Jugadores>
             return true;
         }catch (SQLException s)
         {
-            System.out.println("Error al crear: " + s.getMessage());
+            Vista.mostrarUnMisatgeGeneric("Error al crear: " + s.getMessage());
         }
         return false;
     }
@@ -72,7 +74,7 @@ public class MYSQLJugadoresDAO implements DAOGenerica<Jugadores>
             }
         }catch (SQLException s)
         {
-            System.out.println("Error al hacer select");
+            Vista.mostrarUnMisatgeGeneric("Error al hacer select");
             return null;
         }
         return null;
@@ -101,7 +103,7 @@ public class MYSQLJugadoresDAO implements DAOGenerica<Jugadores>
             }
         }catch (SQLException s)
         {
-            System.out.println("Error al hacer select");
+            Vista.mostrarUnMisatgeGeneric("Error al hacer select");
             return null;
         }
         return jugadors;
@@ -124,7 +126,7 @@ public class MYSQLJugadoresDAO implements DAOGenerica<Jugadores>
             return true;
         }catch (SQLException s)
         {
-            System.out.println("Error al fer update");
+            Vista.mostrarUnMisatgeGeneric("Error al fer update");
         }
         return false;
     }
@@ -138,7 +140,7 @@ public class MYSQLJugadoresDAO implements DAOGenerica<Jugadores>
             return true;
         }catch (SQLException s)
         {
-            System.out.println("Error al borrar: " + s.getMessage());
+            Vista.mostrarUnMisatgeGeneric("Error al borrar: " + s.getMessage());
         }
         return false;
     }

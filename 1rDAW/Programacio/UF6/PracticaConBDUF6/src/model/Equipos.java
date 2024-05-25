@@ -49,4 +49,16 @@ public class Equipos {
     public void setCiutat(String ciutat) {this.ciutat = ciutat;}
     public void setAcronim(String acronim) {this.acronim = acronim;}
     public void setDivisio(String divisio) {this.divisio = divisio;}
+
+    @Override
+    public String toString() {
+        return "Equipos: " + "\n" +
+                "Equip_id: " + equip_id + "\n" +
+                "Guanyades: " + guanyades + "\n" +
+                "Perdudes: " + perdudes + "\n" +
+                "Nom: " + nom + "\n" +
+                "Ciutat: " + ciutat + "\n" +
+                "Acronim: " + acronim + "\n" +
+                "Divisio: " + divisio + "\n";
+    }
 }
