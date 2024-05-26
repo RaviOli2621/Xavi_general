@@ -2,6 +2,7 @@ package controlador;
 import model.*;
 import vista.Vista;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -146,6 +147,7 @@ public class Controlador
     {
         String nom;
         int partit_id;
+        File doc = new File("./1RDAW/Programacio/UF6/PracticaConBDUF6/Arxius/DadesPartit.csv");
 
         Vista.mostrarUnMisatgeGeneric("Indique el nombre del jugador");
         nom = scan.nextLine().trim();
@@ -154,8 +156,7 @@ public class Controlador
             partit_id = scan.nextInt();
         }catch (InputMismatchException i) {partit_id = 0;}
         Vista.mostrarUnMisatgeGeneric("Indique el partido");
-        Model.actualizarDadesPartit(nom, partit_id);
-
+        Model.actualizarDadesPartit(nom, partit_id, doc, con);
     }
 
     private static void pregunta7()

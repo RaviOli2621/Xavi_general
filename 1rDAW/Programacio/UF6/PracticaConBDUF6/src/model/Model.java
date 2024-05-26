@@ -2,8 +2,7 @@ package model;
 
 import vista.Vista;
 
-import java.io.File;
-import java.io.PrintStream;
+import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -529,7 +528,90 @@ public class Model
         histDAO.create(hist);
         jugDAO.delete(jug);
     }
-    public static void actualizarDadesPartit(String nom, int partit){
+    public static void actualizarDadesPartit(String nomComplet, int partit, File doc, Connection con){
+        String linea, separador = ";", tirs_anotats = "tirs_anotats", tirs_tirats = "tirs_tirats",
+                tirs_triples_anotats = "tirs_triples_anotats", tirs_triples_tirats = "tirs_triples_tirats",
+                tirs_lliures_anotats = "tirs_lliures_anotats", tir_lliures_tirats = "tir_lliures_tirats",
+                rebots_ofensius = "rebots_ofensius", rebots_defensius = "rebots_defensius", assistencies = "assistencies",
+                robades = "robades", bloqueigs = "bloqueigs", punts = "punts", minuts_jugats = "minuts_jugats",
+                jug_id = "jugador_id", equip_id = "equip_id", part = "partit";
 
+        MYSQLEstadisticas_jugadoresDAO statsDAO = new MYSQLEstadisticas_jugadoresDAO(con);
+        int jugador_id = trobaIdJugador(separarNombreEnApellido(nomComplet)[0], separarNombreEnApellido(nomComplet)[1],con);
+        Estadisticas_jugadores stats = new Estadisticas_jugadores(jugador_id);
+        boolean jugadortrobat = false, partitTrobat = false;
+
+        try {
+            FileReader reader = new FileReader(doc);
+            BufferedReader breader = new BufferedReader(reader);
+
+            //compruevo si en el documento esta el partido y jugador
+            while ((linea = breader.readLine()) != null){
+                String[] paraules = linea.split(separador);
+
+                if(paraules[0].equals(jug_id) && paraules[1].equals(jugador_id + "")){
+                    jugadortrobat = true;
+                }
+                if(paraules[0].equals(part)&& paraules[1].equals(partit + "")){
+                    partitTrobat = true;
+                }
+            }
+            //compruevo cada campo y lo guardo en el objeto
+            while ((linea = breader.readLine()) != null){
+                if(jugadortrobat && partitTrobat){
+                    String[] paraules = linea.split(separador);
+
+                    if(paraules[0].equals(tirs_anotats)){
+                        stats.setTirs_anotats(Float.parseFloat(paraules[1]));
+                    }
+                    if(paraules[0].equals(tirs_tirats)){
+                        stats.setTirs_tirats(Float.parseFloat(paraules[1]));
+                    }
+                    if(paraules[0].equals(tirs_triples_anotats)){
+                        stats.setTir_triples_anotats(Float.parseFloat(paraules[1]));
+                    }
+                    if(paraules[0].equals(tirs_triples_tirats)){
+                        stats.setTirs_triples_tirats(Float.parseFloat(paraules[1]));
+                    }
+                    if(paraules[0].equals(tirs_lliures_anotats)){
+                        stats.setTirs_lliures_anotats(Float.parseFloat(paraules[1]));
+                    }
+                    if(paraules[0].equals(tir_lliures_tirats)){
+                        stats.setTir_lliures_tirats(Float.parseFloat(paraules[1]));
+                    }
+                    if(paraules[0].equals(rebots_ofensius)){
+                        stats.setRebots_ofensius(Float.parseFloat(paraules[1]));
+                    }
+                    if(paraules[0].equals(rebots_defensius)){
+                        stats.setRebots_defensius(Float.parseFloat(paraules[1]));
+                    }
+                    if(paraules[0].equals(assistencies)){
+                        stats.setAssistencies(Float.parseFloat(paraules[1]));
+                    }
+                    if(paraules[0].equals(robades)){
+                        stats.setRobades(Float.parseFloat(paraules[1]));
+                    }
+                    if(paraules[0].equals(bloqueigs)){
+                        stats.setBloqueigs(Float.parseFloat(paraules[1]));
+                    }
+                    if(paraules[0].equals(punts)){
+                        stats.setPunts(Float.parseFloat(paraules[1]));
+                    }
+                    if(paraules[0].equals(minuts_jugats)){
+                        stats.setMinuts_jugats(Float.parseFloat(paraules[1]));
+                    }
+                    if(paraules[0].equals(equip_id)){
+                        stats.setEquip_id(Integer.parseInt(paraules[1]));
+                    }
+                    Vista.mostrarUnMisatgeGeneric("Estadistiques del jugador " + nomComplet + " actualitzades");
+                }else {
+                    Vista.mostrarUnMisatgeGeneric("El jugador no apareix en el partit");
+                }
+            }
+
+        }catch (IOException e){
+            Vista.mostrarUnMisatgeGeneric(e.getMessage());
+        }
+        statsDAO.update(stats);
     }
 }
