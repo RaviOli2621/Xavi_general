@@ -157,6 +157,7 @@ public class Controlador
         }catch (InputMismatchException i) {partit_id = 0;}
         Vista.mostrarUnMisatgeGeneric("Indique el partido");
         Model.actualizarDadesPartit(nom, partit_id, doc, con);
+
     }
 
     private static void pregunta7()
