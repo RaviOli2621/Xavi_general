@@ -24,9 +24,9 @@ public class MYSQLPartidosDAO implements DAOGenerica<Partidos>{
                     "VALUES (?,?,?,?,?)");
             sta.setInt(1,p.getPartit_id());
             sta.setInt(2,p.getEquip_id());
-            sta.setString(4,p.getResultat());
-            sta.setDate(3,p.getData_partit());
-            sta.setString(8,p.getMatx());
+            sta.setString(3,p.getResultat());
+            sta.setDate(4,p.getData_partit());
+            sta.setString(5,p.getMatx());
             sta.executeUpdate();
             return true;
         }catch (SQLException s)

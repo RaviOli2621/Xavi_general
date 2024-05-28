@@ -49,7 +49,7 @@ public class Jugadores {
         return equip_id;
     }
     public java.sql.Date getData_naixement() {
-        return (java.sql.Date) data_naixement;
+        return new java.sql.Date(data_naixement.getTime());
     }
     public float getAlcada() {
         return alcada;

@@ -5,6 +5,8 @@ import vista.Vista;
 
 import java.io.*;
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.InputMismatchException;
@@ -23,7 +25,6 @@ public class Model
         File filePart = new File (ruta + "\\Partidos.txt");
         File fileEstadíst = new File (ruta + "\\Estadísticas_jug.txt");
         File fileHist = new File (ruta + "\\Historic.txt");
-        File docEx6 = new File(ruta + "\\DadesPartit.scv");
 
         if(ruta.mkdirs())
         {
@@ -35,7 +36,6 @@ public class Model
             filePart.createNewFile();
             fileEstadíst.createNewFile();
             fileHist.createNewFile();
-            docEx6.createNewFile();
         }catch (Exception e)
         {
             Vista.mostrarUnMisatgeGeneric("Ha ocurrido un error en la creacion de los archivos necessarios para ejecutar el programa");
@@ -83,10 +83,12 @@ public class Model
         {
             for (int i = 1; i <= 100; i++)
             {
+
                 String nom = i+"jugador";
                 EditarDocumentos(".\\1rDAW\\Programacio\\UF6\\PracticaConBDUF6\\Arxius\\Jugadores.txt",
-                        i + "," + nom + "," + "cognom" + "," + new Date() + "," +
-                                (i*3) + "," + (i*2) + "," + i + "," + "posicio" + "," + i);
+                        i + "," + nom + "," + "cognom" + "," + new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + "," +
+                                (int)(Math.random()*(90-1+1)+1) + "," + (int)(Math.random()*(90-1+1)+1) + "," + (int)(Math.random()*(90-1+1)+1)
+                                + "," + "posicio" + "," + i);
             }
         }
         //Generar partido
@@ -94,14 +96,13 @@ public class Model
         {
             for (int i = 1; i <= 200; i++)
             {
-
                 EditarDocumentos(".\\1rDAW\\Programacio\\UF6\\PracticaConBDUF6\\Arxius\\Partidos.txt",
-                        i + "," + i + "," + new Date() + "," + (i + " vs " + (i+1)) + "," +
-                                "W");
+                        i*1000000 + "," + i*1000000 + "," + new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + "," + (i + " vs " + (i+1)) + "," +
+                                'W');
                 i++;
                 EditarDocumentos(".\\1rDAW\\Programacio\\UF6\\PracticaConBDUF6\\Arxius\\Partidos.txt",
-                        i + "," + i + "," + new Date() + "," + (i + " vs " + (i-1)) + "," +
-                                "L");
+                        i*1000000 + "," + i*1000000 + "," + new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + "," + (i + " vs " + (i-1)) + "," +
+                                'L');
             }
         }
         //Generar Estadisticas_Jugador
@@ -110,30 +111,139 @@ public class Model
             for (int i = 1; i <= 100; i++)
             {
                 EditarDocumentos(".\\1rDAW\\Programacio\\UF6\\PracticaConBDUF6\\Arxius\\Estadísticas_jug.txt",
-                        i + "," + i + "," + 48.0 + "," + ((int)(Math.random()*(999-1+1)+1))
-                                + "," + ((int)(Math.random()*(249-1+1)+1)) + "," + ((int)(Math.random()*(249-1+1)+1))
-                                + "," + ((int)(Math.random()*(249-1+1)+1)) + "," + ((int)(Math.random()*(249-1+1)+1))
-                                + "," + ((int)(Math.random()*(2-1+1)+1)) + "," + ((int)(Math.random()*(249-1+1)+1))
-                                + "," + ((int)(Math.random()*(249-1+1)+1)) + "," + ((int)(Math.random()*(249-1+1)+1))
-                                + "," + ((int)(Math.random()*(249-1+1)+1)) + "," + ((int)(Math.random()*(249-1+1)+1))
-                                + "," + ((int)(Math.random()*(249-1+1)+1)) + "," + i);
+                        i + "," + i + "," + 48.0 + "," + ((int)(Math.random()*(40-1+1)+1))
+                                + "," + ((int)(Math.random()*(40-1+1)+1)) + "," + ((int)(Math.random()*(40-1+1)+1))
+                                + "," + ((int)(Math.random()*(40-1+1)+1)) + "," + ((int)(Math.random()*(40-1+1)+1))
+                                + "," + ((int)(Math.random()*(2-1+1)+1)) + "," + ((int)(Math.random()*(40-1+1)+1))
+                                + "," + ((int)(Math.random()*(40-1+1)+1)) + "," + ((int)(Math.random()*(40-1+1)+1))
+                                + "," + ((int)(Math.random()*(40-1+1)+1)) + "," + ((int)(Math.random()*(40-1+1)+1))
+                                + "," + ((int)(Math.random()*(40-1+1)+1)) + "," + i);
             }
         }
-        //Generar Estadisticas_Jugador
-        if(new File(".\\1rDAW\\Programacio\\UF6\\PracticaConBDUF6\\Arxius\\Estadísticas_jug.txt").length() == 0)
+        //Generar Historic
+        if(new File(".\\1rDAW\\Programacio\\UF6\\PracticaConBDUF6\\Arxius\\Historic.txt").length() == 0)
         {
             for (int i = 101; i <= 111; i++)
             {
                 String nom = i+"jugador";
                 EditarDocumentos(".\\1rDAW\\Programacio\\UF6\\PracticaConBDUF6\\Arxius\\Historic.txt",
-                        nom + "," + i + "," + i + "," + 4800.0 + "," + ((int)(Math.random()*(249-1+1)+1))
-                                + "," + ((int)(Math.random()*(249-1+1)+1)) + "," + ((int)(Math.random()*(249-1+1)+1))
-                                + "," + ((int)(Math.random()*(249-1+1)+1)) + "," + ((int)(Math.random()*(249-1+1)+1))
-                                + "," + ((int)(Math.random()*(249-1+1)+1)) + "," + ((int)(Math.random()*(249-1+1)+1))
-                                + "," + ((int)(Math.random()*(249-1+1)+1)) + "," + ((int)(Math.random()*(249-1+1)+1))
-                                + "," + ((int)(Math.random()*(249-1+1)+1)) + "," + ((int)(Math.random()*(249-1+1)+1))
-                                + "," + ((int)(Math.random()*(249-1+1)+1)));
+                        nom + "," + i + "," + i + "," + 24.0 + "," + ((int)(Math.random()*(29-1+1)+1))
+                                + "," + ((int)(Math.random()*(24-1+1)+1)) + "," + ((int)(Math.random()*(29-1+1)+1))
+                                + "," + ((int)(Math.random()*(29-1+1)+1)) + "," + ((int)(Math.random()*(29-1+1)+1))
+                                + "," + ((int)(Math.random()*(29-1+1)+1)) + "," + ((int)(Math.random()*(29-1+1)+1))
+                                + "," + ((int)(Math.random()*(29-1+1)+1)) + "," + ((int)(Math.random()*(29-1+1)+1))
+                                + "," + ((int)(Math.random()*(29-1+1)+1)) + "," + ((int)(Math.random()*(29-1+1)+1))
+                                + "," + ((int)(Math.random()*(29-1+1)+1)));
             }
+        }
+
+    }
+
+    //Inserir documents generats a la base de dades
+    public static void insertarDatos(Connection con)
+    {
+        File [] archivos = new File("./1RDAW/Programacio/UF6/PracticaConBDUF6/Arxius").listFiles();
+
+        for (int i = 0; i < archivos.length-1; i++)
+        {
+            try {
+                FileReader reader = new FileReader(archivos[i]);
+                BufferedReader breader = new BufferedReader(reader);
+
+                if(archivos[i].getName().toLowerCase().contains("equips"))
+                {
+                    inserirEquip(breader,con);
+                } else if (archivos[i].getName().toLowerCase().contains("jugadores")) {
+                    inserirJugadors(breader,con);   
+                }else if (archivos[i].getName().toLowerCase().contains("partidos"))
+                {
+                    inserirPartido(breader,con);
+                }else if (archivos[i].getName().toLowerCase().contains("estadísticas_jug"))
+                {
+                    inserirEstadist(breader,con);
+                } else if (archivos[i].getName().toLowerCase().contains("historic")) {
+                    inserirHistorial(breader,con);
+                }
+
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
+    }
+
+    //Crear un equip a la base de dades
+    private static void inserirEquip(BufferedReader breader, Connection con) throws IOException {
+        MYSQLEquiposDAO equiposDAO = new MYSQLEquiposDAO(con);
+        String linea;
+
+        while ((linea = breader.readLine()) != null)
+        {
+            String []lineaSep = linea.split(",");
+            equiposDAO.create(new Equipos(Integer.parseInt(lineaSep[0]),Integer.parseInt(lineaSep[5]),Integer.parseInt(lineaSep[6])
+                    ,lineaSep[2],lineaSep[1],lineaSep[3],lineaSep[4]));
+        }
+    }
+
+    //Crear un jugador a la base de dades
+    private static void inserirJugadors(BufferedReader breader, Connection con) throws IOException, ParseException {
+        MYSQLJugadoresDAO jugadoresDAO = new MYSQLJugadoresDAO(con);
+        String linea;
+        while ((linea = breader.readLine()) != null)
+        {
+            String []lineaSep = linea.split(",");
+            Date parsed = new SimpleDateFormat("yyyy-MM-dd").parse(lineaSep[3]);
+
+            jugadoresDAO.create(new Jugadores(Integer.parseInt(lineaSep[0]),lineaSep[1],lineaSep[2]
+                    ,(new Date(parsed.getTime())),Float.parseFloat(lineaSep[4]),Float.parseFloat(lineaSep[5]),
+                    lineaSep[6],lineaSep[7],Integer.parseInt(lineaSep[8])));
+        }
+    }
+
+    private static void inserirPartido(BufferedReader breader, Connection con) throws IOException, ParseException {
+        MYSQLPartidosDAO partidosDAO = new MYSQLPartidosDAO(con);
+        String linea;
+
+        while ((linea = breader.readLine()) != null)
+        {
+            String []lineaSep = linea.split(",");
+            Date parsed = new SimpleDateFormat("yyyy-MM-dd").parse(lineaSep[2]);
+            
+            partidosDAO.create(new Partidos(Integer.parseInt(lineaSep[0]),Integer.parseInt(lineaSep[1]),lineaSep[4],
+                    new Date(parsed.getTime()),lineaSep[3]));
+        }
+    }
+    private static void inserirEstadist(BufferedReader breader, Connection con) throws IOException {
+        MYSQLEstadisticas_jugadoresDAO estDAO = new MYSQLEstadisticas_jugadoresDAO(con);
+        String linea;
+
+        while ((linea = breader.readLine()) != null)
+        {
+            String []lineaSep = linea.split(",");
+            estDAO.create(new Estadisticas_jugadores(Integer.parseInt(lineaSep[0]),Integer.parseInt(lineaSep[1]),Float.parseFloat(lineaSep[14])
+            ,Float.parseFloat(lineaSep[3]),Float.parseFloat(lineaSep[4]),Float.parseFloat(lineaSep[5]),Float.parseFloat(lineaSep[6])
+            ,Float.parseFloat(lineaSep[7]),Float.parseFloat(lineaSep[8]),Float.parseFloat(lineaSep[9]),Float.parseFloat(lineaSep[10])
+            ,Float.parseFloat(lineaSep[11]),Float.parseFloat(lineaSep[12]),Float.parseFloat(lineaSep[13]),Float.parseFloat(lineaSep[2])
+            ,Integer.parseInt(lineaSep[15])));
+        }
+    }
+    private static void inserirHistorial(BufferedReader breader, Connection con) throws IOException {
+        MYSQLHistoricoDAO historicoDAO = new MYSQLHistoricoDAO(con);
+        String linea;
+
+        while ((linea = breader.readLine()) != null)
+        {
+            String []lineaSep = linea.split(",");
+            historicoDAO.create(new Historico(lineaSep[0],Integer.parseInt(lineaSep[1]),Integer.parseInt(lineaSep[2])
+                    ,Integer.parseInt(lineaSep[15]),Integer.parseInt(lineaSep[4]),Integer.parseInt(lineaSep[5]),Integer.parseInt(lineaSep[6])
+                    ,Integer.parseInt(lineaSep[7]),Integer.parseInt(lineaSep[8]),Integer.parseInt(lineaSep[9]),Integer.parseInt(lineaSep[10])
+                    ,Integer.parseInt(lineaSep[11]),Integer.parseInt(lineaSep[12]),Integer.parseInt(lineaSep[13]),Integer.parseInt(lineaSep[14])
+                    ,Float.parseFloat(lineaSep[3])));
         }
     }
 

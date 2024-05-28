@@ -32,7 +32,8 @@ public class Partidos {
     public int getPartit_id() {return partit_id;}
     public int getEquip_id() {return equip_id;}
     public String getResultat() {return resultat;}
-    public java.sql.Date getData_partit() {return (java.sql.Date) data_partit;}
+    public java.sql.Date getData_partit() {
+        return new java.sql.Date (data_partit.getTime());}
     public String getMatx() {return matx;}
 
     //setters

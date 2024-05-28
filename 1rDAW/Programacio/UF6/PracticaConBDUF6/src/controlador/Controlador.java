@@ -5,7 +5,9 @@ import vista.Vista;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLData;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -49,7 +51,6 @@ public class Controlador
     {
         String respuesta;
         Vista.mostrarMenu();
-
         respuesta = scan.next().trim();
         scan.nextLine();
         switch (respuesta)
