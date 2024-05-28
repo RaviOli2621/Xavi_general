@@ -15,17 +15,23 @@ public class Controlador
 {
     static Scanner scan = new Scanner(System.in);
     private static Connection con;
+
+    //Preparem conexio amb la base de dades
     public static void comenzarPrograma()
     {
         String url = "jdbc:mysql://192.168.56.103:3306/NBAData";
         String username = "perepi";
         String paswrd = "pastanaga";
-        openCon(url,username,paswrd);
-        Model.crearDocs();
-        Model.generarDades();
-        consultes();
-        closeCon();
+
+        openCon(url,username,paswrd);       //obrim conexio
+        Model.crearDocs();                  //generem docs
+        Model.generarDades();               //generem dades
+        Model.insertarDatos(con);           //inserir les dades
+        consultes();                        //iniciem programa
+        closeCon();                         //tanquem conexio
     }
+
+    //Fem la conexio amb la base de dades
     public static void openCon(String url, String nom, String contra) {
         Connection conection = null;
 
@@ -39,6 +45,8 @@ public class Controlador
 
         con = conection;
     }
+
+    //Tanquem conexio
     public static void closeCon() {
         try {
             if (con != null) con.close();
@@ -47,12 +55,15 @@ public class Controlador
         }
     }
 
+    //Programa principal per fer les consultes a la base de dades
     public static void consultes()
     {
         String respuesta;
         Vista.mostrarMenu();
         respuesta = scan.next().trim();
         scan.nextLine();
+
+        //menu de les preguntes
         switch (respuesta)
         {
             case "1":
@@ -90,14 +101,17 @@ public class Controlador
         }
     }
 
+    //Llistar jugadors d'un equip
     private static void pregunta1()
     {
         String respuesta;
         Vista.mostrarUnMisatgeGeneric("Que equipo quieres ver los jugadores?");
         respuesta = scan.nextLine().trim();
+
         Model.llistarJugadorsSegunEquipo(respuesta,con);
     }
 
+    //Fer la mitjana d'estadistiques d'un jugador
     private static void pregunta2()
     {
         String nom;
@@ -106,11 +120,13 @@ public class Controlador
 
         Vista.mostrarUnMisatgeGeneric("De quin jugador vols veure la mitjana d'estadistiques?");
         nom = scan.nextLine();
+
         jugador = Model.separarNombreEnApellido(nom);
         jugador_id = Model.trobaIdJugador(jugador[0], jugador[1], con);
         Model.mostrarAVGJugador(jugador_id,con);
     }
 
+    //Mostrar partits d'un equip amb resultat
     private static void pregunta3()
     {
         String nom;
@@ -118,10 +134,12 @@ public class Controlador
 
         Vista.mostrarUnMisatgeGeneric("Que equipo quieres ver los partidos");
         nom = scan.nextLine().trim();
+
         id = Model.sacarIdEquipoConNombre(nom, con);
         Model.partidosDelEquipo(id,con);
     }
 
+    //Inserir un jugador a un equip
     private static void pregunta4()
     {
         String nombre, equipo;
@@ -130,9 +148,11 @@ public class Controlador
         nombre = scan.nextLine().trim();
         Vista.mostrarUnMisatgeGeneric("Ahora indique su equipo");
         equipo = scan.nextLine().trim();
+
         Model.crearJugadorEnEquipo(nombre,equipo,con);
     }
 
+    //Traspasar jugador d'equip
     private static void pregunta5()
     {
         String nom, equipo;
@@ -141,19 +161,21 @@ public class Controlador
         nom = scan.nextLine().trim();
         Vista.mostrarUnMisatgeGeneric("Ahora indique su nuevo equipo");
         equipo = scan.nextLine().trim();
+
         Model.moverJugador(nom,equipo,con);
     }
 
+    //Actualitzar estadistiques del jugador en un partit a traves de un document
     private static void pregunta6()
     {
         File doc;
-
         doc = new File("./1RDAW/Programacio/UF6/PracticaConBDUF6/Arxius/partits");
 
         Model.actualizarDadesPartit(doc, con);
 
     }
 
+    //Modificar estadistiques d'un jugador
     private static void pregunta7()
     {
         String nom;
@@ -165,33 +187,43 @@ public class Controlador
         try {
             partit_id = scan.nextInt();
         }catch (InputMismatchException i) {partit_id = 0;}
+
         Model.editarJugador(nom,partit_id,con);
     }
 
+    //Retirar un jugador
     private static void pregunta8()
     {
         String nom;
 
         Vista.mostrarUnMisatgeGeneric("Introduzca el nombre completo del jugador al qual quieres jubilar");
         nom = scan.nextLine().trim();
+
         Model.moverAHistoric(nom, con);
     }
 
+    //Canviar dades d'un equip
     private static void pregunta9()
     {
         String nom;
 
         Vista.mostrarUnMisatgeGeneric("Indique el nombre del equipo");
         nom = scan.nextLine().trim();
+
         Model.editarEquip(Model.sacarIdEquipoConNombre(nom, con),con);
     }
+
+    //Editar estadistiques d'un jugador
     public static Estadisticas_jugadores editarElJugador(Estadisticas_jugadores est)//funcion complementaria a editarJugador
     {
         Scanner scan = new Scanner(System.in);
         boolean mantenerBucle = true;
+
         while (mantenerBucle)
         {
             Vista.editarJugadorDades();
+
+            //Menu canvi d'estadistiques
             switch (scan.next())
             {
                 case "1":
@@ -331,13 +363,18 @@ public class Controlador
         Vista.mostrarUnMisatgeGeneric("Los datos modificados estan siendo subidos a la base de datos");
         return est;
     }
+
+    //Canviar dades d'un equip
     public static Equipos editarElEquipo(Equipos eq)//funcion complementaria a editarJugador
     {
         Scanner scan = new Scanner(System.in);
         boolean mantenerBucle = true;
+
         while (mantenerBucle)
         {
             Vista.editarEquipDades();
+
+            //Menu de dades d'un equip
             switch (scan.nextLine().trim())
             {
                 case "1":

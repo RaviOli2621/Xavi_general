@@ -41,6 +41,8 @@ public class Model
             Vista.mostrarUnMisatgeGeneric("Ha ocurrido un error en la creacion de los archivos necessarios para ejecutar el programa");
         }
     }
+
+    //Editar un document
     public static void EditarDocumentos(String archivoConRuta, String mensaje)
     {
         String archivoATexto = "";
@@ -65,6 +67,8 @@ public class Model
             Vista.mostrarUnMisatgeGeneric("Error en el processo de edicion de los archivos de texto:\n\t" + e.getMessage());
         }
     }
+
+    //generar dades aleatories
     public static void generarDades()
     {
         //Generar equipo (falta los partidos ganados y perdidos)
@@ -248,13 +252,16 @@ public class Model
     }
 
     //Exersicis-----------------------------------------------------------------------------------------------------------------------------------
+
+    //Tractament de dades d'un equip per llistar els seus jugadors
     public static void llistarJugadorsSegunEquipo(String equipo, Connection con)
     {
         ArrayList<Jugadores> jugadores = new ArrayList<>();
         MYSQLJugadoresDAO dao = new MYSQLJugadoresDAO(con);
         int id_equipo = sacarIdEquipoConNombre(equipo, con);
         dao.read(jugadores);
-
+        
+        //Mostra el nom y ID dels jugadors segons l'ID de l'equip
         jugadores.forEach((Jugadores j) ->
         {
             if(id_equipo == j.equip_id)
@@ -263,6 +270,8 @@ public class Model
             }
         });
     }
+    
+    //Comprova si coincideixen 2 noms y retorna l'ID si el troba
     private static int comrpobarNombresCoincidir(String nom, String cognom, Connection con)
     {
         ArrayList<Jugadores> jugadores = new ArrayList<>();
@@ -270,7 +279,8 @@ public class Model
         AtomicInteger id_jugador = new AtomicInteger(-1);
 
         daoJug.read(jugadores);
-
+        
+        //comparo cada nom compet dels jugadors amb els rebuts per parametre
         jugadores.forEach((jug) ->
         {
             if(jug.getNom().equals(nom) && jug.getCognom().equals(cognom))
@@ -280,6 +290,8 @@ public class Model
         });
         return id_jugador.get();
     }
+    
+    //Comprova el nom de l'equip y troba l'ID
     public static int sacarIdEquipoConNombre(String equipo, Connection con)
     {
         ArrayList<Equipos> equipos = new ArrayList<>();
@@ -288,6 +300,7 @@ public class Model
 
         daoEqu.read(equipos);
 
+        //comparo cada nom dels equips amb els rebuts per parametre
         equipos.forEach((eq) ->
         {
             if(eq.getNom().equals(equipo))
@@ -298,10 +311,13 @@ public class Model
 
         return id_equipo.get();
     }
+
+    //Separa el nom compet en nom y cognom y els retorna
     public static String[] separarNombreEnApellido(String nombre)
     {
         String []nombreApelliod = new String[2];
         nombreApelliod[1] = "";
+
         if(nombre.contains(" "))
         {
             for (int i = 1; i < nombre.split(" ").length; i++) nombreApelliod[1] += nombre.split(" ")[i] + " ";
@@ -310,15 +326,19 @@ public class Model
         }
         return nombreApelliod;
     }
+
+    //Crea un jugador nou en un equip y si ja existeix el mou a un altre
     public static void crearJugadorEnEquipo(String nombre, String equipo, Connection con)
     {
         MYSQLJugadoresDAO daoJug = new MYSQLJugadoresDAO(con);
-        String apellido = "";
+        String apellido;
         boolean idRep = true;
         int id_jugadorRepetit; // si el jugador ya existe aqui se guarda la id del juagdpr antiguo
         apellido = separarNombreEnApellido(nombre)[1];
         nombre = separarNombreEnApellido(nombre)[0];
         id_jugadorRepetit = comrpobarNombresCoincidir(nombre,apellido,con);
+
+        //genero el jugador amb ID random
         if(id_jugadorRepetit == -1)
         {
             while (idRep)
@@ -336,6 +356,8 @@ public class Model
         }
 
     }
+
+    //Mou un jugador a un equip
     public static void moverJugador(String nom, String equipo, Connection con)
     {
         int id_equipo = sacarIdEquipoConNombre(equipo, con), id_jug;
@@ -353,6 +375,8 @@ public class Model
             DAOjug.update(j);
         }
     }
+
+    //Trova l'ID d'un jugador per el nom
     public static int trobaIdJugador(String nom, String cognom, Connection con){
 
         ArrayList<Jugadores> jugadores = new ArrayList<>();
@@ -360,6 +384,7 @@ public class Model
         AtomicInteger jugador_id = new AtomicInteger(-1);
         daoEqu.read(jugadores);
 
+        //compara tots els noms complets dels jugadors amb els rebuts per patametre
         jugadores.forEach((eq) ->
         {
             if(eq.getNom().equals(nom) && eq.getCognom().equals(cognom))
@@ -369,12 +394,16 @@ public class Model
         });
         return jugador_id.get();
     }
+
+    //Tractament de dades per mostrar la mitja d'estadistiques d'un jugador
     public static void mostrarAVGJugador(int jugador_id, Connection con){
         Estadisticas_jugadores mediaJug = new Estadisticas_jugadores(jugador_id);
 
         prepararAVGJugador(mediaJug, jugador_id, con);
         Vista.mostrarEstadisticas_jugadores(mediaJug);
     }
+
+    //Guardem l'es estadistiques d'un sol jugador en un objecte per calcular la seva mitja
     private static void prepararAVGJugador(Estadisticas_jugadores mediaJug, int jugador_id, Connection con){
         MYSQLEstadisticas_jugadoresDAO statsDAO = new MYSQLEstadisticas_jugadoresDAO(con);
         ArrayList<Estadisticas_jugadores> stats_jugadors = new ArrayList<>();
@@ -402,6 +431,8 @@ public class Model
         totalPartits = stats_jugadors.size();
         calcularAVG(mediaJug, totalPartits);
     }
+
+    //Fa el calcul de la mitja d'estadistiques d'un jugador segons els sus partits
     private static void calcularAVG(Estadisticas_jugadores mediaJug, int totalPartits){
 
         mediaJug.setTirs_anotats(mediaJug.getTirs_anotats() / totalPartits);
@@ -585,6 +616,7 @@ public class Model
                     }
                 }
                 statsDAO.read(stats);
+
                 //compruevo cada campo y lo guardo en el objeto
                 while ((linea = breader.readLine()) != null){
                     if(jugadortrobat){
