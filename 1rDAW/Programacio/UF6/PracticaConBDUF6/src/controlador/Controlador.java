@@ -19,6 +19,7 @@ public class Controlador
     //Preparem conexio amb la base de dades
     public static void comenzarPrograma()
     {
+        boolean seguro = false;
         String url = "jdbc:mysql://192.168.56.103:3306/NBAData";
         String username = "perepi";
         String paswrd = "pastanaga";
@@ -26,7 +27,12 @@ public class Controlador
         openCon(url,username,paswrd);       //obrim conexio
         Model.crearDocs();                  //generem docs
         Model.generarDades();               //generem dades
-        Model.insertarDatos(con);           //inserir les dades
+        seguro = preguntaSeguridad();
+
+        if(seguro){
+            Model.insertarDatos(con);           //inserir les dades
+        }
+
         consultes();                        //iniciem programa
         closeCon();                         //tanquem conexio
     }
@@ -442,5 +448,14 @@ public class Controlador
         Vista.mostrarUnMisatgeGeneric(eq.toString());
         Vista.mostrarUnMisatgeGeneric("Los datos modificados estan siendo subidos a la base de datos");
         return eq;
+    }
+    private static boolean preguntaSeguridad(){
+        String op, si= "SI";
+        Vista.mostrarUnMisatgeGeneric("Vols inserir les dades random?");
+        op=scan.nextLine();
+        if(si.equals(op.toUpperCase())){
+            return true;
+        }
+        return false;
     }
 }

@@ -582,7 +582,6 @@ public class Model
 
         histDAO.create(hist);
         jugDAO.delete(jug);
-
     }
     public static void actualizarDadesPartit(File doc, Connection con){
         String linea, separador = ";", tirs_anotats = "tirs_anotats", tirs_tirats = "tirs_tirats",
