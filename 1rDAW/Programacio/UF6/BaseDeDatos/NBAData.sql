@@ -59,31 +59,21 @@ CREATE TABLE `historic`(
   `jugador_id` int UNSIGNED NOT NULL,
   `ultim_equip_id` int UNSIGNED NOT NULL,
   `tot_min_jugats` decimal(5,3) UNSIGNED NOT NULL,
-  `punts_tot` tinyint UNSIGNED NOT NULL,
-  `tirs_anotats` tinyint UNSIGNED NOT NULL,
-  `tirs_tirats` tinyint UNSIGNED NOT NULL,
-  `tirs_triples_anotats` tinyint UNSIGNED NOT NULL,
-  `tirs_triples_tirats` tinyint UNSIGNED NOT NULL,
-  `tirs_lliures_anotats` tinyint UNSIGNED NOT NULL,
-  `tirs_lliures_tirats` tinyint UNSIGNED NOT NULL,
-  `rebots_ofensius` tinyint UNSIGNED NOT NULL,
-  `rebots_defensius` tinyint UNSIGNED NOT NULL,
-  `assistencies` tinyint UNSIGNED NOT NULL,
-  `robades` tinyint UNSIGNED NOT NULL,
-  `bloqueigs` tinyint UNSIGNED NOT NULL
+  `punts_tot` int UNSIGNED NOT NULL,
+  `tirs_anotats` int UNSIGNED NOT NULL,
+  `tirs_tirats` int UNSIGNED NOT NULL,
+  `tirs_triples_anotats` int UNSIGNED NOT NULL,
+  `tirs_triples_tirats` int UNSIGNED NOT NULL,
+  `tirs_lliures_anotats` int UNSIGNED NOT NULL,
+  `tirs_lliures_tirats` int UNSIGNED NOT NULL,
+  `rebots_ofensius` int UNSIGNED NOT NULL,
+  `rebots_defensius` int UNSIGNED NOT NULL,
+  `assistencies` int UNSIGNED NOT NULL,
+  `robades` int UNSIGNED NOT NULL,
+  `bloqueigs` int UNSIGNED NOT NULL
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 alter table estadistiques_jugadors
-add equip_id int unsigned not null;
-
-SELECT * FROM estadistiques_jugadors WHERE jugador_id = 200782;
-select * from jugadors;
-
-Select * FROM equip;
-Select * FROM historic;
+add equip_id int unsigned not null default 0;
 
 SELECT avg(rebots_defensius) FROM estadistiques_jugadors WHERE jugador_id = 200782;
-
-
-
-USE NBAData;

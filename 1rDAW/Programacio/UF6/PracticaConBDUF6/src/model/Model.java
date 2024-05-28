@@ -6,6 +6,7 @@ import vista.Vista;
 import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -71,10 +72,67 @@ public class Model
         {
             for (int i = 1; i <= 100; i++)
             {
-                String nom = i+"nom";
+                String nom = i+"equip";
                 EditarDocumentos(".\\1rDAW\\Programacio\\UF6\\PracticaConBDUF6\\Arxius\\Equips.txt",
                         i + "," + (i + "ciutat") + "," + nom + "," + nom.toUpperCase().substring(0,3) + "," +
-                                ((int)(Math.random()*(4-1+1)+1) + "DIV") + "," + "Ganar" + "," + "Perder");
+                                ((int)(Math.random()*(4-1+1)+1) + "DIV") + "," + (int)(Math.random()*(100-1+1)+1) + "," + (int)(Math.random()*(100-1+1)+1));
+            }
+        }
+        //Generar Jugador
+        if(new File(".\\1rDAW\\Programacio\\UF6\\PracticaConBDUF6\\Arxius\\Jugadores.txt").length() == 0)
+        {
+            for (int i = 1; i <= 100; i++)
+            {
+                String nom = i+"jugador";
+                EditarDocumentos(".\\1rDAW\\Programacio\\UF6\\PracticaConBDUF6\\Arxius\\Jugadores.txt",
+                        i + "," + nom + "," + "cognom" + "," + new Date() + "," +
+                                (i*3) + "," + (i*2) + "," + i + "," + "posicio" + "," + i);
+            }
+        }
+        //Generar partido
+        if(new File(".\\1rDAW\\Programacio\\UF6\\PracticaConBDUF6\\Arxius\\Partidos.txt").length() == 0)
+        {
+            for (int i = 1; i <= 200; i++)
+            {
+
+                EditarDocumentos(".\\1rDAW\\Programacio\\UF6\\PracticaConBDUF6\\Arxius\\Partidos.txt",
+                        i + "," + i + "," + new Date() + "," + (i + " vs " + (i+1)) + "," +
+                                "W");
+                i++;
+                EditarDocumentos(".\\1rDAW\\Programacio\\UF6\\PracticaConBDUF6\\Arxius\\Partidos.txt",
+                        i + "," + i + "," + new Date() + "," + (i + " vs " + (i-1)) + "," +
+                                "L");
+            }
+        }
+        //Generar Estadisticas_Jugador
+        if(new File(".\\1rDAW\\Programacio\\UF6\\PracticaConBDUF6\\Arxius\\Estadísticas_jug.txt").length() == 0)
+        {
+            for (int i = 1; i <= 100; i++)
+            {
+                EditarDocumentos(".\\1rDAW\\Programacio\\UF6\\PracticaConBDUF6\\Arxius\\Estadísticas_jug.txt",
+                        i + "," + i + "," + 48.0 + "," + ((int)(Math.random()*(999-1+1)+1))
+                                + "," + ((int)(Math.random()*(249-1+1)+1)) + "," + ((int)(Math.random()*(249-1+1)+1))
+                                + "," + ((int)(Math.random()*(249-1+1)+1)) + "," + ((int)(Math.random()*(249-1+1)+1))
+                                + "," + ((int)(Math.random()*(2-1+1)+1)) + "," + ((int)(Math.random()*(249-1+1)+1))
+                                + "," + ((int)(Math.random()*(249-1+1)+1)) + "," + ((int)(Math.random()*(249-1+1)+1))
+                                + "," + ((int)(Math.random()*(249-1+1)+1)) + "," + ((int)(Math.random()*(249-1+1)+1))
+                                + "," + ((int)(Math.random()*(249-1+1)+1)) + "," + i);
+            }
+        }
+        //Generar Estadisticas_Jugador
+        if(new File(".\\1rDAW\\Programacio\\UF6\\PracticaConBDUF6\\Arxius\\Estadísticas_jug.txt").length() == 0)
+        {
+            for (int i = 101; i <= 111; i++)
+            {
+                String nom = i+"jugador";
+                EditarDocumentos(".\\1rDAW\\Programacio\\UF6\\PracticaConBDUF6\\Arxius\\Historic.txt",
+                        nom + "," + i + "," + i + "," + 4800.0 + "," + ((int)(Math.random()*(249-1+1)+1))
+                                + "," + ((int)(Math.random()*(249-1+1)+1)) + "," + ((int)(Math.random()*(249-1+1)+1))
+                                + "," + ((int)(Math.random()*(249-1+1)+1)) + "," + ((int)(Math.random()*(249-1+1)+1))
+                                + "," + ((int)(Math.random()*(249-1+1)+1)) + "," + ((int)(Math.random()*(249-1+1)+1))
+                                + "," + ((int)(Math.random()*(249-1+1)+1)) + "," + ((int)(Math.random()*(249-1+1)+1))
+                                + "," + ((int)(Math.random()*(249-1+1)+1)) + "," + ((int)(Math.random()*(249-1+1)+1))
+                                + "," + ((int)(Math.random()*(249-1+1)+1)));
             }
         }
     }
