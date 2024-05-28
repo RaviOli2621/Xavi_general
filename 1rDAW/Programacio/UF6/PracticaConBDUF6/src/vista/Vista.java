@@ -49,6 +49,18 @@ public class Vista {
         System.out.println("\t0. Nada, me equivoque de boton al seleccionar la funcion / no quiero editar mas (creo que no era necessario un texto tan largo para esta opción aunque el daño ya esta hecho. Bueno ya que estamo, saludos Xavi)");
 
     }
+    public static void editarEquipDades()
+    {
+        System.out.println("Que característica quieres editar");
+        System.out.println("\t1. Ciutat");
+        System.out.println("\t2. Nom");
+        System.out.println("\t3. Acronim");
+        System.out.println("\t4. Divisio");
+        System.out.println("\t5. Guanyades");
+        System.out.println("\t6. Perdudes");
+        System.out.println("\t0. Nada, me equivoque de boton al seleccionar la funcion / no quiero editar mas (creo que no era necessario un texto tan largo para esta opción aunque el daño ya esta hecho. Bueno ya que estamo, saludos Xavi)");
+
+    }
     public static void mostrarEstadisticas_jugadores(Estadisticas_jugadores e){
         Vista.mostrarUnMisatgeGeneric(e.toString());
 

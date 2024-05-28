@@ -125,7 +125,7 @@ public class Controlador
     {
         String nombre, equipo;
 
-        Vista.mostrarUnMisatgeGeneric("Indique el nombre del jugador");
+        Vista.mostrarUnMisatgeGeneric("Indique el nombre completo del jugador");
         nombre = scan.nextLine().trim();
         Vista.mostrarUnMisatgeGeneric("Ahora indique su equipo");
         equipo = scan.nextLine().trim();
@@ -136,7 +136,7 @@ public class Controlador
     {
         String nom, equipo;
 
-        Vista.mostrarUnMisatgeGeneric("Indique el nombre del jugador a mover");
+        Vista.mostrarUnMisatgeGeneric("Indique el nombre completo del jugador a mover");
         nom = scan.nextLine().trim();
         Vista.mostrarUnMisatgeGeneric("Ahora indique su nuevo equipo");
         equipo = scan.nextLine().trim();
@@ -145,18 +145,11 @@ public class Controlador
 
     private static void pregunta6()
     {
-        String nom;
-        int partit_id;
-        File doc = new File("./1RDAW/Programacio/UF6/PracticaConBDUF6/Arxius/DadesPartit.csv");
+        File doc;
 
-        Vista.mostrarUnMisatgeGeneric("Indique el nombre del jugador");
-        nom = scan.nextLine().trim();
-        Vista.mostrarUnMisatgeGeneric("Ahora indique su partido_id");
-        try {
-            partit_id = scan.nextInt();
-        }catch (InputMismatchException i) {partit_id = 0;}
-        Vista.mostrarUnMisatgeGeneric("Indique el partido");
-        Model.actualizarDadesPartit(nom, partit_id, doc, con);
+        doc = new File("./1RDAW/Programacio/UF6/PracticaConBDUF6/Arxius/partits");
+
+        Model.actualizarDadesPartit(doc, con);
 
     }
 
@@ -165,7 +158,7 @@ public class Controlador
         String nom;
         int partit_id;
 
-        Vista.mostrarUnMisatgeGeneric("Indique el nombre del jugador");
+        Vista.mostrarUnMisatgeGeneric("Indique el nombre completo del jugador");
         nom = scan.nextLine().trim();
         Vista.mostrarUnMisatgeGeneric("Ahora indique su partido_id");
         try {
@@ -178,7 +171,7 @@ public class Controlador
     {
         String nom;
 
-        Vista.mostrarUnMisatgeGeneric("Introduzca el nombre del jugador al qual quieres jubilar");
+        Vista.mostrarUnMisatgeGeneric("Introduzca el nombre completo del jugador al qual quieres jubilar");
         nom = scan.nextLine().trim();
         Model.moverAHistoric(nom, con);
     }

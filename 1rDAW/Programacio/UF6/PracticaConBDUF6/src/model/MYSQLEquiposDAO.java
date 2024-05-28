@@ -5,6 +5,7 @@ import vista.Vista;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MYSQLEquiposDAO implements DAOGenerica<Equipos>{
     static Connection con;
@@ -138,7 +139,13 @@ public class MYSQLEquiposDAO implements DAOGenerica<Equipos>{
     // ALTRES DAO
     @Override
     public boolean exists(Equipos e) {
-        return false;
+        ArrayList<Equipos> equipos = readQuery();
+        AtomicBoolean existe = new AtomicBoolean(false);
+        equipos.forEach((j) ->
+        {
+            if(j.getEquip_id() == e.getEquip_id()) existe.set(true);
+        });
+        return existe.get();
     }
 
     @Override

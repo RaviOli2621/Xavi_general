@@ -55,6 +55,7 @@ CREATE TABLE `partits` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `historic`(
+  `nom` varchar(70) NOT NULL,
   `jugador_id` int UNSIGNED NOT NULL,
   `ultim_equip_id` int UNSIGNED NOT NULL,
   `tot_min_jugats` decimal(5,3) UNSIGNED NOT NULL,
@@ -75,13 +76,14 @@ CREATE TABLE `historic`(
 alter table estadistiques_jugadors
 add equip_id int unsigned not null;
 
-SELECT * FROM partits WHERE equip_id = 1610612741;
-select * from equips;
+SELECT * FROM estadistiques_jugadors WHERE jugador_id = 200782;
+select * from jugadors;
 
-Select * FROM jugadors WHERE equip_id = 1610612741;
+Select * FROM equip;
+Select * FROM historic;
+
+SELECT avg(rebots_defensius) FROM estadistiques_jugadors WHERE jugador_id = 200782;
 
 
 
-
-
-WHERE jugador_id = this;
+USE NBAData;

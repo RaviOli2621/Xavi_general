@@ -48,7 +48,7 @@ public class MYSQLEstadisticas_jugadoresDAO implements DAOGenerica<Estadisticas_
         return false;
     }
     public boolean read(Estadisticas_jugadores e) {
-        Estadisticas_jugadores ej = readQuery(e.getJugador_id());
+        Estadisticas_jugadores ej = readQuery(e.getJugador_id(), e.getPartit_id());
         if (ej == null) return false;
         e.setPartit_id(ej.getPartit_id());
         e.setPunts(ej.getPunts());
@@ -72,18 +72,19 @@ public class MYSQLEstadisticas_jugadoresDAO implements DAOGenerica<Estadisticas_
         if (estadisticasJugadores.isEmpty()) return false;
         return true;
     }
-    private static Estadisticas_jugadores readQuery(int jugador_id) {
+    private static Estadisticas_jugadores readQuery(int jugador_id, int partit_id) {
         PreparedStatement sta;
         ResultSet rs;
         try {
-            sta = con.prepareStatement("SELECT * FROM estadistiques_jugadors WHERE jugador_id = ?");
+            sta = con.prepareStatement("SELECT * FROM estadistiques_jugadors WHERE jugador_id = ? AND partit_id = ?");
             sta.setInt(1,jugador_id);
+            sta.setInt(2,partit_id);
             rs = sta.executeQuery();
             while (rs.next())
             {
                 if (rs.getString("jugador_id").isEmpty()) return null;
-                return new Estadisticas_jugadores(jugador_id, rs.getInt("partit_id"),rs.getFloat("tirs_anotats")
-                        ,rs.getFloat("tirs_tirats"),rs.getFloat("punts"),rs.getFloat("tirs_triples_anotats")
+                return new Estadisticas_jugadores(jugador_id, rs.getInt("partit_id"),rs.getFloat("punts"),rs.getFloat("tirs_anotats")
+                        ,rs.getFloat("tirs_tirats"),rs.getFloat("tirs_triples_anotats")
                         ,rs.getFloat("tirs_triples_tirats"),rs.getFloat("tirs_lliures_anotats")
                         ,rs.getFloat("tirs_lliures_tirats"),rs.getFloat("rebots_ofensius"),rs.getFloat("rebots_defensius")
                         ,rs.getFloat("assistencies"),rs.getFloat("robades"),rs.getFloat("bloqueigs")
