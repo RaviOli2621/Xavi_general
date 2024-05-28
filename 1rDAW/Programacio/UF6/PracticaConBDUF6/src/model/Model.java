@@ -523,11 +523,12 @@ public class Model
                         if(paraules[0].equals(equip_id)){
                             stats.setEquip_id(Integer.parseInt(paraules[1]));
                         }
-                        Vista.mostrarUnMisatgeGeneric("Estadistiques del jugador '" + stats.getJugador_id() + "' actualitzades");
+
                     }else {
                         Vista.mostrarUnMisatgeGeneric("El jugador no apareix en el partit");
                     }
                 }
+                Vista.mostrarUnMisatgeGeneric("Estadistiques del jugador '" + stats.getPartit_id() + "' actualitzades");
 
             }catch (IOException e){
                 Vista.mostrarUnMisatgeGeneric(e.getMessage());
