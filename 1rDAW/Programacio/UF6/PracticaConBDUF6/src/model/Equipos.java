@@ -52,13 +52,13 @@ public class Equipos {
 
     @Override
     public String toString() {
-        return "Equipos: " + "\n" +
-                "Equip_id: " + equip_id + "\n" +
-                "Guanyades: " + guanyades + "\n" +
-                "Perdudes: " + perdudes + "\n" +
-                "Nom: " + nom + "\n" +
-                "Ciutat: " + ciutat + "\n" +
-                "Acronim: " + acronim + "\n" +
-                "Divisio: " + divisio + "\n";
+        return "Equipo: " + "\n" +
+                "\tEquip_id: " + equip_id + "\n" +
+                "\tGuanyades: " + guanyades + "\n" +
+                "\tPerdudes: " + perdudes + "\n" +
+                "\tNom: " + nom + "\n" +
+                "\tCiutat: " + ciutat + "\n" +
+                "\tAcronim: " + acronim + "\n" +
+                "\tDivisio: " + divisio + "\n";
     }
 }

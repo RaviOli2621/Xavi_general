@@ -107,21 +107,21 @@ public class Historico {
     @Override
     public String toString() {
         return "Historico: " + "\n" +
-                "Tirs_anotats: " + tirs_anotats + "\n" +
-                "Tirs_tirats: " + tirs_tirats + "\n" +
-                "Tir_triples_anotats: " + tir_triples_anotats + "\n" +
-                "Tirs_triples_tirats: " + tirs_triples_tirats + "\n" +
-                "Tirs_lliures_anotats: " + tirs_lliures_anotats + "\n" +
-                "Tir_lliures_tirats: " + tir_lliures_tirats + "\n" +
-                "Rebots_ofensius: " + rebots_ofensius + "\n" +
-                "Rebots_defensius: " + rebots_defensius + "\n" +
-                "Assistencies: " + assistencies + "\n" +
-                "Robades: " + robades + "\n" +
-                "Bloqueigs: " + bloqueigs + "\n" +
-                "Jugador_id: " + jugador_id + "\n" +
-                "Ultim_Equip_id: " + ultim_Equip_id + "\n" +
-                "Punts_tot: " + punts_tot + "\n" +
-                "Tot_min_jugats: " + tot_min_jugats + "\n" +
-                "Nom: " + nom + "\n";
+                "\tTirs_anotats: " + tirs_anotats + "\n" +
+                "\tTirs_tirats: " + tirs_tirats + "\n" +
+                "\tTir_triples_anotats: " + tir_triples_anotats + "\n" +
+                "\tTirs_triples_tirats: " + tirs_triples_tirats + "\n" +
+                "\tTirs_lliures_anotats: " + tirs_lliures_anotats + "\n" +
+                "\tTir_lliures_tirats: " + tir_lliures_tirats + "\n" +
+                "\tRebots_ofensius: " + rebots_ofensius + "\n" +
+                "\tRebots_defensius: " + rebots_defensius + "\n" +
+                "\tAssistencies: " + assistencies + "\n" +
+                "\tRobades: " + robades + "\n" +
+                "\tBloqueigs: " + bloqueigs + "\n" +
+                "\tJugador_id: " + jugador_id + "\n" +
+                "\tUltim_Equip_id: " + ultim_Equip_id + "\n" +
+                "\tPunts_tot: " + punts_tot + "\n" +
+                "\tTot_min_jugats: " + tot_min_jugats + "\n" +
+                "\tNom: " + nom + "\n";
     }
 }

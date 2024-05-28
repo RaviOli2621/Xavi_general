@@ -178,6 +178,231 @@ public class Controlador
 
     private static void pregunta9()
     {
+        String nom;
 
+        Vista.mostrarUnMisatgeGeneric("Indique el nombre del equipo");
+        nom = scan.nextLine().trim();
+        Model.editarEquip(Model.sacarIdEquipoConNombre(nom, con),con);
+    }
+    public static Estadisticas_jugadores editarElJugador(Estadisticas_jugadores est)//funcion complementaria a editarJugador
+    {
+        Scanner scan = new Scanner(System.in);
+        boolean mantenerBucle = true;
+        while (mantenerBucle)
+        {
+            Vista.editarJugadorDades();
+            switch (scan.next())
+            {
+                case "1":
+                    Vista.mostrarUnMisatgeGeneric("Introduzca el nuevo id del equipo:");
+                    try {
+                        est.setEquip_id(scan.nextInt());
+                    }catch (InputMismatchException i)
+                    {
+                        Vista.mostrarUnMisatgeGeneric("Valor no valido");
+                    }
+                    break;
+                case "2":
+                    Vista.mostrarUnMisatgeGeneric("Introduzca los puntos totales del jugador:");
+                    try {
+                        est.setPunts(scan.nextInt());
+                    }catch (InputMismatchException i)
+                    {
+                        Vista.mostrarUnMisatgeGeneric("Valor no valido");
+                    }
+                    break;
+                case "3":
+                    Vista.mostrarUnMisatgeGeneric("Introduzca los tiros metidos:");
+                    try {
+                        est.setTirs_anotats(scan.nextInt());
+                    }catch (InputMismatchException i)
+                    {
+                        Vista.mostrarUnMisatgeGeneric("Valor no valido");
+                    }
+                    break;
+                case "4":
+                    Vista.mostrarUnMisatgeGeneric("Introduzca los tiros tirados");
+                    try {
+                        est.setTirs_tirats(scan.nextInt());
+                    }catch (InputMismatchException i)
+                    {
+                        Vista.mostrarUnMisatgeGeneric("Valor no valido");
+                    }
+                    break;
+                case "5":
+                    Vista.mostrarUnMisatgeGeneric("Introduzca los triple metidos");
+                    try {
+                        est.setTir_triples_anotats(scan.nextInt());
+                    }catch (InputMismatchException i)
+                    {
+                        Vista.mostrarUnMisatgeGeneric("Valor no valido");
+                    }
+                    break;
+                case "6":
+                    Vista.mostrarUnMisatgeGeneric("Introduzca los triple tirados");
+                    try {
+                        est.setTirs_triples_tirats(scan.nextInt());
+                    }catch (InputMismatchException i)
+                    {
+                        Vista.mostrarUnMisatgeGeneric("Valor no valido");
+                    }
+                    break;
+                case "7":
+                    Vista.mostrarUnMisatgeGeneric("Introduzca los tiros libres metidos");
+                    try {
+                        est.setTirs_lliures_anotats(scan.nextInt());
+                    }catch (InputMismatchException i)
+                    {
+                        Vista.mostrarUnMisatgeGeneric("Valor no valido");
+                    }
+                    break;
+                case "8":
+                    Vista.mostrarUnMisatgeGeneric("Introduzca los tiros libres tirados");
+                    try {
+                        est.setTir_lliures_tirats(scan.nextInt());
+                    }catch (InputMismatchException i)
+                    {
+                        Vista.mostrarUnMisatgeGeneric("Valor no valido");
+                    }
+                    break;
+                case "9":
+                    Vista.mostrarUnMisatgeGeneric("Introduzca los rebotes ofensivos");
+                    try {
+                        est.setRebots_ofensius(scan.nextInt());
+                    }catch (InputMismatchException i)
+                    {
+                        Vista.mostrarUnMisatgeGeneric("Valor no valido");
+                    }
+                    break;
+                case "10":
+                    Vista.mostrarUnMisatgeGeneric("Introduzca los rebotes defensivos");
+                    try {
+                        est.setRebots_defensius(scan.nextInt());
+                    }catch (InputMismatchException i)
+                    {
+                        Vista.mostrarUnMisatgeGeneric("Valor no valido");
+                    }
+                    break;
+                case "11":
+                    Vista.mostrarUnMisatgeGeneric("Introduzca las assistencias");
+                    try {
+                        est.setAssistencies(scan.nextInt());
+                    }catch (InputMismatchException i)
+                    {
+                        Vista.mostrarUnMisatgeGeneric("Valor no valido");
+                    }
+                    break;
+                case "12":
+                    Vista.mostrarUnMisatgeGeneric("Introduzca las robadas");
+                    try {
+                        est.setRobades(scan.nextInt());
+                    }catch (InputMismatchException i)
+                    {
+                        Vista.mostrarUnMisatgeGeneric("Valor no valido");
+                    }
+                    break;
+                case "13":
+                    Vista.mostrarUnMisatgeGeneric("Introduzca los bloqueos");
+                    try {
+                        est.setBloqueigs(scan.nextInt());
+                    }catch (InputMismatchException i)
+                    {
+                        Vista.mostrarUnMisatgeGeneric("Valor no valido");
+                    }
+                    break;
+                case "14":
+                    Vista.mostrarUnMisatgeGeneric("Introduzca los minutos jugados");
+                    try {
+                        est.setMinuts_jugats(scan.nextInt());
+                    }catch (InputMismatchException i)
+                    {
+                        Vista.mostrarUnMisatgeGeneric("Valor no valido");
+                    }
+                    break;
+                case "0":
+                    mantenerBucle = false;
+                    break;
+                default:
+                    Vista.mostrarUnMisatgeGeneric("Te equivocaste mi loco");
+                    break;
+            }
+        }
+        Vista.mostrarUnMisatgeGeneric("Los datos modificados estan siendo subidos a la base de datos");
+        return est;
+    }
+    public static Equipos editarElEquipo(Equipos eq)//funcion complementaria a editarJugador
+    {
+        Scanner scan = new Scanner(System.in);
+        boolean mantenerBucle = true;
+        while (mantenerBucle)
+        {
+            Vista.editarEquipDades();
+            switch (scan.nextLine().trim())
+            {
+                case "1":
+                    Vista.mostrarUnMisatgeGeneric("Introdueix el nom de la ciutat (Valor actual: " + eq.getCiutat() + "):");
+                    try {
+                        eq.setCiutat(scan.nextLine());
+                    }catch (InputMismatchException i)
+                    {
+                        Vista.mostrarUnMisatgeGeneric("Valor no valido");
+                    }
+                    break;
+                case "2":
+                    Vista.mostrarUnMisatgeGeneric("Introdueix el nom de l'equip:");
+                    try {
+                        eq.setNom(scan.nextLine());
+                    }catch (InputMismatchException i)
+                    {
+                        Vista.mostrarUnMisatgeGeneric("Valor no valido");
+                    }
+                    break;
+                case "3":
+                    Vista.mostrarUnMisatgeGeneric("Introdueix l'acronim");
+                    try {
+                        eq.setAcronim(scan.nextLine());
+                    }catch (InputMismatchException i)
+                    {
+                        Vista.mostrarUnMisatgeGeneric("Valor no valido");
+                    }
+                    break;
+                case "4":
+                    Vista.mostrarUnMisatgeGeneric("Introdueix la divisio");
+                    try {
+                        eq.setDivisio(scan.nextLine());
+                    }catch (InputMismatchException i)
+                    {
+                        Vista.mostrarUnMisatgeGeneric("Valor no valido");
+                    }
+                    break;
+                case "5":
+                    Vista.mostrarUnMisatgeGeneric("Introdueix el numero de victories");
+                    try {
+                        eq.setGuanyades(scan.nextInt());
+                    }catch (InputMismatchException i)
+                    {
+                        Vista.mostrarUnMisatgeGeneric("Valor no valido");
+                    }
+                    break;
+                case "6":
+                    Vista.mostrarUnMisatgeGeneric("Introdueix el numero de derrotes");
+                    try {
+                        eq.setPerdudes(scan.nextInt());
+                    }catch (InputMismatchException i)
+                    {
+                        Vista.mostrarUnMisatgeGeneric("Valor no valido");
+                    }
+                    break;
+                case "0":
+                    mantenerBucle = false;
+                    break;
+                default:
+                    Vista.mostrarUnMisatgeGeneric("Te equivocaste mi loco");
+                    break;
+            }
+        }
+        Vista.mostrarUnMisatgeGeneric(eq.toString());
+        Vista.mostrarUnMisatgeGeneric("Los datos modificados estan siendo subidos a la base de datos");
+        return eq;
     }
 }

@@ -44,11 +44,11 @@ public class Partidos {
 
     @Override
     public String toString() {
-        return "Partidos: " + "\n" +
-                "Partit_id: " + partit_id + "\n" +
-                "Equip_id: " + equip_id + "\n" +
-                "Resultat: " + resultat + "\n" +
-                "Data_partit: " + data_partit + "\n" +
-                "Matx: " + matx + "\n";
+        return "Partido: " + "\n" +
+                "\tPartit_id: " + partit_id + "\n" +
+                "\tEquip_id: " + equip_id + "\n" +
+                "\tResultat: " + resultat + "\n" +
+                "\tData_partit: " + data_partit + "\n" +
+                "\tMatx: " + matx + "\n";
     }
 }

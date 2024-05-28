@@ -101,15 +101,15 @@ public class Jugadores {
 
     @Override
     public String toString() {
-        return "Jugadores: " + "\n" +
-                "Jugador_id: " + jugador_id + "\n" +
-                "Equip_id: " + equip_id + "\n" +
-                "Data_naixement: " + data_naixement + "\n" +
-                "Alcada: " + alcada + "\n" +
-                "Pes: " + pes + "\n" +
-                "Nom: " + nom + "\n" +
-                "Cognom: " + cognom + "\n" +
-                "Dorsal: " + dorsal + "\n" +
-                "Psicio: " + posicio + "\n";
+        return "Jugador: " + "\n" +
+                "\tJugador_id: " + jugador_id + "\n" +
+                "\tEquip_id: " + equip_id + "\n" +
+                "\tData_naixement: " + data_naixement + "\n" +
+                "\tAlcada: " + alcada + "\n" +
+                "\tPes: " + pes + "\n" +
+                "\tNom: " + nom + "\n" +
+                "\tCognom: " + cognom + "\n" +
+                "\tDorsal: " + dorsal + "\n" +
+                "\tPsicio: " + posicio + "\n";
     }
 }
