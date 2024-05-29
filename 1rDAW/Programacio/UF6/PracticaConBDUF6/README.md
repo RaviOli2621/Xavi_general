@@ -1,8 +1,8 @@
-Aquest programa tracta dades de una base de dades y permet fer consultes a treves d'un menu, utilitzem metodologia VMC 
+Aquest programa tracta dades de una base de dades y permet fer consultes a treves d'un menu, utilitzem metodologia VMC
 (Vista, Moel, Controlador) per gestionar el programa y metodologia CRUD (Create, Read, Upadate, Delete) per a gestionar
 totes les consultes de la base de dades a traves de les classes DAO implementantles en una interficie DAO generica.
 
-Vista: En aquesta clase tenim els metodes per Mostrar coses per pantalla per informar al usuari que esta succeint com 
+Vista: En aquesta clase tenim els metodes per Mostrar coses per pantalla per informar al usuari que esta succeint com
 per exemple mostrarMenu(), un metode que et mostra les diferents opcions que pots fer.
 ~~~ java
 public static void mostrarMenu(){
@@ -19,78 +19,165 @@ public static void mostrarMenu(){
 
 }
 ~~~
-Controlador: En aquesta clase tenim els metodes amb els cuals directament interactua amb l'usuari y la conexio amb la 
-base de dades com per exemple consultes(), un metode que permet escollir entre diferents opcions, guarda en variables 
+Controlador: En aquesta clase tenim els metodes amb els cuals directament interactua amb l'usuari y la conexio amb la
+base de dades com per exemple consultes(), un metode que permet escollir entre diferents opcions, guarda en variables
 les dades introduides per l'usuari i truca als metodes adients a aquesta seleccio per fer el que calgui.
-~~~ java
-public static void consultes(){
-    String respuesta;
-    boolean salir = false;
-
-    while (!salir)
-    {
-
-        Vista.mostrarMenu();
-        respuesta = scan.next().trim();
-        scan.nextLine();
-
-        //menu de les preguntes
-        switch (respuesta)
+~~~  java
+public class Controlador{
+    static Scanner scan = new Scanner(System.in);
+    private static Connection con;
+    
+    public static void consultes(){
+        String respuesta;
+        boolean salir = false;
+    
+        while (!salir)
         {
-            case "1":
-                pregunta1();
-                break;
-            case "2":
-                pregunta2();
-                break;
-            case "3":
-                pregunta3();
-                break;
-            case "4":
-                pregunta4();
-                break;
-            case "5":
-                pregunta5();
-                break;
-            case "6":
-                pregunta6();
-                break;
-            case "7":
-                pregunta7();
-                break;
-            case "8":
-                pregunta8();
-                break;
-            case "9":
-                pregunta9();
-                break;
-            case "0":
-                Vista.mostrarUnMisatgeGeneric("Sortint...");
-                salir = true;
-                break;
-            default:
-                Vista.mostrarUnMisatgeGeneric("Te equivocaste");
+    
+            Vista.mostrarMenu();
+            respuesta = scan.next().trim();
+            scan.nextLine();
+    
+            //menu de les preguntes
+            switch (respuesta)
+            {
+                case "1":
+                    pregunta1();
+                    break;
+                case "2":
+                    pregunta2();
+                    break;
+                case "3":
+                    pregunta3();
+                    break;
+                case "4":
+                    pregunta4();
+                    break;
+                case "5":
+                    pregunta5();
+                    break;
+                case "6":
+                    pregunta6();
+                    break;
+                case "7":
+                    pregunta7();
+                    break;
+                case "8":
+                    pregunta8();
+                    break;
+                case "9":
+                    pregunta9();
+                    break;
+                case "0":
+                    Vista.mostrarUnMisatgeGeneric("Sortint...");
+                    salir = true;
+                    break;
+                default:
+                    Vista.mostrarUnMisatgeGeneric("Te equivocaste");
+            }
         }
     }
 }
 ~~~
 Model:
-~~~java
+~~~ java
 
 ~~~
+Serveix com a plantilla per a les DAO de jugador, equip, partir...
 DAOGenerica:
-~~~java
+~~~ java
+public interface DAOGenerica<T>
+{
+    // CRUD
+    boolean create(T t);
 
+    boolean read(T t);
+
+    boolean update(T t);
+    boolean delete(T t);
+    // ALTRES
+    boolean exists(T t);
+    int count();
+    List<T> all();
+}
 ~~~
-Objeto:
-~~~java
+Objeto: Aquesta classe conte les propietats, getters, setters, toString i constructors de cada objecte.
+Els constructors es troben preparats per a diverses situacions (només id, amb un altre objecte igual o amb totes les dades). Exemple constructors:
+~~~ java
+int equip_id, guanyades, perdudes;
+String nom, ciutat, acronim, divisio;
 
+public Equipos(int equip_id){
+    this.equip_id = equip_id;
+    setGuanyades(0);
+    setPerdudes(0);
+    setNom("");
+    setCiutat("");
+    setAcronim("");
+    setDivisio("");
+}
 ~~~
-ObjetoDAO:
-~~~java
-
+~~~ java
+public Equipos(Equipos e){
+    this.equip_id = e.equip_id;
+    setGuanyades(e.guanyades);
+    setPerdudes(e.perdudes);
+    setNom(e.nom);
+    setCiutat(e.ciutat);
+    setAcronim(e.acronim);
+    setDivisio(e.divisio);
+}
 ~~~
-Main:
-~~~java
-
+~~~ java
+public Equipos(int equip_id, int guanyades, int perdudes, String nom, String ciutat, String acronim, String divisio) {
+    this.equip_id = equip_id;
+    this.guanyades = guanyades;
+    this.perdudes = perdudes;
+    this.nom = nom;
+    this.ciutat = ciutat;
+    this.acronim = acronim;
+    this.divisio = divisio;
+}
+~~~
+ObjetoDAO: Aquesta classe conte els metodes CRUD implementats per l'interficie DAOGenerica,
+~~~ java
+public boolean update(Estadisticas_jugadores e) {
+    PreparedStatement sta;
+    try {
+        sta = con.prepareStatement("UPDATE estadistiques_jugadors SET punts =?,tirs_anotats =?," +
+                "tirs_tirats =?,tirs_triples_anotats =?,tirs_triples_tirats =?,tirs_lliures_anotats =?,tirs_lliures_tirats =?" +
+                ",rebots_ofensius =?,rebots_defensius =?,assistencies =?,robades =?,bloqueigs =?,minuts_jugats =?,equip_id =?" +
+                " WHERE jugador_id =? AND partit_id =?");
+        sta.setFloat(1,e.getPunts());
+        sta.setFloat(2,e.getTirs_anotats());
+        sta.setFloat(3,e.getTirs_tirats());
+        sta.setFloat(4,e.getTir_triples_anotats());
+        sta.setFloat(5,e.getTirs_triples_tirats());
+        sta.setFloat(6,e.getTirs_lliures_anotats());
+        sta.setFloat(7,e.getTir_lliures_tirats());
+        sta.setFloat(8,e.getRebots_ofensius());
+        sta.setFloat(9,e.getRebots_defensius());
+        sta.setFloat(10,e.getAssistencies());
+        sta.setFloat(11,e.getRobades());
+        sta.setFloat(12,e.getBloqueigs());
+        sta.setFloat(13,e.getMinuts_jugats());
+        sta.setInt(14,e.getEquip_id());
+        sta.setInt(15, e.getJugador_id());
+        sta.setInt(16,e.getPartit_id());
+        sta.executeUpdate();
+        return true;
+    }catch (SQLException s)
+    {
+        Vista.mostrarUnMisatgeGeneric("Error al fer update " +s.getMessage() );
+    }
+    return false;
+}
+~~~
+Main: Classe principal que executa l'inici del programa trucant a comenzarPrograma(), funcio de la clase Controlador.
+~~~ java
+public class Main {
+    public static void main(String[] args) {
+       Controlador.comenzarPrograma();
+    }
+}   
 ~~~
