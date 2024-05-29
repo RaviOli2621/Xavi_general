@@ -450,6 +450,7 @@ public class Model
         mediaJug.setPunts(mediaJug.getPunts() / totalPartits);
     }
 
+    //Tractament de dades per llistar els partits d'un equip
     public static void partidosDelEquipo(int id, Connection con)
     {
         MYSQLPartidosDAO partDAO = new MYSQLPartidosDAO(con);
@@ -461,11 +462,13 @@ public class Model
         partDAO.read(part);
         equDAO.read(equipos);
 
+        //Comparem l'ID dels equips amb el rebut per parametre
         part.forEach((p) ->
         {
             if(p.equip_id == id) partDeUnEquipo.add(p);
         });
 
+        //Mostrar cada enfrontament
         partDeUnEquipo.forEach((p) ->
         {
             AtomicReference<String> local = new AtomicReference<>();

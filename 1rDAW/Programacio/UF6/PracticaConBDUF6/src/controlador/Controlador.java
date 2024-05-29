@@ -457,13 +457,13 @@ public class Controlador
         Vista.mostrarUnMisatgeGeneric("Los datos modificados estan siendo subidos a la base de datos");
         return eq;
     }
+
+    //Pregunta de seguretat per no carregar dades 2 cops o mes
     private static boolean preguntaSeguridad(){
         String op, si= "SI";
         Vista.mostrarUnMisatgeGeneric("Vols inserir les dades random?");
         op=scan.nextLine();
-        if(si.equals(op.toUpperCase())){
-            return true;
-        }
-        return false;
+
+        return si.equals(op.toUpperCase());
     }
 }
