@@ -178,7 +178,7 @@ public class Controlador
         Model.moverJugador(nom,equipo,con);
     }
 
-    //Actualitzar estadistiques del jugador en un partit a traves de un document
+    //Actualitzar estadistiques del jugador en un partit a traves de un document. Els documents es troben en "Arxius" -> "partits"
     private static void pregunta6()
     {
         File doc;
