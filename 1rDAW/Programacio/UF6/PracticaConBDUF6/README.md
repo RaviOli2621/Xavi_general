@@ -78,13 +78,31 @@ public class Controlador{
         }
     }
 }
+~~~ 
+Model: Claser principal on es tracten totes les dades del programa, ja sigui generades per si mateix, introduides
+per l'usuari o extretes de la base de dades
+Aqui podem trobar les diferents funcions que son requerides per els exersicis.
+En l'exersici 6 la estructura dels documents es la seguent:
+~~~ 
+jugador_id;1                //obligatori en aquesta posició
+partit;1                    //obligatori en aquesta posició
+tirs_anotats;2.0            //opcional sense importar l'ordre
+tirs_tirats;23.             //opcional sense importar l'ordre
+tirs_triples_anotats;19.0   //opcional sense importar l'ordre
+tirs_triples_tirats;9.0     //opcional sense importar l'ordre
+tirs_lliures_anotats;4.0    //opcional sense importar l'ordre
+tir_lliures_tirats;4.0      //opcional sense importar l'ordre
+rebots_ofensius;19.0        //opcional sense importar l'ordre
+rebots_defensius;2.0        //opcional sense importar l'ordre
+assistencies;6.0            //opcional sense importar l'ordre
+robades;1.0                 //opcional sense importar l'ordre
+bloqueigs;13.0              //opcional sense importar l'ordre
+punts;60.0                  //opcional sense importar l'ordre
+minuts_jugats;19.00         //opcional sense importar l'ordre
+equip_id;938532             //opcional sense importar l'ordre
 ~~~
-Model:
-~~~ java
 
-~~~
-Serveix com a plantilla per a les DAO de jugador, equip, partir...
-DAOGenerica:
+DAOGenerica: Aquesta interficie serveix com a plantilla per a les DAO de jugador, equip, partir...
 ~~~ java
 public interface DAOGenerica<T>
 {
@@ -139,7 +157,11 @@ public Equipos(int equip_id, int guanyades, int perdudes, String nom, String ciu
     this.divisio = divisio;
 }
 ~~~
-ObjetoDAO: Aquesta classe conte els metodes CRUD implementats per l'interficie DAOGenerica,
+ObjetoDAO: Aquesta classe conte els metodes CRUD implementats per l'interficie DAOGenerica, com per exemple update(),
+en aquest metode li pasem per parametre un Objecte, utilitzant el prepareStatment fem una consulta amb la conexio de
+Controlador amb la sentencia sql adient y fem els sets corresponents per a cada parametre de l'objecte.
+La funcio read() esta adaptada per a 2 tipus de situacions, cuan volem extreure una dada concreta o cuan volem extreure
+totes les dades de la taula per guarar-les en un arraylist d'objectes.
 ~~~ java
 public boolean update(Estadisticas_jugadores e) {
     PreparedStatement sta;
