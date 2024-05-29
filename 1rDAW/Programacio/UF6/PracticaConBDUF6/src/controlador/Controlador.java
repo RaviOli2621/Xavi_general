@@ -133,6 +133,7 @@ public class Controlador
 
         Vista.mostrarUnMisatgeGeneric("De quin jugador vols veure la mitjana d'estadistiques?");
         nom = scan.nextLine();
+        if(!nom.trim().contains(" ")) nom += " null";
 
         jugador = Model.separarNombreEnApellido(nom);
         jugador_id = Model.trobaIdJugador(jugador[0], jugador[1], con);
@@ -159,6 +160,7 @@ public class Controlador
 
         Vista.mostrarUnMisatgeGeneric("Indique el nombre completo del jugador");
         nombre = scan.nextLine().trim();
+        if(!nombre.trim().contains(" ")) nombre += " null";
         Vista.mostrarUnMisatgeGeneric("Ahora indique su equipo");
         equipo = scan.nextLine().trim();
 
@@ -172,6 +174,8 @@ public class Controlador
 
         Vista.mostrarUnMisatgeGeneric("Indique el nombre completo del jugador a mover");
         nom = scan.nextLine().trim();
+        if(!nom.trim().contains(" ")) nom += " null";
+
         Vista.mostrarUnMisatgeGeneric("Ahora indique su nuevo equipo");
         equipo = scan.nextLine().trim();
 
@@ -196,6 +200,8 @@ public class Controlador
 
         Vista.mostrarUnMisatgeGeneric("Indique el nombre completo del jugador");
         nom = scan.nextLine().trim();
+        if(!nom.trim().contains(" ")) nom += " null";
+
         Vista.mostrarUnMisatgeGeneric("Ahora indique su partido_id");
         try {
             partit_id = scan.nextInt();
@@ -211,6 +217,8 @@ public class Controlador
 
         Vista.mostrarUnMisatgeGeneric("Introduzca el nombre completo del jugador al qual quieres jubilar");
         nom = scan.nextLine().trim();
+        if(!nom.trim().contains(" ")) nom += " null";
+
 
         Model.moverAHistoric(nom, con);
     }
