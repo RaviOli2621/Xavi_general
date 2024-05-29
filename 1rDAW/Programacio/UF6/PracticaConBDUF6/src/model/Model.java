@@ -98,14 +98,14 @@ public class Model
         //Generar partido
         if(new File(".\\1rDAW\\Programacio\\UF6\\PracticaConBDUF6\\Arxius\\Partidos.txt").length() == 0)
         {
-            for (int i = 1; i <= 200; i++)
+            for (int i = 1; i <= 100; i++)
             {
                 EditarDocumentos(".\\1rDAW\\Programacio\\UF6\\PracticaConBDUF6\\Arxius\\Partidos.txt",
-                        i*1000000 + "," + i*1000000 + "," + new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + "," + (i + " vs " + (i+1)) + "," +
+                        i + "," + i + "," + new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + "," + ((i+"EQUIP").substring(0,3) + " vs " + ((i+1)+"EQUIP").substring(0,3)) + "," +
                                 'W');
                 i++;
                 EditarDocumentos(".\\1rDAW\\Programacio\\UF6\\PracticaConBDUF6\\Arxius\\Partidos.txt",
-                        i*1000000 + "," + i*1000000 + "," + new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + "," + (i + " vs " + (i-1)) + "," +
+                        i-1 + "," + i + "," + new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + "," + ((i+"EQUIP").substring(0,3) + " vs " + ((i-1)+"EQUIP").substring(0,3)) + "," +
                                 'L');
             }
         }
@@ -345,7 +345,7 @@ public class Model
             {
                     idRep = false;
                     int id = (int)(Math.random()*(2147483646+1-1)+1);
-                    Jugadores j = new Jugadores(id,nombre,apellido,null,0,0,"0","",sacarIdEquipoConNombre(equipo,con));
+                    Jugadores j = new Jugadores(id,nombre,apellido,new Date(),0,0,"0","",sacarIdEquipoConNombre(equipo,con));
                     if(!daoJug.exists(j)) daoJug.create(j);
                     else idRep = true;
             }
@@ -480,6 +480,10 @@ public class Model
                 if(p.matx.split(" vs. ").length > 1)
                 {
                     if(p.matx.split(" vs. ")[1].equals(e.getAcronim())) vis.set(e.getNom());
+                }
+                if(p.matx.split(" vs ").length > 1)
+                {
+                    if(p.matx.split(" vs ")[1].equals(e.getAcronim())) vis.set(e.getNom());
                 }
             });
             Vista.mostrarUnMisatgeGeneric(local + " vs " + vis + ": " + p.resultat);

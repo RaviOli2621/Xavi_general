@@ -104,21 +104,21 @@ public class Estadisticas_jugadores {
     @Override
     public String toString() {
         return "Estadisticas: \n" +
-                "Tirs_anotats: " + tirs_anotats + "\n" +
-                "Tirs_tirats: " + tirs_tirats + "\n" +
-                "Tir_triples_anotats: " + tir_triples_anotats + "\n" +
-                "Tirs_triples_tirats: " + tirs_triples_tirats + "\n" +
-                "Tirs_lliures_anotats: " + tirs_lliures_anotats + "\n" +
-                "Tir_lliures_tirats: " + tir_lliures_tirats + "\n" +
-                "Rebots_ofensius: " + rebots_ofensius + "\n" +
-                "Rebots_defensius: " + rebots_defensius + "\n" +
-                "Assistencies: " + assistencies + "\n" +
-                "Robades: " + robades + "\n" +
-                "Bloqueigs: " + bloqueigs + "\n" +
-                "Jugador_id: " + jugador_id + "\n" +
-                "Partit_id: " + partit_id + "\n" +
-                "Punts: " + punts + "\n" +
-                "Equip_id: " + equip_id + "\n" +
-                "Minuts_jugats: " + minuts_jugats + "\n";
+                "\tTirs_anotats: " + tirs_anotats + "\n" +
+                "\tTirs_tirats: " + tirs_tirats + "\n" +
+                "\tTir_triples_anotats: " + tir_triples_anotats + "\n" +
+                "\tTirs_triples_tirats: " + tirs_triples_tirats + "\n" +
+                "\tTirs_lliures_anotats: " + tirs_lliures_anotats + "\n" +
+                "\tTir_lliures_tirats: " + tir_lliures_tirats + "\n" +
+                "\tRebots_ofensius: " + rebots_ofensius + "\n" +
+                "\tRebots_defensius: " + rebots_defensius + "\n" +
+                "\tAssistencies: " + assistencies + "\n" +
+                "\tRobades: " + robades + "\n" +
+                "\tBloqueigs: " + bloqueigs + "\n" +
+                "\tJugador_id: " + jugador_id + "\n" +
+                "\tPartit_id: " + partit_id + "\n" +
+                "\tPunts: " + punts + "\n" +
+                "\tEquip_id: " + equip_id + "\n" +
+                "\tMinuts_jugats: " + minuts_jugats + "\n";
     }
 }

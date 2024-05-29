@@ -65,45 +65,52 @@ public class Controlador
     public static void consultes()
     {
         String respuesta;
-        Vista.mostrarMenu();
-        respuesta = scan.next().trim();
-        scan.nextLine();
+        boolean salir = false;
 
-        //menu de les preguntes
-        switch (respuesta)
+        while (!salir)
         {
-            case "1":
-                pregunta1();
-                break;
-            case "2":
-                pregunta2();
-                break;
-            case "3":
-                pregunta3();
-                break;
-            case "4":
-                pregunta4();
-                break;
-            case "5":
-                pregunta5();
-                break;
-            case "6":
-                pregunta6();
-                break;
-            case "7":
-                pregunta7();
-                break;
-            case "8":
-                pregunta8();
-                break;
-            case "9":
-                pregunta9();
-                break;
-            case "0":
-                Vista.mostrarUnMisatgeGeneric("Sortint...");
-                break;
-            default:
-                Vista.mostrarUnMisatgeGeneric("Te equivocaste");
+
+            Vista.mostrarMenu();
+            respuesta = scan.next().trim();
+            scan.nextLine();
+
+            //menu de les preguntes
+            switch (respuesta)
+            {
+                case "1":
+                    pregunta1();
+                    break;
+                case "2":
+                    pregunta2();
+                    break;
+                case "3":
+                    pregunta3();
+                    break;
+                case "4":
+                    pregunta4();
+                    break;
+                case "5":
+                    pregunta5();
+                    break;
+                case "6":
+                    pregunta6();
+                    break;
+                case "7":
+                    pregunta7();
+                    break;
+                case "8":
+                    pregunta8();
+                    break;
+                case "9":
+                    pregunta9();
+                    break;
+                case "0":
+                    Vista.mostrarUnMisatgeGeneric("Sortint...");
+                    salir = true;
+                    break;
+                default:
+                    Vista.mostrarUnMisatgeGeneric("Te equivocaste");
+            }
         }
     }
 
@@ -366,6 +373,7 @@ public class Controlador
                     break;
             }
         }
+        Vista.mostrarUnMisatgeGeneric(est.toString());
         Vista.mostrarUnMisatgeGeneric("Los datos modificados estan siendo subidos a la base de datos");
         return est;
     }

@@ -15,7 +15,7 @@ public class Jugadores {
         setDorsal("");
         setNom("");
         setPes(0);
-        setData_naixement(null);
+        setData_naixement(new Date());
         setEquip_id(0);
     }
     public Jugadores(Jugadores j){
